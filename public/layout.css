@@ -1,0 +1,68 @@
+section {
+}
+
+body {
+}
+
+.long-form {
+  max-width: clamp(312px, 80vw, 1200px);
+  margin: 0 auto;
+}
+
+.component {
+  max-width: clamp(312px, 80vw, 1200px);
+  margin: 0 auto;
+}
+
+.sized-box-small {
+  height: min(calc(1vw * var(--scaling-factor)), 1rem);
+  width: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.sized-box-medium {
+  height: min(calc(2vw * var(--scaling-factor)), 2rem);
+  width: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.sized-box-large {
+  height: min(calc(4vw * var(--scaling-factor)), 4rem);
+  width: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.sized-box-massive {
+  height: min(calc(16vw * var(--scaling-factor)), 8rem);
+  width: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+/* move to media.css */
+img {
+  border-radius: 1rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: min(calc(8vw * var(--scaling-factor)), 8rem);
+}
+
+.grid-item {
+  overflow: visible;
+  min-width: 320px;
+  width: 100%;
+}
+
+.grid-item hr {
+  height: 0.4rem;
+  background-color: var(--black);
+  margin: 0.4rem 0;
+}
+
+section.primary .grid-item hr {
+  height: 0.4rem;
+  background-color: var(--white);
+  margin: 0.4rem 0;
+}

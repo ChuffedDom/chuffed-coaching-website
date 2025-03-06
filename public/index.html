@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="colour.css" />
+    <link rel="stylesheet" href="typography.css" />
+    <link rel="stylesheet" href="layout.css" />
+    <link rel="stylesheet" href="call-to-action.css" />
+    <title>Chuffed Coaching</title>
+    <style>
+      .grid-hero {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: min(calc(4vw * var(--scaling-factor)), 4rem);
+        grid-auto-rows: auto;
+      }
+
+      .grid-item-hero-text {
+        overflow: visible;
+        min-width: 280px;
+        width: 100%;
+      }
+
+      .profile {
+        height: 64px;
+        width: 64px;
+      }
+
+      .domface {
+        height: 128px;
+        width: 128px;
+        transform: scaleX(-1);
+      }
+    </style>
+  </head>
+  <body>
+    <section class="primary">
+      <div class="sized-box-medium"></div>
+      <div class="sized-box-medium"></div>
+      <div class="component">
+        <div class="grid-hero">
+          <div class="grid-item-hero-text">
+            <h1>Engineer to Entrepreneur</h1>
+            <div class="sized-box-small"></div>
+            <h3>Turn Your Coding Skills Into Financial Independence</h3>
+            <div class="sized-box-medium"></div>
+            <p>
+              You’ve mastered software development—now it’s time to learn
+              product, branding, and go-to-market so you can ship and monetise
+              your own digital product.
+            </p>
+            <div class="sized-box-medium"></div>
+            <button
+              onclick="window.open('https://calendar.app.google/krHBfcFJj6PCVWfc6', '_blank')"
+            >
+              BOOK MY FREE SESSION
+            </button>
+            <div class="sized-box-medium"></div>
+          </div>
+
+          <img
+            style="transform: scaleX(-1)"
+            class="journey-graphic"
+            src="woman-coding.jpg"
+            alt="A visual display of going from code through branding, marketing, product, and arriving at cash"
+          />
+        </div>
+      </div>
+      <div class="sized-box-large"></div>
+    </section>
+    <section class="light">
+      <div class="sized-box-massive"></div>
+      <div class="component">
+        <div class="grid">
+          <div class="grid-item">
+            <h3>For Software Engineers</h3>
+            <hr />
+            <p>
+              Just actionable, hands-on 1-to-1 coaching. Book sessions as often
+              as you like.
+            </p>
+          </div>
+          <div class="grid-item">
+            <h3>No MBA Jargon</h3>
+            <hr />
+            <p>
+              Building successful products doesn't need it own secret language.
+            </p>
+          </div>
+          <div class="grid-item">
+            <h3>Accountability & Momentum</h3>
+            <hr />
+            <p>
+              Stop overthinking, start shipping. You will get a clear weekly
+              plan so you know the best way to spend you time, effort, and
+              money.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="sized-box-massive"></div>
+    </section>
+    <section class="dark">
+      <div class="component">
+        <div class="sized-box-massive"></div>
+        <h2>Our clients are Chuffed</h2>
+        <div class="sized-box-massive"></div>
+        <div style="display: flex; gap: 8px">
+          <img src="jake-edwards.jpg" alt="Jake Edwards" class="profile" />
+          <div class="sized-box-small"></div>
+          <p>
+            “Before Dom joined, we lacked a guiding force for our product-market
+            fit and struggled to bridge the gap between our product and
+            marketing departments. Dom stepped in seamlessly, showcasing
+            autonomy, ingenuity, and exceptional skill. I am confident that Dom
+            will continue to lead our product-marketing role with the same level
+            of excellence displayed during their time with us.” — Jake Edwards.
+          </p>
+        </div>
+        <div class="sized-box-large"></div>
+        <div style="display: flex; gap: 8px">
+          <img src="meldee-ching.jpg" alt="Meldee Ching" class="profile" />
+          <div class="sized-box-small"></div>
+          <p>
+            “Where possible, he advises on improved ways of working and
+            effective Product Marketing approaches. We are grateful to have had
+            the opportunity to work with him and look forward to working with
+            him in the future again.” — Meldee Ching.
+          </p>
+        </div>
+        <div class="sized-box-large"></div>
+        <div style="display: flex; gap: 8px">
+          <img src="mike-daniels.jpg" alt="Mike Daniels" class="profile" />
+          <div class="sized-box-small"></div>
+          <p>
+            “Turning around a challenging framework and delivering a
+            high-quality solution in a small, globally remote team. Dom can see
+            where the high-value work is and gets a team laser-focused on
+            delivery.” — Mike Daniels.
+          </p>
+        </div>
+        <div class="sized-box-large"></div>
+        <div style="display: flex; gap: 8px">
+          <img src="katie-lacy.jpg" alt="Katy Lacey" class="profile" />
+          <div class="sized-box-small"></div>
+          <p>
+            "Chuffed has really helped me personally and my agency by offering
+            great advice and delivering brilliant project management skills." —
+            Katy Lacey.
+          </p>
+        </div>
+        <div class="sized-box-massive"></div>
+      </div>
+    </section>
+    <section class="primary">
+      <div class="component">
+        <div class="long-form letter">
+          <div class="sized-box-massive"></div>
+          <div class="grid">
+            <div class="grid-item">
+              <img src="me.webp" class="domface" alt="A picture of my face" />
+              <div class="sized-box-small"></div>
+              <h2>Hi, I'm Dom</h2>
+              <div class="sized-box-small"></div>
+              <h6>Professional Tinkerer and Product Coach</h6>
+            </div>
+            <div class="grid-items">
+              <p>
+                With a history of being a Head of Product, I built a company,
+                Chuffed Solutions, that has launched digital products for my
+                clients since 2021.
+              </p>
+              <p>I also own apps that I have monetised.</p>
+              <p>
+                That leads to me sitting with developers like yourself and
+                talking about what they are working on in their spare time.
+              </p>
+              <p>
+                But they get stuck levelling up the code when, in actual fact,
+                the most effective advice I give them are the easy wins for the
+                product management and go-to-market.
+              </p>
+              <p>
+                Therefore, I want to help you get your product out there and get
+                you to a place where financial indepence is in your hands, not
+                at the whims of Shareholders.
+              </p>
+              <p></p>
+              <p>
+                But the bigger picture is this; I want the next generation of
+                tech owners to be the people who genuinely innovate.
+              </p>
+              <p>
+                Let's build great products for great people by great creators.
+              </p>
+              <p>Dom</p>
+            </div>
+          </div>
+        </div>
+        <div class="sized-box-massive"></div>
+      </div>
+    </section>
+    <section class="dark">
+      <div class="component">
+        <div class="sized-box-massive"></div>
+        <h2>Your Journey of becoming and Entrepreneur Starts Here</h2>
+        <div class="sized-box-medium"></div>
+        <p>
+          Begin taking control of your success with Chuffed in a free 1-hour
+          session, all info and data is kept private.
+        </p>
+        <div class="sized-box-medium"></div>
+        <button
+          onclick="window.open('https://calendar.app.google/krHBfcFJj6PCVWfc6', '_blank')"
+        >
+          BOOK MY FREE SESSION
+        </button>
+        <div class="sized-box-massive"></div>
+      </div>
+    </section>
+  </body>
+</html>

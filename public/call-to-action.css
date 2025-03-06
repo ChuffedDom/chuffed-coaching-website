@@ -1,0 +1,101 @@
+button {
+  background-color: var(--call-to-action);
+  color: var(--black);
+  font-weight: bold;
+  font-size: calc(1.2rem * var(--scaling-factor));
+  padding: 1rem 2rem;
+  border: 2px solid var(--call-to-action);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease-in;
+}
+
+button:hover {
+  transform: scale(1.01);
+}
+
+button:active {
+  transform: scale(0.99);
+  background-color: var(--white);
+}
+
+.cta-button {
+  background-color: var(--call-to-action);
+  color: var(--black);
+  font-weight: bold;
+  font-size: calc(1.2rem * var(--scaling-factor));
+  padding: 1rem 2rem;
+  border: 2px solid var(--call-to-action);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease-in;
+}
+
+.cta-button:hover {
+  transform: scale(1.01);
+}
+
+.cta-button:active {
+  transform: scale(0.99);
+  background-color: var(--white);
+}
+
+.subscribing {
+  background-color: transparent;
+  color: var(--call-to-action);
+  /* make button disabled and unclickable */
+  pointer-events: none;
+}
+
+.subscribed {
+  border: 2px solid transparent;
+  background-color: transparent;
+  color: var(--white);
+  pointer-events: none;
+}
+
+.disabled-button {
+  color: var(--white);
+  background-color: var(--primary-color);
+  pointer-events: none;
+  opacity: 0.8;
+  cursor: not-allowed;
+  border: 1px solid var(--call-to-action);
+}
+
+/* Additional styles for input field */
+input[type="email"] {
+  background-color: transparent;
+  color: var(--white);
+  outline: 2px solid var(--call-to-action);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.form-control::placeholder {
+  color: var(--white);
+  opacity: 0.75;
+  font-style: italic;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.error-message {
+  font-size: 1rem;
+  color: var(--white);
+  background-color: rgb(218, 71, 71);
+  padding: 0.2rem;
+  text-align: center;
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+  box-shadow: 0.1rem 0.1rem 0.1rem rgb(46, 46, 46);
+}
+
+.hide {
+  display: none;
+}

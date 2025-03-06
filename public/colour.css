@@ -1,0 +1,71 @@
+:root {
+  --call-to-action-seed: 50;
+  --call-to-action: hsl(var(--call-to-action-seed), 100%, 80%);
+  --black: hsl(calc(var(--call-to-action-seed) - 180), 50%, 8%);
+  --white: hsl(calc(var(--call-to-action-seed) - 180), 5%, 95%);
+  --primary: hsl(calc(var(--call-to-action-seed) - 180), 50%, 30%);
+}
+
+section.light {
+  background-color: var(--white);
+  display: block;
+  visibility: visible;
+  color: var(--black);
+}
+
+section.primary {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+section.dark {
+  background-color: var(--black);
+  color: var(--white);
+}
+
+.dark a {
+  color: var(--call-to-action);
+  text-decoration: none;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.dark a:hover {
+  color: var(--white);
+  text-decoration: underline;
+}
+
+.dark a:visited {
+  color: var(--call-to-action);
+}
+
+.light a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.light a:hover {
+  color: var(--black);
+  text-decoration: underline;
+}
+
+.light a:visited {
+  color: var(--primary);
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.primary a {
+  color: var(--call-to-action);
+  text-decoration: none;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.primary a:hover {
+  color: var(--white);
+  text-decoration: underline;
+}
+
+.primary a:visited {
+  color: var(--call-to-action);
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
