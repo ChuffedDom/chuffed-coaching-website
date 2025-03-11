@@ -9,6 +9,29 @@
     <link rel="stylesheet" href="layout.css" />
     <link rel="stylesheet" href="call-to-action.css" />
     <title>Chuffed Coaching</title>
+    <!-- Meta tags for SEO -->
+    <meta name="title" content="Chuffed Coaching" />
+    <meta
+      name="keywords"
+      content="coaching, product management, go-to-market, design, startup, side project"
+    />
+    <meta
+      name="description"
+      content="Level-up your skills outside of coding to make your side project a success with Chuffed Coaching"
+    />
+    <meta
+      name="author"
+      content="Dom, Head of Product and Professional Tinkerer"
+    />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="" />
+    <meta property="og:title" content="Chuffed Coaching" />
+    <meta
+      property="og:description"
+      content="Level-up your skills outside of coding to make your side project a success with Chuffed Coaching"
+    />
+    <meta property="og:image" content="og-image.png" />
     <style>
       .grid-hero {
         display: grid;
@@ -26,6 +49,7 @@
       .profile {
         height: 64px;
         width: 64px;
+        margin-top: 12px;
       }
 
       .domface {
@@ -166,7 +190,7 @@
               <div class="sized-box-small"></div>
               <h6>Professional Tinkerer and Product Coach</h6>
             </div>
-            <div class="grid-items">
+            <div class="grid-item">
               <p>
                 With a history of being a Head of Product, I built a company,
                 Chuffed Solutions, that has launched digital products for my
@@ -220,5 +244,70 @@
         <div class="sized-box-massive"></div>
       </div>
     </section>
+    <section class="light">
+      <div class="component">
+        <div class="sized-box-massive"></div>
+        <h2>Find Us</h2>
+        <div class="sized-box-large"></div>
+        <div class="grid">
+          <div style="display: flex; flex-direction: column" class="grid-item">
+            <a href="https://chuffed.solutions/dom-maurice"
+              >Chuffed's Journey</a
+            >
+            <div class="sized-box-medium"></div>
+            <a href="https://www.linkedin.com/in/dom-maurice/">LinkedIn</a>
+            <div class="sized-box-medium"></div>
+            <a href="https://www.youtube.com/@ChuffedDom">YouTube</a>
+          </div>
+          <div class="grid-item">
+            Chuffed Solutions Limited <br />
+            13 Whitchurch Lane Edgware, <br />
+            Middlesex <br />
+            England <br />
+            HA8 6JZ <br />
+            <br />
+            Registered Company no.
+            <a
+              href="https://find-and-update.company-information.service.gov.uk/company/13492456"
+              >13492456</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="sized-box-massive"></div>
+    </section>
   </body>
+  <script>
+    // get the current domain of the page and set it to a variable
+    const source = window.location.hostname;
+    const url = "https://proxy.chuffed.app/";
+    const body = {
+      target:
+        "https://script.google.com/macros/s/AKfycbxgXjWfMPJjQWqIl6PjSicv6FaRibqtoh3-9Zarwf10bYHwuxAXiqFu56VU-GSg5OY50A/exec",
+      body: { scope: "visit", source: source },
+    };
+
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => console.log("Response:", data))
+      .catch((error) => console.error("Error:", error));
+    // Record a visit after 5 seconds of loading the page
+    setTimeout(() => {
+      fetch(url + "proxy", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      })
+        .then((response) => response.json())
+        .then((data) => console.log("Response:", data))
+        .catch((error) => console.error("Error:", error));
+    }, 5000);
+  </script>
 </html>
