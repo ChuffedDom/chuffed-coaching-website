@@ -3,40 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="colour.css" />
     <link rel="stylesheet" href="typography.css" />
     <link rel="stylesheet" href="layout.css" />
     <link rel="stylesheet" href="call-to-action.css" />
     <title>Chuffed Coaching</title>
-    <!-- Meta tags for SEO -->
-    <meta name="title" content="Chuffed Coaching" />
-    <meta
-      name="keywords"
-      content="coaching, product management, go-to-market, design, startup, side project"
-    />
-    <meta
-      name="description"
-      content="Level-up your skills outside of coding to make your side project a success with Chuffed Coaching"
-    />
-    <meta
-      name="author"
-      content="Dom, Head of Product and Professional Tinkerer"
-    />
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="" />
-    <meta property="og:title" content="Chuffed Coaching" />
-    <meta
-      property="og:description"
-      content="Level-up your skills outside of coding to make your side project a success with Chuffed Coaching"
-    />
-    <meta property="og:image" content="og-image.png" />
     <style>
       .grid-hero {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: min(calc(4vw * var(--scaling-factor)), 4rem);
+        gap: 4rem; /* Multiple of 16px */
         grid-auto-rows: auto;
       }
 
@@ -47,28 +30,34 @@
       }
 
       .profile {
-        height: 64px;
-        width: 64px;
-        margin-top: 12px;
+        height: 64px; /* Multiple of 16px */
+        width: 64px; /* Multiple of 16px */
+        margin-top: 16px; /* Multiple of 16px */
       }
 
       .domface {
-        height: 128px;
-        width: 128px;
+        height: 128px; /* Multiple of 16px */
+        width: 128px; /* Multiple of 16px */
         transform: scaleX(-1);
       }
     </style>
   </head>
   <body>
-    <section class="primary">
+    <section>
       <div class="sized-box-medium"></div>
       <div class="sized-box-medium"></div>
       <div class="component">
         <div class="grid-hero">
           <div class="grid-item-hero-text">
-            <h1>Engineer to Entrepreneur</h1>
+            <h1>
+              Engineer to
+              <span class="text-accent"> &lt;/Entrepreneur&gt;</span>
+            </h1>
             <div class="sized-box-small"></div>
-            <h3>Turn Your Coding Skills Into Financial Independence</h3>
+            <h3>
+              Turn Your Coding Skills Into
+              <span class="text-accent-cyan">Financial Freedom</span>
+            </h3>
             <div class="sized-box-medium"></div>
             <p>
               You’ve mastered software development—now it’s time to learn
@@ -77,9 +66,10 @@
             </p>
             <div class="sized-box-medium"></div>
             <button
+              class="cta-button"
               onclick="window.open('https://calendar.app.google/krHBfcFJj6PCVWfc6', '_blank')"
             >
-              BOOK MY FREE SESSION
+              Book Now
             </button>
             <div class="sized-box-medium"></div>
           </div>
@@ -87,18 +77,49 @@
           <img
             style="transform: scaleX(-1)"
             class="journey-graphic"
-            src="woman-coding.jpg"
+            src="dom.jpg"
             alt="A visual display of going from code through branding, marketing, product, and arriving at cash"
           />
         </div>
       </div>
       <div class="sized-box-large"></div>
     </section>
-    <section class="light">
+    <section>
+      <div class="component">
+        <div class="sized-box-massive"></div>
+        <h2>Answering Big Questions</h2>
+        <div class="sized-box-large"></div>
+        <div class="grid">
+          <div class="grid-item card-coral">
+            <h4>How do I find an app idea?</h4>
+            <p>
+              With a decade in product, I have proven methodologies that will
+              help you find killer ideas that will be primed for the market.
+            </p>
+          </div>
+          <div class="grid-item card-coral">
+            <h4>How do I get users?</h4>
+            <p>
+              I will give you the keys to success by helping you build a launch
+              campaign and a custom go-to-market strategy for your app.
+            </p>
+          </div>
+          <div class="grid-item card-coral">
+            <h4>How do I know if anyone will use my app?</h4>
+            <p>
+              I get it, you don't want to waste a year's worth of weekends
+              building something no one wants.
+            </p>
+          </div>
+        </div>
+        <div class="sized-box-massive"></div>
+      </div>
+    </section>
+    <section>
       <div class="sized-box-massive"></div>
       <div class="component">
         <div class="grid">
-          <div class="grid-item">
+          <div class="grid-item card">
             <h3>For Software Engineers</h3>
             <hr />
             <p>
@@ -106,79 +127,106 @@
               as you like.
             </p>
           </div>
-          <div class="grid-item">
-            <h3>No MBA Jargon</h3>
+          <div class="grid-item card">
+            <h3>No MBA Jargon No Nonsense</h3>
             <hr />
             <p>
-              Building successful products doesn't need it own secret language.
+              Building successful products doesn't need its own secret language.
             </p>
           </div>
-          <div class="grid-item">
+          <div class="grid-item card">
             <h3>Accountability & Momentum</h3>
             <hr />
             <p>
-              Stop overthinking, start shipping. You will get a clear weekly
-              plan so you know the best way to spend you time, effort, and
-              money.
+              Stop overthinking, start shipping. You will get a clear plan so
+              you know the best way to spend your time, effort, and money.
             </p>
           </div>
         </div>
       </div>
       <div class="sized-box-massive"></div>
     </section>
-    <section class="dark">
+    <section>
       <div class="component">
         <div class="sized-box-massive"></div>
-        <h2>Our clients are Chuffed</h2>
+        <h2>Our Clients are Chuffed</h2>
         <div class="sized-box-massive"></div>
-        <div style="display: flex; gap: 8px">
-          <img src="jake-edwards.jpg" alt="Jake Edwards" class="profile" />
-          <div class="sized-box-small"></div>
-          <p>
-            “Before Dom joined, we lacked a guiding force for our product-market
-            fit and struggled to bridge the gap between our product and
-            marketing departments. Dom stepped in seamlessly, showcasing
-            autonomy, ingenuity, and exceptional skill. I am confident that Dom
-            will continue to lead our product-marketing role with the same level
-            of excellence displayed during their time with us.” — Jake Edwards.
-          </p>
-        </div>
-        <div class="sized-box-large"></div>
-        <div style="display: flex; gap: 8px">
-          <img src="meldee-ching.jpg" alt="Meldee Ching" class="profile" />
-          <div class="sized-box-small"></div>
-          <p>
-            “Where possible, he advises on improved ways of working and
-            effective Product Marketing approaches. We are grateful to have had
-            the opportunity to work with him and look forward to working with
-            him in the future again.” — Meldee Ching.
-          </p>
-        </div>
-        <div class="sized-box-large"></div>
-        <div style="display: flex; gap: 8px">
-          <img src="mike-daniels.jpg" alt="Mike Daniels" class="profile" />
-          <div class="sized-box-small"></div>
-          <p>
-            “Turning around a challenging framework and delivering a
-            high-quality solution in a small, globally remote team. Dom can see
-            where the high-value work is and gets a team laser-focused on
-            delivery.” — Mike Daniels.
-          </p>
-        </div>
-        <div class="sized-box-large"></div>
-        <div style="display: flex; gap: 8px">
-          <img src="katie-lacy.jpg" alt="Katy Lacey" class="profile" />
-          <div class="sized-box-small"></div>
-          <p>
-            "Chuffed has really helped me personally and my agency by offering
-            great advice and delivering brilliant project management skills." —
-            Katy Lacey.
-          </p>
+        <div class="grid">
+          <div class="grid-item testimonial-card">
+            <div class="testimonial-header">
+              <img
+                src="nicholas.jpeg"
+                alt="Portrait of Nicholas"
+                class="testimonial-avatar"
+              />
+              <h3>Nicholas</h3>
+            </div>
+            <p>
+              I had a fantastic discussion with Dom about my project idea. He
+              has a remarkable ability to clarify complex concepts, and he truly
+              helped me visualize a realistic path forward. His guidance on
+              dividing the project into smaller, achievable deliverables was
+              brilliant, and he pushed my thinking on product requirements in
+              all the right ways. A truly productive and insightful session!
+            </p>
+          </div>
+          <div class="grid-item testimonial-card">
+            <div class="testimonial-header">
+              <img
+                src="vincent.jpeg"
+                alt="Portrait of Vincent"
+                class="testimonial-avatar"
+              />
+              <h3>Vincent</h3>
+            </div>
+            <p>
+              Had a fantastic initial strategy session with Dom. His deep
+              industry insight and practical advice were invaluable. I came away
+              with actionable takeaways that have helped shape the go-to-market
+              direction for Mercantiworld and energised the next steps of the
+              project.
+            </p>
+          </div>
+          <div class="grid-item testimonial-card">
+            <div class="testimonial-header">
+              <img
+                src="sabare.jpeg"
+                alt="Portrait of Sabare"
+                class="testimonial-avatar"
+              />
+              <h3>Sabare</h3>
+            </div>
+            <p>
+              Dom was incredibly helpful on how to actually validate an app
+              without breaking a sweat and just by a evening work. He gave some
+              practical no-nonsense feedback that filled some gaps and gave a
+              clarity to think on the right direction!
+            </p>
+          </div>
+          <div class="grid-item testimonial-card">
+            <div class="testimonial-header">
+              <img
+                src="tim.jpeg"
+                alt="Portrait of Tim"
+                class="testimonial-avatar"
+              />
+              <h3>Tim</h3>
+            </div>
+            <p>
+              As a Full-time Developer turned Technical Founder, it's easy for
+              me to hack away for hours on features no one has asked for. I
+              needed someone that could show me how to redefine my passion
+              project into a marketable product. Dom understands the dev mindset
+              and knows how to break it out of "solution tunnel vision". Our
+              conversations often tread into unexpected territory, but I always
+              come away with new excitement to work on my business.
+            </p>
+          </div>
         </div>
         <div class="sized-box-massive"></div>
       </div>
     </section>
-    <section class="primary">
+    <section>
       <div class="component">
         <div class="long-form letter">
           <div class="sized-box-massive"></div>
@@ -186,7 +234,7 @@
             <div class="grid-item">
               <img src="me.webp" class="domface" alt="A picture of my face" />
               <div class="sized-box-small"></div>
-              <h2>Hi, I'm Dom</h2>
+              <h2><span class="text-accent-pink">Hi, I'm Dom</span></h2>
               <div class="sized-box-small"></div>
               <h6>Professional Tinkerer and Product Coach</h6>
             </div>
@@ -226,25 +274,26 @@
         <div class="sized-box-massive"></div>
       </div>
     </section>
-    <section class="dark">
+    <section>
       <div class="component">
         <div class="sized-box-massive"></div>
-        <h2>Your Journey of becoming and Entrepreneur Starts Here</h2>
+        <h2>Your Journey of becoming an Entrepreneur Starts Here</h2>
         <div class="sized-box-medium"></div>
         <p>
-          Begin taking control of your success with Chuffed in a free 1-hour
-          session, all info and data is kept private.
+          Begin taking control of your success with Chuffed in a 1-hour session,
+          all info and data is kept private.
         </p>
         <div class="sized-box-medium"></div>
         <button
+          class="cta-button"
           onclick="window.open('https://calendar.app.google/krHBfcFJj6PCVWfc6', '_blank')"
         >
-          BOOK MY FREE SESSION
+          Book Now
         </button>
         <div class="sized-box-massive"></div>
       </div>
     </section>
-    <section class="light">
+    <section>
       <div class="component">
         <div class="sized-box-massive"></div>
         <h2>Find Us</h2>
@@ -277,37 +326,4 @@
       <div class="sized-box-massive"></div>
     </section>
   </body>
-  <script>
-    // get the current domain of the page and set it to a variable
-    const source = window.location.hostname;
-    const url = "https://proxy.chuffed.app/";
-    const body = {
-      target:
-        "https://script.google.com/macros/s/AKfycbxgXjWfMPJjQWqIl6PjSicv6FaRibqtoh3-9Zarwf10bYHwuxAXiqFu56VU-GSg5OY50A/exec",
-      body: { scope: "visit", source: source },
-    };
-
-    fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => console.log("Response:", data))
-      .catch((error) => console.error("Error:", error));
-    // Record a visit after 5 seconds of loading the page
-    setTimeout(() => {
-      fetch(url + "proxy", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      })
-        .then((response) => response.json())
-        .then((data) => console.log("Response:", data))
-        .catch((error) => console.error("Error:", error));
-    }, 5000);
-  </script>
 </html>

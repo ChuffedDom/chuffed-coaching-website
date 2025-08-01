@@ -20,18 +20,20 @@ button:active {
 }
 
 .cta-button {
-  background-color: var(--call-to-action);
-  color: var(--black);
-  font-weight: bold;
-  font-size: calc(1.2rem * var(--scaling-factor));
-  padding: 1rem 2rem;
-  border: 2px solid var(--call-to-action);
-  border-radius: 0.5rem;
+  background-color: var(--accent-gold);
+  color: var(--bg-grey);
+  padding: 1rem 2rem; /* 16px 32px */
+  border: none;
+  border-radius: 0.5rem; /* 8px */
+  font-family: "JetBrains Mono", monospace;
+  font-size: 2rem; /* 20px */
+  font-weight: 700;
   cursor: pointer;
-  transition: transform 0.2s ease-in;
+  transition: background-color 0.3s ease;
 }
 
 .cta-button:hover {
+  background-color: var(--text-white);
   transform: scale(1.01);
 }
 

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../reset.css" />
+    <link rel="stylesheet" href="../colour.css" />
+    <link rel="stylesheet" href="../typography.css" />
+    <link rel="stylesheet" href="../layout.css" />
+    <link rel="stylesheet" href="../call-to-action.css" />
+    <title>Chuffed Coaching</title>
+    <!-- Meta tags for SEO -->
+    <meta name="title" content="Chuffed Coaching" />
+    <meta
+      name="keywords"
+      content="coaching, product management, go-to-market, design, startup, side project"
+    />
+    <meta
+      name="description"
+      content="Level-up your skills outside of coding to make your side project a success with Chuffed Coaching"
+    />
+    <meta
+      name="author"
+      content="Dom, Head of Product and Professional Tinkerer"
+    />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="" />
+    <meta property="og:title" content="Chuffed Coaching" />
+    <meta
+      property="og:description"
+      content="Level-up your skills outside of coding to make your side project a success with Chuffed Coaching"
+    />
+    <meta property="og:image" content="../og-image.png" />
+    <style>
+      .grid-hero {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: min(calc(4vw * var(--scaling-factor)), 4rem);
+        grid-auto-rows: auto;
+      }
+
+      .grid-item-hero-text {
+        overflow: visible;
+        min-width: 280px;
+        width: 100%;
+      }
+
+      .profile {
+        height: 64px;
+        width: 64px;
+        margin-top: 12px;
+      }
+
+      .domface {
+        height: 128px;
+        width: 128px;
+        transform: scaleX(-1);
+      }
+    </style>
+  </head>
+</html>
+<body>
+  <section class="primary">
+    <div class="sized-box-medium"></div>
+    <div class="sized-box-medium"></div>
+    <div class="component">
+      <div class="grid-hero">
+        <div class="grid-item-hero-text">
+          <h1>Engineer to Entrepreneur</h1>
+          <div class="sized-box-small"></div>
+          <h3>Turn Your Coding Skills Into Financial Independence</h3>
+          <div class="sized-box-medium"></div>
+          <p>
+            Book a coaching session with me, Dom, to level-up your skills
+            outside of coding.
+            <br />
+            <strong> Just £100 for a 1-hour session </strong>
+          </p>
+          <div class="sized-box-medium"></div>
+          <button
+            onclick="window.open('https://calendar.app.google/3bMVh4GHmMdYviMDA', '_blank')"
+          >
+            BUY SESSION
+          </button>
+          <div class="sized-box-medium"></div>
+        </div>
+
+        <img
+          style="transform: scaleX(-1)"
+          class="journey-graphic"
+          src="dom.jpg"
+          alt="A visual display of going from code through branding, marketing, product, and arriving at cash"
+        />
+      </div>
+    </div>
+    <div class="sized-box-large"></div>
+  </section>
+  <section class="dark">
+    <div class="component">
+      <div class="sized-box-massive"></div>
+      <h2>Our clients are Chuffed</h2>
+      <div class="sized-box-massive"></div>
+      <div style="display: flex; gap: 8px">
+        <img src="../jake-edwards.jpg" alt="Jake Edwards" class="profile" />
+        <div class="sized-box-small"></div>
+        <p>
+          “Before Dom joined, we lacked a guiding force for our product-market
+          fit and struggled to bridge the gap between our product and marketing
+          departments. Dom stepped in seamlessly, showcasing autonomy,
+          ingenuity, and exceptional skill. I am confident that Dom will
+          continue to lead our product-marketing role with the same level of
+          excellence displayed during their time with us.” — Jake Edwards.
+        </p>
+      </div>
+      <div class="sized-box-large"></div>
+      <div style="display: flex; gap: 8px">
+        <img src="../meldee-ching.jpg" alt="Meldee Ching" class="profile" />
+        <div class="sized-box-small"></div>
+        <p>
+          “Where possible, he advises on improved ways of working and effective
+          Product Marketing approaches. We are grateful to have had the
+          opportunity to work with him and look forward to working with him in
+          the future again.” — Meldee Ching.
+        </p>
+      </div>
+      <div class="sized-box-large"></div>
+      <div style="display: flex; gap: 8px">
+        <img src="../mike-daniels.jpg" alt="Mike Daniels" class="profile" />
+        <div class="sized-box-small"></div>
+        <p>
+          “Turning around a challenging framework and delivering a high-quality
+          solution in a small, globally remote team. Dom can see where the
+          high-value work is and gets a team laser-focused on delivery.” — Mike
+          Daniels.
+        </p>
+      </div>
+      <div class="sized-box-large"></div>
+      <div style="display: flex; gap: 8px">
+        <img src="../katie-lacy.jpg" alt="Katy Lacey" class="profile" />
+        <div class="sized-box-small"></div>
+        <p>
+          "Chuffed has really helped me personally and my agency by offering
+          great advice and delivering brilliant project management skills." —
+          Katy Lacey.
+        </p>
+      </div>
+      <div class="sized-box-massive"></div>
+    </div>
+  </section>
+</body>
