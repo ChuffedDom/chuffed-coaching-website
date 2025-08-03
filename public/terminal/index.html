@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chuffed Coaching</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: "VT323", monospace;
+        background-color: #1a1a1a;
+        color: #00ff41;
+        overflow: hidden;
+      }
+      #terminal {
+        white-space: pre-wrap;
+        width: 100%;
+        max-width: 90ch;
+        margin: 0 auto;
+        height: 100vh;
+        overflow-y: auto;
+        padding: 0.5rem 1rem;
+        box-sizing: border-box;
+      }
+      .cursor {
+        display: inline-block;
+        background-color: #00ff41;
+        width: 10px;
+        height: 1.2rem;
+        animation: blink 1s step-end infinite;
+        vertical-align: bottom;
+      }
+      @keyframes blink {
+        from,
+        to {
+          background-color: transparent;
+        }
+        50% {
+          background-color: #00ff41;
+        }
+      }
+      a {
+        color: inherit;
+        text-decoration: underline;
+      }
+      a:hover {
+        background-color: #00ff41;
+        color: #1a1a1a;
+      }
+
+      /* --- Custom Scrollbar Styles --- */
+      /* For Webkit browsers like Chrome, Safari */
+      ::-webkit-scrollbar {
+        width: 12px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #1a1a1a; /* Dark background for the track */
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: #00ff41; /* Green color for the thumb */
+        border-radius: 6px;
+        border: 3px solid #1a1a1a; /* Creates padding around thumb */
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: #33ff66; /* Lighter green on hover */
+      }
+
+      /* For Firefox */
+      html {
+        scrollbar-width: thin;
+        scrollbar-color: #00ff41 #1a1a1a;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900 text-green-400">
+    <div
+      id="terminal"
+      onclick="document.getElementById('hidden-input').focus()"
+    >
+      <span id="output"></span><span class="cursor"></span>
+    </div>
+    <input
+      type="text"
+      id="hidden-input"
+      style="position: absolute; left: -9999px"
+    />
+
+    <script>
+      const outputElement = document.getElementById("output");
+      const hiddenInput = document.getElementById("hidden-input");
+      const terminalDiv = document.getElementById("terminal");
+
+      const prompt = "> ";
+      let isTyping = true;
+      let currentInput = "";
+      let menuState = "main";
+
+      const menus = {
+        main: [
+          "1. Book",
+          "2. Tell me more",
+          "3. How can Chuffed help?",
+          "4. Why Chuffed Coaching?",
+          "5. How has Chuffed worked in the past?",
+          "6. Who is Dom?",
+          "7. Grab a 30 min Coffee Chat with Dom",
+        ],
+        how: [
+          "1. How do I find an app idea?",
+          "2. How do I get users?",
+          "3. How do I know if anyone will use my app?",
+          "4. back",
+        ],
+        why: [
+          "1. For Software Engineers",
+          "2. No MBA Jargon, No Nonsense",
+          "3. Accountability & Momentum",
+          "4. back",
+        ],
+        past: ["1. Nicholas", "2. Vincent", "3. Sabare", "4. Tim", "5. back"],
+      };
+
+      const asciiArt = [
+        "",
+        " $$$$$$\\  $$\\                  $$$$$$\\   $$$$$$\\                 $$\\      ",
+        "$$  __$$\\ $$ |                $$  __$$\\ $$  __$$\\                $$ |     ",
+        "$$ /  \\__|$$$$$$$\\  $$\\   $$\\ $$ /  \\__|$$ /  \\__|$$$$$$\\   $$$$$$$ |     ",
+        "$$ |      $$  __$$\\ $$ |  $$ |$$$$\\     $$$$\\    $$  __$$\\ $$  __$$ |     ",
+        "$$ |      $$ |  $$ |$$ |  $$ |$$  _|    $$  _|   $$$$$$$$ |$$ /  $$ |     ",
+        "$$ |  $$\\ $$ |  $$ |$$ |  $$ |$$ |      $$ |     $$   ____|$$ |  $$ |     ",
+        "\\$$$$$$  |$$ |  $$ |\\$$$$$$  |$$ |      $$ |     \\$$$$$$$\\ \\$$$$$$$ |     ",
+        " \\______/ \\__|  \\__| \\______/ \\__|      \\__|      \\_______| \\_______|     ",
+        "                                                                          ",
+        "                                                                          ",
+        "                                                                          ",
+        " $$$$$$\\                                $$\\       $$\\                     ",
+        "$$  __$$\\                               $$ |      \\__|                    ",
+        "$$ /  \\__| $$$$$$\\   $$$$$$\\   $$$$$$$\\ $$$$$$$\\  $$\\ $$$$$$$\\   $$$$$$\\  ",
+        "$$ |      $$  __$$\\  \\____$$\\ $$  _____|$$  __$$\\ $$ |$$  __$$\\ $$  __$$\\ ",
+        "$$ |      $$ /  $$ | $$$$$$$ |$$ /      $$ |  $$ |$$ |$$ |  $$ |$$ /  $$ |",
+        "$$ |  $$\\ $$ |  $$ |$$  __$$ |$$ |      $$ |  $$ |$$ |$$ |  $$ |$$ |  $$ |",
+        "\\$$$$$$  |\\$$$$$$  |\\$$$$$$$ |\\$$$$$$$\\ $$ |  $$ |$$ |$$ |  $$ |\\$$$$$$$ |",
+        " \\______/  \\______/  \\_______| \\_______|\\__|  \\__|\\__|\\__|  \\__| \\____$$ |",
+        "                                                                $$\\   $$ |",
+        "                                                                \\$$$$$$  |",
+        "                                                                 \\______/ ",
+        "",
+        "Welcome to the terminal.",
+      ];
+
+      // --- Helper function to scroll to the bottom ---
+      function scrollToBottom() {
+        terminalDiv.scrollTop = terminalDiv.scrollHeight;
+      }
+
+      // --- Universal Typewriter Function ---
+      function typewriter(lines, callback, charSpeed = 10, lineSpeed = 20) {
+        isTyping = true;
+        let lineIndex = 0;
+        let charIndex = 0;
+
+        function type() {
+          if (lineIndex < lines.length) {
+            const currentLine = lines[lineIndex];
+            if (charIndex < currentLine.length) {
+              outputElement.innerHTML += currentLine.charAt(charIndex);
+              charIndex++;
+              setTimeout(type, charSpeed); // Use passed in typing speed
+            } else {
+              outputElement.innerHTML += "<br>";
+              lineIndex++;
+              charIndex = 0;
+              setTimeout(type, lineSpeed); // Use passed in line delay
+            }
+            scrollToBottom(); // Scroll after each character/line is added
+          } else {
+            isTyping = false;
+            if (callback) callback();
+          }
+        }
+        type();
+      }
+
+      function displayMenu(menuKey) {
+        const menuLines = [
+          "",
+          "Please select an option by typing its number.",
+        ].concat(menus[menuKey]);
+        typewriter(menuLines, () => {
+          outputElement.innerHTML += "<br><br>" + prompt;
+          hiddenInput.focus();
+          scrollToBottom();
+        });
+      }
+
+      function printOutput(message, nextMenu = menuState) {
+        const lines = message.split("<br>");
+        typewriter(lines, () => displayMenu(nextMenu));
+      }
+
+      function processCommand(command) {
+        const cmd = command.trim();
+        outputElement.innerHTML += "<br>";
+
+        if (cmd.toLowerCase() === "clear") {
+          outputElement.innerHTML = "";
+          // Use faster speed for ascii art on clear
+          typewriter(
+            asciiArt,
+            () => {
+              menuState = "main";
+              displayMenu("main");
+            },
+            3,
+            7
+          );
+          return;
+        }
+
+        switch (menuState) {
+          case "main":
+            switch (cmd) {
+              case "1":
+                window.open(
+                  "https://calendar.app.google/Vqe7pwokH5LKwLeb9",
+                  "_blank"
+                );
+                printOutput("Opening booking calendar...");
+                break;
+              case "2":
+                printOutput(
+                  "Engineer to Entrepreneur<br>Turn Your Coding Skills Into Financial Freedom<br>You’ve mastered software development—now it’s time to learn product, branding, and go-to-market so you can ship and monetise your own digital product."
+                );
+                break;
+              case "3":
+                menuState = "how";
+                displayMenu("how");
+                break;
+              case "4":
+                menuState = "why";
+                displayMenu("why");
+                break;
+              case "5":
+                menuState = "past";
+                displayMenu("past");
+                break;
+              case "6":
+                printOutput(
+                  "Hi, I'm Dom, Professional Tinkerer and Coach.<br><br>With a history of being a Head of Product, I built a company, Chuffed Solutions, that has launched digital products for my clients since 2021. I also own apps that I have monetised.<br><br>That leads to me sitting with developers like yourself and talking about what they are working on in their spare time. But they get stuck levelling up the code when, in actual fact, the most effective advice I give them are the easy wins for the product management and go-to-market.<br><br>Therefore, I want to help you get your product out there and get you to a place where financial indepence is in your hands, not at the whims of Shareholders.<br><br>But the bigger picture is this; I want the next generation of tech owners to be the people who genuinely innovate. Let's build great products for great people by great creators.<br><br>Dom <br><br>https://www.linkedin.com/in/dom-maurice/ | @ChuffedDom"
+                );
+                break;
+              case "7":
+                window.open(
+                  "https://calendar.app.google/TH85b3392DUjBfEw7",
+                  "_blank"
+                );
+                printOutput("Opening coffee chat calendar...");
+                break;
+              default:
+                printOutput(
+                  "Invalid option. Please select a number from the menu."
+                );
+                break;
+            }
+            break;
+          case "how":
+            switch (cmd) {
+              case "1":
+                printOutput(
+                  "With a decade in product, I have proven methodologies that will help you find killer ideas that will be primed for the market.",
+                  "how"
+                );
+                break;
+              case "2":
+                printOutput(
+                  "I will give you the keys to success by helping you build a launch campaign and a custom go-to-market strategy for your app.",
+                  "how"
+                );
+                break;
+              case "3":
+                printOutput(
+                  "I get it, you don't want to waste a year's worth of weekends building something no one wants. I have validation strategies that will help you test your ideas before you build them.",
+                  "how"
+                );
+                break;
+              case "4":
+                menuState = "main";
+                displayMenu("main");
+                break;
+              default:
+                printOutput("Invalid option.", "how");
+                break;
+            }
+            break;
+          case "why":
+            switch (cmd) {
+              case "1":
+                printOutput(
+                  "Just actionable, hands-on 1-to-1 coaching. Book sessions as often as you like.",
+                  "why"
+                );
+                break;
+              case "2":
+                printOutput(
+                  "Building successful products doesn't need its own secret language.",
+                  "why"
+                );
+                break;
+              case "3":
+                printOutput(
+                  "Stop overthinking, start shipping. You will get a clear plan so you know the best way to spend your time, effort, and money.",
+                  "why"
+                );
+                break;
+              case "4":
+                menuState = "main";
+                displayMenu("main");
+                break;
+              default:
+                printOutput("Invalid option.", "why");
+                break;
+            }
+            break;
+          case "past":
+            switch (cmd) {
+              case "1":
+                printOutput(
+                  `"I had a fantastic discussion with Dom about my project idea. He has a remarkable ability to clarify complex concepts, and he truly helped me visualize a realistic path forward. His guidance on dividing the project into smaller, achievable deliverables was brilliant, and he pushed my thinking on product requirements in all the right ways. A truly productive and insightful session!"`,
+                  "past"
+                );
+                break;
+              case "2":
+                printOutput(
+                  `"Had a fantastic initial strategy session with Dom. His deep industry insight and practical advice were invaluable. I came away with actionable takeaways that have helped shape the go-to-market direction for Mercantiworld and energised the next steps of the project."`,
+                  "past"
+                );
+                break;
+              case "3":
+                printOutput(
+                  `"Dom was incredibly helpful on how to actually validate an app without breaking a sweat and just by a evening work. He gave some practical no-nonsense feedback that filled some gaps and gave a clarity to think on the right direction!"`,
+                  "past"
+                );
+                break;
+              case "4":
+                printOutput(
+                  `"As a Full-time Developer turned Technical Founder, it's easy for me to hack away for hours on features no one has asked for. I needed someone that could show me how to redefine my passion project into a marketable product. Dom understands the dev mindset and knows how to break it out of "solution tunnel vision". Our conversations often tread into unexpected territory, but I always come away with new excitement to work on my business."`,
+                  "past"
+                );
+                break;
+              case "5":
+                menuState = "main";
+                displayMenu("main");
+                break;
+              default:
+                printOutput("Invalid option.", "past");
+                break;
+            }
+            break;
+        }
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (isTyping) return;
+        if (e.ctrlKey || e.metaKey) return;
+
+        e.preventDefault();
+        const key = e.key;
+
+        if (key === "Enter") {
+          processCommand(currentInput);
+          currentInput = "";
+        } else if (key === "Backspace") {
+          if (currentInput.length > 0) {
+            currentInput = currentInput.slice(0, -1);
+            const currentOutput = outputElement.innerHTML;
+            const lastPromptIndex = currentOutput.lastIndexOf(prompt);
+            outputElement.innerHTML =
+              currentOutput.slice(0, lastPromptIndex + prompt.length) +
+              currentInput;
+          }
+        } else if (key.length === 1) {
+          currentInput += key;
+          outputElement.innerHTML += key;
+        }
+        scrollToBottom(); // Scroll after any user key press
+      });
+
+      window.onload = () => {
+        // Use faster speed for the initial intro art
+        typewriter(asciiArt, () => displayMenu("main"), 3, 7);
+      };
+    </script>
+  </body>
+</html>
