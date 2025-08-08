@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chuffed Coaching | Newsletter - Screenshit App Idea</title>
+    <meta
+      name="description"
+      content="This week's newsletter covering a free app idea, AI ethics, cloud native trends, and more."
+    />
+
+    <!-- Favicon -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="../apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../../favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="../../favicon-16x16.png"
+    />
+    <link rel="manifest" href="../../site.webmanifest" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../../reset.css" />
+    <link rel="stylesheet" href="../../typography.css" />
+    <link rel="stylesheet" href="../../colour.css" />
+    <link rel="stylesheet" href="../../layout.css" />
+    <link rel="stylesheet" href="../../call-to-action.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* Additional styles for newsletter layout */
+      .newsletter-content h2 {
+        margin-top: 48px;
+        margin-bottom: 24px;
+        color: var(--accent-gold);
+      }
+      .newsletter-content h3 {
+        margin-top: 32px;
+        margin-bottom: 16px;
+        color: var(--accent-cyan);
+      }
+      .newsletter-content ul {
+        list-style-type: none;
+        padding-left: 0;
+      }
+      .newsletter-content li {
+        margin-bottom: 16px;
+        padding-left: 24px;
+        position: relative;
+      }
+      .newsletter-content li::before {
+        content: "🥡";
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+      .newsletter-content .event-list li::before {
+        content: "📆";
+      }
+      .newsletter-content hr {
+        border: 0;
+        height: 1px;
+        background-color: var(--card-background);
+        margin: 48px 0;
+      }
+      .newsletter-content p {
+        line-height: 1.6;
+      }
+
+      /* Event Card Styles */
+      .event-cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 32px;
+        margin-top: 32px;
+      }
+      .event-card {
+        background-color: var(--card-background);
+        border-radius: 8px;
+        padding: 24px;
+        display: flex;
+        gap: 24px;
+        align-items: flex-start;
+        border: 1px solid var(--accent-cyan-translucent);
+      }
+      .event-card .date {
+        background-color: var(--accent-cyan);
+        color: var(--bg-grey);
+        border-radius: 8px;
+        padding: 16px;
+        text-align: center;
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 700;
+        min-width: 80px;
+      }
+      .event-card .date .month {
+        font-size: 16px;
+        display: block;
+        opacity: 0.8;
+      }
+      .event-card .date .day {
+        font-size: 32px;
+        display: block;
+        line-height: 1;
+      }
+      .event-card .details h4 {
+        font-family: "JetBrains Mono", monospace;
+        color: var(--accent-gold);
+        margin: 0 0 8px 0;
+      }
+      .event-card .details p {
+        margin: 0 0 16px 0;
+        color: var(--text-main);
+        font-size: 14px;
+      }
+      .event-card .details a {
+        color: var(--accent-cyan);
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 14px;
+      }
+      .event-card .details a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="component newsletter-content">
+        <div class="sized-box-massive"></div>
+        <img src="header-image.png" alt="" />
+        <div class="sized-box-large"></div>
+        <h1>Welcome to my Newsletter, Future Founder.</h1>
+        <div class="sized-box-small"></div>
+        <small>by Dom Maurice &#183; 2025-08-08</small>
+        <h2>Free App Idea of the Week | Screenshit</h2>
+        <p class="subtitle">
+          An app that can take all of the screenshots from a Mac desktop, and
+          uses OCR and AI to categorise and tag all screenshots for future use,
+          whilst also clearing up the desktop.
+        </p>
+      </section>
+
+      <section class="component newsletter-content">
+        <h3>The Problem</h3>
+        <p>
+          Mac desktops are the default location for screenshots, which can
+          quickly lead to a cluttered and disorganised mess ... which is
+          annoying. As users take more and more screenshots, the desktop becomes
+          a dumping ground of miscellaneous images with generic file names like
+          "Screenshot 2023-10-27 at 10.30.00 AM." Finding a specific screenshot
+          later becomes a frustrating and time-consuming task, forcing users to
+          either manually sort through a disorganised pile of nonsense or give
+          up on retrieving the information altogether, or funnily leads to
+          taking another screenshot.
+        </p>
+
+        <h3>Hypothesis</h3>
+        <p>
+          By creating an app that automatically processes, tags, and archives
+          screenshots, we can eliminate desktop clutter and make it effortless
+          for users to find any screenshot they've ever taken, saving time and
+          reducing frustration.
+        </p>
+        <br />
+        <h3>Potential Features</h3>
+        <p>
+          <strong>Automated Organisation and Tagging:</strong> The app would
+          constantly monitor the desktop for new screenshots. Using Optical
+          Character Recognition (OCR), it would read the text within the image
+          and then use AI to understand the context.
+        </p>
+        <br />
+        <p>
+          <strong>Smart Search:</strong> With all screenshots properly tagged
+          and indexed, the app would provide a powerful search function. A user
+          could simply type "pasta recipe" or "financial report" and the app
+          would instantly pull up all relevant screenshots.
+        </p>
+        <br />
+        <p>
+          <strong>Desktop Cleanup and Archiving:</strong> The app's primary
+          function would be to clear the desktop. As soon as a screenshot is
+          taken and processed, it would be automatically moved from the desktop
+          to a designated, organised folder within the app's archive. This keeps
+          the desktop clean and clutter-free (mmmm nice) while still making the
+          screenshots easily accessible and searchable from within the app
+          itself.
+        </p>
+
+        <h3>Mockup of Screenshit</h3>
+        <p>
+          Here is an example of what the app could look like (viewable on
+          desktop only). The app would have a clean, minimalist design, focusing
+          on functionality and ease of use. The main screen would display a grid
+          of screenshots, each with a small preview and the associated tags. A
+          search bar at the top would allow users to find specific screenshots
+          quickly. The left sidebar would provide access to different categories
+          or tags, making it easy to browse through archived screenshots.
+        </p>
+        <br />
+        <iframe
+          src="screenshit.html"
+          style="width: 100%; height: 100%; min-height: 800px; display: block"
+          frameborder="0"
+        ></iframe>
+        <hr />
+      </section>
+
+      <section class="component newsletter-content">
+        <h2>This Week's Events</h2>
+        <h3>Data Engineers London - Data Quality & AI Ethics</h3>
+        <ul>
+          <li>
+            When to use AI is down to what type of output is expected -
+            Deterministic or Probabilistic.
+          </li>
+          <li>
+            The era of specialists and generalists is changing with AI, and
+            domain-level knowledge is expanding.
+          </li>
+        </ul>
+
+        <h3>Cloud Native London</h3>
+        <ul>
+          <li>
+            There is a wide adoption of implementation a hybrid vendor and open
+            source solution for observability.
+          </li>
+          <li>
+            No longer need to choose between functionality or flexibility in
+            observability.
+          </li>
+          <li>
+            Cloud Native helps hugely with maintaining continuous integration
+            and continuous deployment, and the testing required for all stages
+            of the pipeline.
+          </li>
+          <li>
+            The worlds of Cloud Native and AI will take the best ideas from each
+            other.
+          </li>
+        </ul>
+        <hr />
+      </section>
+
+      <section class="component newsletter-content">
+        <h2>What I am working on</h2>
+        <p>
+          Week 15 of pivoting my business to a coaching service, and things are
+          going well. Videos to shoot and edit, new faces to meet, each
+          interaction enjoyable but also a little draining. The days were filled
+          with a massive outreach effort, all focused on getting more people
+          interested in what I'm building.
+        </p>
+        <br />
+        <p>
+          With the algo being what it is, I am going to lean on email more over
+          the coming weeks. I've even been considering starting a micro-vlog,
+          documenting the entire process of building a micro-SaaS to give people
+          a real look behind the curtain. And in between all of this, I'm making
+          sure to dedicate time to more sessions with my clients, the people who
+          remind me why this work is so important.
+        </p>
+        <hr />
+      </section>
+
+      <section class="component newsletter-content">
+        <h2>The World of Tech</h2>
+        <img src="gpt5.png" alt="" />
+        <br />
+        <p>
+          GPT-5 has been released. It’s better, but not game-changing; however,
+          the hype train keeps going.
+        </p>
+        <br />
+        <p>
+          After implementing platform and tool enhancements that reduced the
+          need for customer support, Atlassian cut 150 jobs in its customer
+          service and support departments. The job cuts were announced in a
+          prerecorded message from CEO Mike Cannon-Brookes, which was released
+          just hours before co-founder Scott Farquhar gave a speech to the
+          Australian Press Club. In his address, Farquhar called on Australia to
+          embrace an “AI revolution” and move past the “jobs of the past.”
+          Atlassian, an Australian software firm, was founded in 2002.
+        </p>
+        <br />
+        <p>
+          Scale AI is letting go of about 200 employees, which is roughly 14% of
+          its workforce, and cutting ties with 500 contractors. This decision
+          comes shortly after Meta made a $14.3 billion deal with the
+          data-labelling startup, bringing in Scale AI's CEO to lead a new lab.
+          The layoffs are part of a broader restructuring, with the company's
+          interim CEO citing "inefficiencies and redundancies" that were created
+          by a rapid expansion in its generative AI division.
+        </p>
+        <br />
+        <p>
+          AI is doing job interviews now, but candidates say they'd rather risk
+          staying unemployed than talk to another robot. Can’t blame them.
+        </p>
+        <hr />
+      </section>
+
+      <section class="component newsletter-content">
+        <h2>How they got to Success (and how you can copy their homework)</h2>
+        <p>
+          Tinder's initial go-to-market strategy was a masterclass in grassroots
+          adoption, focusing on a deep understanding of its target audience's
+          existing habits. Instead of relying on traditional advertising, the
+          company directly engaged with college students by hosting parties and
+          going to campus clubs.
+        </p>
+        <br />
+        <p>
+          The core of this strategy was a simple yet effective tactic: they
+          would give out free merchandise, including t-shirts, to female
+          students with a message that directly addressed a common social
+          interaction.
+        </p>
+        <br />
+        <p>
+          These shirts, which read "don't ask for my number, find me on Tinder,"
+          cleverly preempted the old method of exchanging contact information
+          and simultaneously advertised the app as the new, cooler alternative.
+        </p>
+        <br />
+        <p>
+          This hands-on approach built a critical mass of early adopters by
+          meeting people where the "old" problem (meeting new people and
+          exchanging numbers) was already being solved, creating a network
+          effect that quickly drove widespread behavioural change and
+          established Tinder as the dominant force in mobile dating.
+        </p>
+        <hr />
+      </section>
+
+      <section class="component newsletter-content">
+        <h2>Next Week's Events</h2>
+        <div class="event-cards-container">
+          <div class="event-card">
+            <div class="date">
+              <span class="month">AUG</span>
+              <span class="day">13</span>
+            </div>
+            <div class="details">
+              <h4>Django London: Picnic Party!</h4>
+              <p>
+                A chilled one for all the Pythonistas! Looking forward to a
+                relaxed evening in the park.
+              </p>
+              <a
+                href="https://www.meetup.com/djangolondon/events/309575411/"
+                target="_blank"
+                >View Event &rarr;</a
+              >
+            </div>
+          </div>
+          <div class="event-card">
+            <div class="date">
+              <span class="month">AUG</span>
+              <span class="day">15</span>
+            </div>
+            <div class="details">
+              <h4>Tech Startups in the Pub</h4>
+              <p>
+                Relaxed networking. Always a good one, with amazing people
+                building great products.
+              </p>
+              <a
+                href="https://www.meetup.com/tech-startups-in-the-pub-relaxed-networking/events/305944834/"
+                target="_blank"
+                >View Event &rarr;</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <section>
+      <div class="component">
+        <div class="sized-box-massive"></div>
+        <h2>Find Us</h2>
+        <div class="sized-box-large"></div>
+        <div class="grid">
+          <div style="display: flex; flex-direction: column" class="grid-item">
+            <a href="https://chuffed.solutions/dom-maurice"
+              >Chuffed's Journey</a
+            >
+            <div class="sized-box-medium"></div>
+            <a href="https://www.linkedin.com/in/dom-maurice/">LinkedIn</a>
+            <div class="sized-box-medium"></div>
+            <a href="https://www.youtube.com/@ChuffedDom">YouTube</a>
+          </div>
+          <div class="grid-item">
+            Chuffed Solutions Limited <br />
+            13 Whitchurch Lane Edgware, <br />
+            Middlesex <br />
+            England <br />
+            HA8 6JZ <br />
+            <br />
+            Registered Company no.
+            <a
+              href="https://find-and-update.company-information.service.gov.uk/company/13492456"
+              >13492456</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="sized-box-massive"></div>
+    </section>
+  </body>
+</html>
