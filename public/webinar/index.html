@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chuffed Coaching Webinar Signup</title>
+    <!-- Use the Jetbrains Mono font for titles and Inter for body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Include the Tailwind CSS CDN for modern, utility-first styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Define brand colors and fonts using CSS variables for easy reuse */
+      :root {
+        --color-bg-grey: #191919;
+        --color-card-grey: #303030;
+        --color-bg-blue: #0b0d1d;
+        --color-card-blue: #232534;
+        --color-accent-gold: #faea95;
+        --color-accent-gold-darker: #e5c35e;
+        --color-accent-pink: #ff00ff;
+        --color-accent-cyan: #0df1b1;
+        --color-accent-coral: #f6084c;
+        --color-text-white: #e6fef7;
+        --font-jetbrains-mono: "JetBrains Mono", monospace;
+        --font-inter: "Inter", sans-serif;
+      }
+
+      /* Custom CSS for the body background texture */
+      body {
+        background-color: var(--color-bg-blue);
+        font-family: var(--font-inter);
+        color: var(--color-text-white);
+        background-image: radial-gradient(#151624 1px, transparent 1px);
+        background-size: 16px 16px;
+      }
+
+      /* Custom CSS for the loading spinner animation */
+      .spinner {
+        border: 4px solid var(--color-card-blue);
+        border-top: 4px solid var(--color-accent-gold);
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Styles for the h1 element using the specified font */
+      .title-font {
+        font-family: var(--font-jetbrains-mono);
+      }
+
+      #submit-btn {
+        background-color: var(--color-accent-gold) !important;
+        border-color: var(--color-accent-gold) !important;
+        color: var(--color-card-blue) !important;
+      }
+    </style>
+  </head>
+  <body class="selection:bg-color-accent-coral selection:text-white">
+    <!-- Main content container, centered and responsive -->
+    <div class="min-h-screen flex items-center justify-center p-8">
+      <div
+        class="bg-color-card-blue rounded-[16px] shadow-2xl overflow-hidden max-w-5xl w-full flex flex-col lg:flex-row-reverse"
+      >
+        <!-- Image section with a relevant placeholder image in brand colors -->
+        <div class="lg:w-1/2 flex items-center justify-center p-8">
+          <img
+            src="me-presenting.png"
+            alt="A software developer working on their app"
+            class="rounded-[16px] object-cover w-full h-full max-h-96 lg:max-h-full"
+          />
+        </div>
+
+        <!-- Content and form section -->
+        <div
+          class="lg:w-1/2 p-8 md:p-12 space-y-16 flex flex-col justify-center"
+        >
+          <div class="space-y-4">
+            <!-- Absolute reference for the logo, as requested -->
+            <a href="https://chuffedcoaching.com">
+              <p class="text-color-accent-gold font-bold text-sm">← home</p>
+            </a>
+
+            <h1
+              class="text-3xl md:text-4xl font-bold title-font leading-tight text-color-text-white"
+            >
+              Your Launchpad for App Success
+            </h1>
+            <p class="text-lg text-color-text-white">
+              Join our free webinar for software developers. We'll show you what
+              you can do right now, with little time, effort, and money, to
+              ensure your app is a massive success when you're ready to launch
+              in 6-12 months.
+            </p>
+            <p class="text-sm italic text-color-text-white opacity-75">
+              The day and time of the webinar will be flexible to accommodate
+              different schedules. Add your email below to get notified when I
+              announce the date.
+            </p>
+          </div>
+
+          <!-- Signup Form -->
+          <form id="signup-form" class="space-y-8">
+            <div>
+              <label for="email" class="sr-only">Email address</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                placeholder="Enter your email address"
+                class="w-full px-5 py-3 border border-color-card-grey rounded-[16px] shadow-sm placeholder-color-text-white focus:outline-none focus:ring-2 focus:ring-color-accent-gold focus:border-color-accent-gold bg-transparent text-color-text-white transition duration-200 ease-in-out"
+              />
+            </div>
+
+            <button
+              type="submit"
+              id="submit-btn"
+              class="w-full relative flex items-center justify-center px-6 py-3 border border-transparent rounded-[16px] shadow-sm text-base font-medium text-color-card-blue bg-color-accent-gold hover:bg-color-accent-gold-darker focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-color-accent-gold focus:ring-offset-color-card-blue transition duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <span id="button-text">Sign Up for the Free Webinar</span>
+              <!-- Loading spinner, initially hidden -->
+              <div
+                id="loading-spinner"
+                class="spinner hidden absolute inset-0 m-auto"
+              ></div>
+              <!-- Success icon, initially hidden -->
+              <svg
+                id="success-icon"
+                class="hidden w-6 h-6 text-color-card-blue"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </button>
+            <p
+              id="response-message"
+              class="text-center text-sm font-medium h-4"
+            ></p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("signup-form");
+        const emailInput = document.getElementById("email");
+        const submitBtn = document.getElementById("submit-btn");
+        const buttonText = document.getElementById("button-text");
+        const loadingSpinner = document.getElementById("loading-spinner");
+        const successIcon = document.getElementById("success-icon");
+        const responseMessage = document.getElementById("response-message");
+
+        // Function to handle the button state
+        const setButtonState = (state) => {
+          // Hide all indicators first
+          buttonText.classList.add("hidden");
+          loadingSpinner.classList.add("hidden");
+          successIcon.classList.add("hidden");
+          submitBtn.disabled = false;
+
+          if (state === "loading") {
+            submitBtn.disabled = true;
+            loadingSpinner.classList.remove("hidden");
+            responseMessage.textContent = "";
+          } else if (state === "success") {
+            submitBtn.disabled = true;
+            successIcon.classList.remove("hidden");
+            responseMessage.textContent =
+              "Success! Check your email for details.";
+            responseMessage.classList.remove("text-color-accent-coral");
+            responseMessage.classList.add("text-color-accent-cyan");
+            emailInput.value = ""; // Clear the input field
+          } else if (state === "error") {
+            buttonText.classList.remove("hidden");
+            responseMessage.textContent =
+              "Oops! Something went wrong. Please try again.";
+            responseMessage.classList.remove("text-color-accent-cyan");
+            responseMessage.classList.add("text-color-accent-coral");
+          } else {
+            // 'initial' state
+            buttonText.classList.remove("hidden");
+            responseMessage.textContent = "";
+            responseMessage.classList.remove(
+              "text-color-accent-cyan",
+              "text-color-accent-coral"
+            );
+          }
+        };
+
+        // Initial button state
+        setButtonState("initial");
+
+        // Handle form submission
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          setButtonState("loading");
+
+          const email = emailInput.value;
+          const source = window.location.href; // Get the current page URL as requested
+
+          const myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
+
+          const raw = JSON.stringify({
+            target:
+              "https://script.google.com/macros/s/AKfycbxgXjWfMPJjQWqIl6PjSicv6FaRibqtoh3-9Zarwf10bYHwuxAXiqFu56VU-GSg5OY50A/exec",
+            body: {
+              scope: "signup",
+              source: source,
+              email: email,
+            },
+          });
+
+          const requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow",
+          };
+
+          try {
+            const response = await fetch(
+              "https://proxy.chuffed.app/proxy",
+              requestOptions
+            );
+            if (response.ok) {
+              setButtonState("success");
+              console.log("Successfully submitted:", await response.text());
+            } else {
+              setButtonState("error");
+              console.error("Submission failed with status:", response.status);
+            }
+          } catch (error) {
+            setButtonState("error");
+            console.error("Submission failed:", error);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

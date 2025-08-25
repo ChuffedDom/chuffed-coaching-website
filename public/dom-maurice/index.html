@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for social media icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- The following CSS files are now linked using the full domain URL -->
+    <link rel="stylesheet" href="https://chuffedcoaching.com/reset.css" />
+    <link rel="stylesheet" href="https://chuffedcoaching.com/colour.css" />
+    <link rel="stylesheet" href="https://chuffedcoaching.com/typography.css" />
+    <link rel="stylesheet" href="https://chuffedcoaching.com/layout.css" />
+    <title>Chuffed Coaching - Dom Maurice</title>
+    <!-- Meta tags for SEO -->
+    <meta name="title" content="Dom Maurice - Chuffed Coaching" />
+    <meta
+      name="description"
+      content="Connect with Dom Maurice on his social media platforms."
+    />
+    <meta
+      name="author"
+      content="Dom, Head of Product and Professional Tinkerer"
+    />
+
+    <style>
+      /* Page-specific styles */
+
+      /* The main container for the social links.
+         Uses flexbox to stack links vertically with a gap of 2rem (32px),
+         which is a multiple of 16px. */
+      .social-links {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      /* Container for each card, applying the 'card' style and adding hover effect.
+         The 'card' class is defined in your layout.css with a grey background and padding. */
+      .social-link-card {
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+      }
+
+      /* Hover effect for the entire card, reverted to a subtle shadow */
+      .social-link-card:hover {
+        transform: scale(1.01);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Style for the link itself within the card */
+      .social-link-card a {
+        display: flex; /* Use flexbox to align icon and text */
+        align-items: center;
+        gap: 1rem; /* Space between icon and text */
+        text-decoration: none; /* Remove underline */
+        color: var(--text-white);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 1.5rem; /* 24px, a multiple of 16px */
+        font-weight: 700;
+        letter-spacing: -0.04rem;
+      }
+
+      /* Hover effect for the text inside the card */
+      .social-link-card a:hover {
+        color: var(--accent-cyan);
+      }
+
+      /* Style for the social media icons */
+      .social-link-card a i {
+        width: 1.5rem; /* Set a fixed width for the icons to prevent text shifting */
+        text-align: center;
+      }
+
+      /* Use a grid layout to handle responsiveness, similar to the main site.
+         Each grid item will take up an equal amount of space on larger screens,
+         and stack on smaller screens. */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 4rem; /* 64px, a multiple of 16px */
+      }
+
+      /* A new class for the more subtle "Home Page" card */
+      .home-link-card {
+        background-color: transparent;
+        border: 2px solid var(--text-white);
+        text-align: center;
+      }
+
+      /* A specific hover effect for the subtle home card */
+      .home-link-card:hover {
+        transform: none; /* No scaling effect */
+        box-shadow: none; /* No box shadow */
+        background-color: var(
+          --card-grey
+        ); /* Adds a subtle background on hover */
+      }
+
+      /* Ensure the image is fluid within its container */
+      .domface {
+        height: 128px;
+        width: 128px;
+        transform: scaleX(-1);
+        border-radius: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- The main page content section, using the `primary` class from your existing CSS -->
+    <section class="primary">
+      <!-- Massive sized box for top margin, as per your layout.css -->
+      <div class="sized-box-massive"></div>
+
+      <!-- Component container for centered content -->
+      <div class="component">
+        <!-- Main grid for two-column layout on desktop, stacking on mobile -->
+        <div class="grid">
+          <!-- First grid item: Dom's profile info -->
+          <div class="grid-item">
+            <!-- Image source is now linked using the full domain URL -->
+            <img
+              src="https://chuffedcoaching.com/me.webp"
+              class="domface"
+              alt="A picture of Dom Maurice"
+            />
+            <div class="sized-box-small"></div>
+            <h2><span class="text-accent-pink">Hi, I'm Dom</span></h2>
+            <div class="sized-box-small"></div>
+            <h6>Professional Tinkerer and Product Coach</h6>
+          </div>
+
+          <!-- Second grid item: Social media links -->
+          <div class="grid-item">
+            <!-- A container for the list of links -->
+            <div class="social-links">
+              <p>Find me on:</p>
+              <div class="card social-link-card">
+                <a
+                  href="https://www.linkedin.com/in/dom-maurice"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i class="fab fa-linkedin"></i>
+                  LinkedIn
+                </a>
+              </div>
+              <div class="card social-link-card">
+                <a
+                  href="https://bsky.app/profile/chuffeddom.bsky.social"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <!-- Changed from fa-butterfly to the correct fa-bluesky brand icon -->
+                  <i class="fab fa-bluesky"></i>
+                  Bluesky
+                </a>
+              </div>
+              <div class="card social-link-card">
+                <a
+                  href="https://github.com/ChuffedDom"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i class="fab fa-github"></i>
+                  Github
+                </a>
+              </div>
+              <div class="card social-link-card">
+                <a
+                  href="https://www.youtube.com/@ChuffedDom"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i class="fab fa-youtube"></i>
+                  YouTube
+                </a>
+              </div>
+              <div class="card social-link-card">
+                <a href="mailto:dom@chuffed.solutions">
+                  <i class="fa-solid fa-envelope"></i>
+                  Email: dom@chuffed.solutions
+                </a>
+              </div>
+              <div class="card social-link-card">
+                <a
+                  href="https://calendar.app.google/bviNNJ8DT8WMha7Q6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i class="fa-solid fa-mug-hot"></i>
+                  Book a coffee chat
+                </a>
+              </div>
+              <!-- This card is now more subtle with a transparent background -->
+              <div class="card social-link-card home-link-card">
+                <a href="https://chuffedcoaching.com">
+                  <i class="fa-solid fa-house-chimney"></i>
+                  Return to home page
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Massive sized box for bottom margin -->
+      <div class="sized-box-massive"></div>
+    </section>
+  </body>
+</html>

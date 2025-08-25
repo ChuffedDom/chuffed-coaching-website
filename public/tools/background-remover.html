@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Image Background Remover</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font -->
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl text-center">
+      <h1 class="text-3xl font-bold text-gray-800 mb-6">
+        AI Image Background Remover
+      </h1>
+      <p class="text-gray-600 mb-6">
+        Upload an image and let AI do the magic of removing the background. The
+        result will appear below.
+      </p>
+
+      <!-- Main app container -->
+      <div
+        class="flex flex-col md:flex-row items-center justify-around space-y-8 md:space-y-0 md:space-x-8"
+      >
+        <!-- Original Image Section -->
+        <div class="flex flex-col items-center flex-1">
+          <h2 class="text-xl font-semibold text-gray-700 mb-4">
+            Original Image
+          </h2>
+          <label
+            for="imageUpload"
+            class="cursor-pointer bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-xl transition duration-300 ease-in-out"
+          >
+            Choose Image
+          </label>
+          <input type="file" id="imageUpload" class="hidden" accept="image/*" />
+
+          <div
+            class="mt-4 w-full h-64 border-2 border-dashed border-gray-300 rounded-xl overflow-hidden flex items-center justify-center bg-gray-50 p-2"
+          >
+            <img
+              id="previewImage"
+              src=""
+              alt="Image Preview"
+              class="max-h-full max-w-full object-contain hidden"
+            />
+            <span id="noImageText" class="text-gray-400"
+              >No image selected</span
+            >
+          </div>
+        </div>
+
+        <!-- Arrow Indicator -->
+        <div class="flex-shrink-0">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-10 w-10 text-gray-400 md:rotate-0 rotate-90"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 8l4 4m0 0l-4 4m4-4H3"
+            />
+          </svg>
+        </div>
+
+        <!-- Result Image Section -->
+        <div class="flex flex-col items-center flex-1">
+          <h2 class="text-xl font-semibold text-gray-700 mb-4">Result Image</h2>
+          <button
+            id="removeBgButton"
+            class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-xl transition duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Remove Background
+          </button>
+          <div
+            class="mt-4 w-full h-64 border-2 border-dashed border-gray-300 rounded-xl overflow-hidden flex items-center justify-center bg-gray-50 p-2 relative"
+          >
+            <img
+              id="resultImage"
+              src=""
+              alt="Result Image"
+              class="max-h-full max-w-full object-contain hidden"
+            />
+            <div
+              id="loadingIndicator"
+              class="hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+            >
+              <div
+                class="w-8 h-8 border-4 border-gray-200 rounded-full border-t-blue-500 animate-spin"
+              ></div>
+            </div>
+            <span id="noResultText" class="text-gray-400">No result yet</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Download button -->
+      <button
+        id="downloadButton"
+        class="mt-8 bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-xl transition duration-300 ease-in-out hidden"
+      >
+        Download Result
+      </button>
+      <p id="messageBox" class="text-red-500 mt-4 hidden"></p>
+    </div>
+
+    <script>
+      // Get all necessary DOM elements
+      const imageUpload = document.getElementById("imageUpload");
+      const previewImage = document.getElementById("previewImage");
+      const resultImage = document.getElementById("resultImage");
+      const removeBgButton = document.getElementById("removeBgButton");
+      const downloadButton = document.getElementById("downloadButton");
+      const noImageText = document.getElementById("noImageText");
+      const noResultText = document.getElementById("noResultText");
+      const loadingIndicator = document.getElementById("loadingIndicator");
+      const messageBox = document.getElementById("messageBox");
+
+      let uploadedImageBase64 = null;
+      let uploadedImageType = null; // Store the image MIME type
+
+      // Function to display messages to the user in a message box.
+      function showMessage(message, isError = true) {
+        messageBox.textContent = message;
+        messageBox.className = isError
+          ? "text-red-500 mt-4"
+          : "text-green-500 mt-4";
+        messageBox.classList.remove("hidden");
+      }
+
+      // Function to hide the message box.
+      function hideMessage() {
+        messageBox.classList.add("hidden");
+      }
+
+      // Function to convert a file to a Base64 string.
+      function fileToBase64(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result.split(",")[1]); // Get only the Base64 data part
+          reader.onerror = (error) => reject(error);
+          reader.readAsDataURL(file);
+        });
+      }
+
+      // Handle image selection and preview
+      imageUpload.addEventListener("change", async (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          try {
+            hideMessage();
+            uploadedImageBase64 = await fileToBase64(file);
+            uploadedImageType = file.type; // Store the actual image type
+
+            previewImage.src = `data:${uploadedImageType};base64,${uploadedImageBase64}`;
+            previewImage.classList.remove("hidden");
+            noImageText.classList.add("hidden");
+            removeBgButton.disabled = false;
+            downloadButton.classList.add("hidden"); // Hide download button for new upload
+            resultImage.classList.add("hidden");
+            noResultText.classList.remove("hidden");
+          } catch (error) {
+            showMessage("Error reading file. Please try a different image.");
+            console.error("File reading error:", error);
+            uploadedImageBase64 = null;
+            uploadedImageType = null;
+          }
+        }
+      });
+
+      // Handle background removal API call
+      removeBgButton.addEventListener("click", async () => {
+        if (!uploadedImageBase64 || !uploadedImageType) {
+          showMessage("Please upload an image first.");
+          return;
+        }
+
+        // Show loading state
+        removeBgButton.disabled = true;
+        loadingIndicator.classList.remove("hidden");
+        resultImage.classList.add("hidden");
+        noResultText.classList.add("hidden");
+        hideMessage();
+
+        try {
+          // API endpoint and payload for gemini-2.0-flash-preview-image-generation model
+          const apiUrl =
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent?key=";
+          const prompt =
+            "Please remove the background of the main subject in this image. Do not change the subject.";
+
+          const payload = {
+            contents: [
+              {
+                role: "user",
+                parts: [
+                  { text: prompt },
+                  {
+                    inlineData: {
+                      mimeType: uploadedImageType, // Use the dynamically detected MIME type
+                      data: uploadedImageBase64,
+                    },
+                  },
+                ],
+              },
+            ],
+            generationConfig: {
+              responseModalities: ["TEXT", "IMAGE"],
+            },
+          };
+
+          // Fetch call with exponential backoff for retries
+          let response;
+          let delay = 1000;
+          let maxRetries = 5;
+
+          for (let i = 0; i < maxRetries; i++) {
+            try {
+              response = await fetch(apiUrl, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+              });
+
+              if (response.ok) {
+                break;
+              } else if (response.status === 429) {
+                // Too Many Requests
+                if (i < maxRetries - 1) {
+                  await new Promise((res) => setTimeout(res, delay));
+                  delay *= 2;
+                } else {
+                  throw new Error(
+                    "API rate limit exceeded. Please try again later."
+                  );
+                }
+              } else {
+                throw new Error(`API error: ${response.statusText}`);
+              }
+            } catch (err) {
+              if (i === maxRetries - 1) {
+                throw err;
+              }
+              await new Promise((res) => setTimeout(res, delay));
+              delay *= 2;
+            }
+          }
+
+          if (!response || !response.ok) {
+            throw new Error("Failed to get a valid response from the API.");
+          }
+
+          const result = await response.json();
+
+          // Extract the Base64 image data from the response
+          const base64Data = result?.candidates?.[0]?.content?.parts?.find(
+            (p) => p.inlineData
+          )?.inlineData?.data;
+
+          if (base64Data) {
+            const imageUrl = `data:image/png;base64,${base64Data}`;
+            resultImage.src = imageUrl;
+            resultImage.classList.remove("hidden");
+            downloadButton.classList.remove("hidden");
+            showMessage("Background successfully removed!", false);
+          } else {
+            showMessage(
+              "Could not generate an image from the response. Please try again."
+            );
+            noResultText.classList.remove("hidden");
+            console.error("API response did not contain image data:", result);
+          }
+        } catch (error) {
+          showMessage(`Error: ${error.message}`);
+          noResultText.classList.remove("hidden");
+          console.error("Background removal error:", error);
+        } finally {
+          // Hide loading state
+          removeBgButton.disabled = false;
+          loadingIndicator.classList.add("hidden");
+        }
+      });
+
+      // Download the result image
+      downloadButton.addEventListener("click", () => {
+        const link = document.createElement("a");
+        link.href = resultImage.src;
+        link.download = "image-with-no-background.png";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+    </script>
+  </body>
+</html>
