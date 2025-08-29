@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chuffed Toolkit</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS for utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      /* Applying Brand Guidelines */
+      :root {
+        --bg-grey: #191919;
+        --card-grey: #303030;
+        --bg-blue: #0b0d1d;
+        --card-blue: #232534;
+        --accent-gold: #faea95;
+        --accent-pink: #ff00ff;
+        --accent-cyan: #0df1b1;
+        --accent-coral: #f6084c;
+        --text-white: #cecece;
+        --font-body: "Inter", sans-serif;
+        --font-heading: "JetBrains Mono", monospace;
+      }
+
+      body {
+        background-color: var(--bg-grey);
+        color: var(--text-white);
+        font-family: var(--font-body);
+        position: relative;
+      }
+
+      /* Dotted background effect */
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.05) 1px,
+          transparent 1px
+        );
+        background-size: 1rem 1rem; /* 16px by 16px */
+        z-index: -1;
+      }
+
+      /* Custom selection color */
+      ::selection {
+        background-color: var(--accent-coral);
+        color: var(--bg-grey);
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--font-heading);
+      }
+
+      /* App Card Styling */
+      .tool-card {
+        background-color: var(--card-grey);
+        border-radius: 1rem; /* 16px */
+        padding: 1.5rem; /* 24px */
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        text-decoration: none;
+        color: var(--text-white);
+      }
+
+      .tool-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+      }
+
+      .tool-card-header {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1 / 1; /* Make it square */
+        margin-bottom: 1.5rem; /* 24px */
+      }
+
+      .tool-card-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 0.5rem; /* 8px */
+      }
+
+      .tool-card-icon {
+        position: absolute;
+        bottom: -1rem; /* -16px */
+        left: 1rem; /* 16px */
+        width: 4rem; /* 64px */
+        height: 4rem; /* 64px */
+        border-radius: 0.75rem; /* 12px */
+        border: 4px solid var(--bg-grey);
+        background-color: var(--card-grey);
+      }
+
+      .tool-card-body {
+        margin-top: 1.5rem; /* 24px */
+        display: flex;
+        flex-direction: column;
+      }
+
+      .tool-card-title {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        color: var(--accent-gold);
+        white-space: nowrap; /* Keep title on a single line */
+        overflow: hidden; /* Hide overflowing text */
+        text-overflow: ellipsis; /* Add '...' to a long title */
+      }
+
+      .tool-card-description {
+        font-size: 0.875rem; /* 14px */
+        line-height: 1.25rem; /* 20px */
+        color: var(--text-white);
+        opacity: 0.8;
+        margin-top: 0.5rem; /* 8px */
+        overflow: hidden; /* Hide overflowing text */
+        /* The following properties create a multi-line truncation effect */
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* Limit description to 3 lines */
+        -webkit-box-orient: vertical;
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <div class="container mx-auto px-4 py-16 md:py-32">
+      <header class="text-center mb-16">
+        <h1 class="text-5xl md:text-6xl font-bold">Chuffed Toolkit</h1>
+        <p class="mt-4 text-lg max-w-2xl mx-auto opacity-80">
+          A collection of tools I have built to help with my workflow, and to
+          get away from annoying subscriptions that deliver very little value.
+        </p>
+      </header>
+
+      <!-- Tools Grid -->
+      <main
+        id="toolkit-grid"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+      >
+        <!-- Tool cards will be inserted here by JavaScript -->
+      </main>
+
+      <footer class="text-center mt-16">
+        <a
+          href="https://chuffedcoaching.com"
+          class="text-sm text-cyan-400 hover:text-white transition-colors duration-300"
+          >← Back to Chuffed Coaching</a
+        >
+      </footer>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const tools = [
+          {
+            title: "Timelinked",
+            description:
+              "Get the time and date exactly from LinkedIn posts so you can anticipate a user posting and be the first to comment",
+            // IMPORTANT: Replace these placeholder URLs with absolute paths from your domain root.
+            // Example: '/toolkit/assets/bg-remover-large.png'
+            largeImage: "./timelinked.png",
+            iconImage: "./timelinked-icon.png",
+            link: "./timelinked",
+          },
+        ];
+
+        const grid = document.getElementById("toolkit-grid");
+
+        tools.forEach((tool) => {
+          const cardLink = document.createElement("a");
+          cardLink.href = tool.link;
+          cardLink.className = "tool-card";
+          cardLink.target = "_blank";
+          cardLink.rel = "noopener noreferrer";
+
+          cardLink.innerHTML = `
+                    <div class="tool-card-header">
+                        <img src="${tool.largeImage}" alt="${tool.title} large image" class="tool-card-image" onerror="this.onerror=null;this.src='https://placehold.co/600x600/303030/CECECE?text=Image+Not+Found';">
+                        <img src="${tool.iconImage}" alt="${tool.title} icon" class="tool-card-icon" onerror="this.onerror=null;this.src='https://placehold.co/128x128/303030/CECECE?text=Icon';">
+                    </div>
+                    <div class="tool-card-body">
+                        <h3 class="tool-card-title">${tool.title}</h3>
+                        <p class="tool-card-description">${tool.description}</p>
+                    </div>
+                `;
+          grid.appendChild(cardLink);
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timelinked</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* Custom base styles */
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f3f4f6; /* A light gray background */
+      }
+
+      /* Define custom button styles using Tailwind's @apply directive if needed,
+           but for simplicity, we will use utility classes directly. */
+    </style>
+  </head>
+  <body class="antialiased text-gray-800">
+    <!-- App Container -->
+    <div id="app" class="min-h-screen">
+      <!-- Top Navigation Bar -->
+      <nav class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <!-- Left side: Brand/Logo -->
+            <div class="flex-shrink-0">
+              <a
+                href="https://chuffedcoaching.com/toolkit"
+                target="_blank"
+                class="text-2xl font-bold text-gray-900 hover:text-indigo-600 transition-colors"
+              >
+                Chuffed Toolkit
+              </a>
+            </div>
+
+            <!-- Right side: Settings Icon -->
+            <div class="flex items-center">
+              <button
+                id="settings-btn"
+                type="button"
+                class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                aria-label="Open settings"
+              >
+                <i class="fas fa-cog text-xl"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content Area -->
+      <main class="p-4 sm:p-6 lg:p-8">
+        <div class="max-w-7xl mx-auto">
+          <!-- Your main app content will go here -->
+          <div class="bg-white p-8 rounded-lg shadow">
+            <h1 class="text-3xl font-bold mb-4">Welcome to Timelinked</h1>
+            <p class="text-gray-600">
+              This is the main content area of your application. Start building
+              your features here!
+            </p>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Settings Modal -->
+    <div
+      id="settings-modal"
+      class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
+      <div
+        class="bg-white rounded-xl shadow-2xl w-full max-w-lg m-4 transform transition-all"
+        id="modal-panel"
+      >
+        <!-- Modal Header -->
+        <div
+          class="flex items-start justify-between p-5 border-b border-gray-200 rounded-t-xl"
+        >
+          <h3 class="text-xl font-semibold text-gray-900" id="modal-title">
+            Settings
+          </h3>
+          <button
+            type="button"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+            id="close-modal-btn"
+            aria-label="Close modal"
+          >
+            <i class="fas fa-times w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="p-6 space-y-4">
+          <p class="text-base leading-relaxed text-gray-500">
+            This is where the user configuration settings will go. You can add
+            form fields, toggles, and other options here to customize the
+            application experience.
+          </p>
+          <p class="text-base leading-relaxed text-gray-500">
+            For now, it's just placeholder text demonstrating the modal's
+            functionality. All settings saved will be persisted to local
+            storage.
+          </p>
+        </div>
+
+        <!-- Modal Footer -->
+        <div
+          class="flex items-center justify-end p-6 space-x-3 border-t border-gray-200 rounded-b-xl bg-gray-50"
+        >
+          <button
+            id="cancel-btn"
+            type="button"
+            class="btn btn-outline px-5 py-2.5 text-sm font-medium text-gray-700 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-indigo-300"
+          >
+            Cancel
+          </button>
+          <button
+            id="save-btn"
+            type="button"
+            class="btn btn-soft btn-primary px-5 py-2.5 text-sm font-medium text-indigo-700 bg-indigo-100 rounded-lg hover:bg-indigo-200 focus:ring-4 focus:outline-none focus:ring-indigo-300"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get modal elements
+        const settingsBtn = document.getElementById("settings-btn");
+        const settingsModal = document.getElementById("settings-modal");
+        const closeModalBtn = document.getElementById("close-modal-btn");
+        const cancelBtn = document.getElementById("cancel-btn");
+        const saveBtn = document.getElementById("save-btn");
+        const modalPanel = document.getElementById("modal-panel");
+
+        // --- Function to open the modal ---
+        const openModal = () => {
+          if (settingsModal) {
+            settingsModal.classList.remove("hidden");
+            // We can add animations here if desired
+          }
+        };
+
+        // --- Function to close the modal ---
+        const closeModal = () => {
+          if (settingsModal) {
+            settingsModal.classList.add("hidden");
+          }
+        };
+
+        // --- Event Listeners ---
+
+        // Open modal when settings icon is clicked
+        if (settingsBtn) {
+          settingsBtn.addEventListener("click", openModal);
+        }
+
+        // Close modal with 'X' button
+        if (closeModalBtn) {
+          closeModalBtn.addEventListener("click", closeModal);
+        }
+
+        // Close modal with 'Cancel' button
+        if (cancelBtn) {
+          cancelBtn.addEventListener("click", closeModal);
+        }
+
+        // For now, 'Save' button also just closes the modal
+        if (saveBtn) {
+          saveBtn.addEventListener("click", () => {
+            console.log("Settings saved to localStorage (simulation)");
+            // Add actual localStorage logic here in the future
+            closeModal();
+          });
+        }
+
+        // Close modal when clicking on the background overlay
+        if (settingsModal) {
+          settingsModal.addEventListener("click", (event) => {
+            // Check if the click is on the modal overlay itself and not the panel
+            if (event.target === settingsModal) {
+              closeModal();
+            }
+          });
+        }
+
+        // Close modal with the 'Escape' key
+        document.addEventListener("keydown", (event) => {
+          if (
+            event.key === "Escape" &&
+            !settingsModal.classList.contains("hidden")
+          ) {
+            closeModal();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

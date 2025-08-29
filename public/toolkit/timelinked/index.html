@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timelinked</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* Custom base styles */
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f3f4f6; /* A light gray background */
+      }
+
+      /* Define custom button styles using Tailwind's @apply directive if needed,
+           but for simplicity, we will use utility classes directly. */
+    </style>
+  </head>
+  <body class="antialiased text-gray-800">
+    <!-- App Container -->
+    <div id="app" class="min-h-screen">
+      <!-- Top Navigation Bar -->
+      <nav class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <!-- Left side: Brand/Logo -->
+            <div class="flex-shrink-0">
+              <a
+                href="https://chuffedcoaching.com/toolkit"
+                target="_blank"
+                class="text-2xl font-bold text-gray-900 hover:text-indigo-600 transition-colors"
+              >
+                Chuffed Toolkit
+              </a>
+            </div>
+
+            <!-- Right side: Settings Icon -->
+            <div class="flex items-center">
+              <button
+                id="settings-btn"
+                type="button"
+                class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                aria-label="Open settings"
+              >
+                <i class="fas fa-cog text-xl"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content Area -->
+      <main class="p-4 sm:p-6 lg:p-8">
+        <div class="max-w-7xl mx-auto">
+          <!-- Your main app content will go here -->
+          <div class="bg-white p-8 rounded-lg shadow space-y-8">
+            <div>
+              <h1 class="text-3xl font-bold mb-2">Timelinked</h1>
+              <p class="text-gray-600">
+                Get exact timestamps for LinkedIn posts so you can anticipate a
+                user posting and be the first to comment.
+              </p>
+            </div>
+
+            <!-- URL Input Form -->
+            <div class="space-y-4">
+              <div>
+                <label
+                  for="linkedin-url"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >LinkedIn Post URL</label
+                >
+                <div class="flex flex-col sm:flex-row gap-3">
+                  <input
+                    type="url"
+                    id="linkedin-url"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
+                    placeholder="https://www.linkedin.com/posts/..."
+                    required
+                  />
+                  <button
+                    type="button"
+                    id="add-btn"
+                    class="w-full sm:w-auto text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:bg-indigo-300 disabled:cursor-not-allowed"
+                    disabled
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Clear Table Controls -->
+            <div id="clear-table-container" class="flex justify-end hidden">
+              <button
+                type="button"
+                id="clear-table-btn"
+                class="text-sm font-medium text-red-600 hover:text-red-800 transition-colors"
+              >
+                Clear Table
+              </button>
+              <div id="clear-table-confirm" class="hidden items-center gap-3">
+                <span class="text-sm text-gray-700">Are you sure?</span>
+                <button
+                  type="button"
+                  id="clear-table-no"
+                  class="px-4 py-1.5 text-sm font-medium text-gray-700 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-indigo-300"
+                >
+                  No
+                </button>
+                <button
+                  type="button"
+                  id="clear-table-yes"
+                  class="px-4 py-1.5 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300"
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+
+            <!-- URL List/Table -->
+            <div id="url-container" class="mt-6">
+              <!-- This will be populated by JavaScript -->
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Settings Modal -->
+    <div
+      id="settings-modal"
+      class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
+      <div
+        class="bg-white rounded-xl shadow-2xl w-full max-w-lg m-4 transform transition-all"
+        id="modal-panel"
+      >
+        <!-- Modal Header -->
+        <div
+          class="flex items-start justify-between p-5 border-b border-gray-200 rounded-t-xl"
+        >
+          <h3 class="text-xl font-semibold text-gray-900" id="modal-title">
+            Settings
+          </h3>
+          <button
+            type="button"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+            id="close-modal-btn"
+            aria-label="Close modal"
+          >
+            <i class="fas fa-times w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="p-6 space-y-4">
+          <div>
+            <label
+              for="timezone-select"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >Select Timezone</label
+            >
+            <select
+              id="timezone-select"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
+            >
+              <optgroup label="UK">
+                <option value="Europe/London">London (GMT/BST)</option>
+              </optgroup>
+              <optgroup label="USA">
+                <option value="America/New_York">Eastern Time (ET)</option>
+                <option value="America/Chicago">Central Time (CT)</option>
+                <option value="America/Denver">Mountain Time (MT)</option>
+                <option value="America/Los_Angeles">Pacific Time (PT)</option>
+                <option value="America/Anchorage">Alaska Time (AKT)</option>
+                <option value="Pacific/Honolulu">Hawaii Time (HT)</option>
+              </optgroup>
+              <optgroup label="Canada">
+                <option value="America/Toronto">Eastern Time (ET)</option>
+                <option value="America/Winnipeg">Central Time (CT)</option>
+                <option value="America/Edmonton">Mountain Time (MT)</option>
+                <option value="America/Vancouver">Pacific Time (PT)</option>
+                <option value="America/Halifax">Atlantic Time (AT)</option>
+                <option value="America/St_Johns">Newfoundland Time (NT)</option>
+              </optgroup>
+              <optgroup label="Other">
+                <option value="Europe/Paris">
+                  Central European Time (CET)
+                </option>
+                <option value="Australia/Sydney">
+                  Sydney, Australia (AEST)
+                </option>
+                <option value="Asia/Tokyo">Tokyo, Japan (JST)</option>
+                <option value="Asia/Dubai">Dubai, UAE (GST)</option>
+                <option value="Asia/Kolkata">India Standard Time (IST)</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div
+          class="flex items-center justify-end p-6 space-x-3 border-t border-gray-200 rounded-b-xl bg-gray-50"
+        >
+          <button
+            id="cancel-btn"
+            type="button"
+            class="btn btn-outline px-5 py-2.5 text-sm font-medium text-gray-700 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-indigo-300"
+          >
+            Cancel
+          </button>
+          <button
+            id="save-btn"
+            type="button"
+            class="btn btn-soft btn-primary px-5 py-2.5 text-sm font-medium text-indigo-700 bg-indigo-100 rounded-lg hover:bg-indigo-200 focus:ring-4 focus:outline-none focus:ring-indigo-300"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get modal elements
+        const settingsBtn = document.getElementById("settings-btn");
+        const settingsModal = document.getElementById("settings-modal");
+        const closeModalBtn = document.getElementById("close-modal-btn");
+        const cancelBtn = document.getElementById("cancel-btn");
+        const saveBtn = document.getElementById("save-btn");
+        const modalPanel = document.getElementById("modal-panel");
+        const timezoneSelect = document.getElementById("timezone-select");
+
+        // --- Function to open the modal ---
+        const openModal = () => {
+          if (settingsModal) {
+            settingsModal.classList.remove("hidden");
+          }
+        };
+
+        // --- Function to close the modal ---
+        const closeModal = () => {
+          if (settingsModal) {
+            settingsModal.classList.add("hidden");
+          }
+        };
+
+        // --- Modal Event Listeners ---
+
+        if (settingsBtn) {
+          settingsBtn.addEventListener("click", openModal);
+        }
+
+        if (closeModalBtn) {
+          closeModalBtn.addEventListener("click", closeModal);
+        }
+
+        if (cancelBtn) {
+          cancelBtn.addEventListener("click", closeModal);
+        }
+
+        if (saveBtn) {
+          saveBtn.addEventListener("click", () => {
+            const selectedTimezone = timezoneSelect.value;
+            localStorage.setItem(SETTINGS_KEY, selectedTimezone);
+            console.log("Settings saved to localStorage");
+            renderUrls(); // Re-render URLs with the new timezone
+            closeModal();
+          });
+        }
+
+        if (settingsModal) {
+          settingsModal.addEventListener("click", (event) => {
+            if (event.target === settingsModal) {
+              closeModal();
+            }
+          });
+        }
+
+        document.addEventListener("keydown", (event) => {
+          if (
+            event.key === "Escape" &&
+            !settingsModal.classList.contains("hidden")
+          ) {
+            closeModal();
+          }
+        });
+
+        // --- Timelinked App Logic ---
+
+        const urlInput = document.getElementById("linkedin-url");
+        const addBtn = document.getElementById("add-btn");
+        const urlContainer = document.getElementById("url-container");
+        const POSTS_STORAGE_KEY = "timelinkedPosts";
+        const SETTINGS_KEY = "timelinkedTimezone";
+
+        const clearTableContainer = document.getElementById(
+          "clear-table-container"
+        );
+        const clearTableBtn = document.getElementById("clear-table-btn");
+        const clearTableConfirm = document.getElementById(
+          "clear-table-confirm"
+        );
+        const clearTableYes = document.getElementById("clear-table-yes");
+        const clearTableNo = document.getElementById("clear-table-no");
+
+        // --- Provided JavaScript Functions for Date Calculation ---
+
+        function getPostIdFromUrl(linkedinURL) {
+          if (!linkedinURL) return null;
+          const regex = /([0-9]{19})/;
+          const postId = regex.exec(linkedinURL)?.pop();
+          return postId;
+        }
+
+        function getCommentIdFromUrl(linkedinURL) {
+          if (!linkedinURL) return null;
+          const decodedURL = decodeURIComponent(linkedinURL);
+          const regex = /fsd_comment:\((\d+),urn:li:activity:\d+\)/;
+          const match = regex.exec(decodedURL);
+          return match ? match[1] : null;
+        }
+
+        function extractUnixTimestamp(postId) {
+          if (postId == null) return null;
+          try {
+            const asBinary = BigInt(postId).toString(2);
+            const first41Chars = asBinary.slice(0, 41);
+            const timestamp = parseInt(first41Chars, 2);
+            return timestamp;
+          } catch (e) {
+            console.error("Error parsing Post ID for timestamp:", e);
+            return null;
+          }
+        }
+
+        function formatTimestamp(timestamp, timeZone) {
+          if (timestamp === null || isNaN(timestamp)) {
+            return "Invalid Date";
+          }
+          try {
+            const date = new Date(timestamp);
+            const options = {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+              hour12: false,
+              timeZoneName: "short",
+              timeZone: timeZone,
+            };
+            return new Intl.DateTimeFormat("en-GB", options).format(date);
+          } catch (e) {
+            console.error("Error formatting date for timezone:", timeZone, e);
+            const dateObject = new Date(timestamp);
+            return ("" + dateObject).substring(0, 25); // Fallback
+          }
+        }
+
+        function getTimestampFromUrl(url) {
+          const postId = getPostIdFromUrl(url);
+          const commentId = getCommentIdFromUrl(url);
+          const idToUse = commentId || postId;
+          return extractUnixTimestamp(idToUse);
+        }
+
+        // --- Function to render URLs from localStorage ---
+        const renderUrls = () => {
+          const posts =
+            JSON.parse(localStorage.getItem(POSTS_STORAGE_KEY)) || [];
+          const savedTimezone =
+            localStorage.getItem(SETTINGS_KEY) || "Europe/London"; // Default to London
+          urlContainer.innerHTML = ""; // Clear previous content
+
+          if (clearTableContainer) {
+            if (posts.length === 0) {
+              clearTableContainer.classList.add("hidden");
+            } else {
+              clearTableContainer.classList.remove("hidden");
+            }
+          }
+
+          if (posts.length === 0) {
+            urlContainer.innerHTML = `<p class="text-center text-gray-500 py-8">Add a LinkedIn Post URL to get started</p>`;
+          } else {
+            const table = document.createElement("table");
+            table.className = "min-w-full divide-y divide-gray-200";
+            table.innerHTML = `
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    LinkedIn Post URL
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Post date and time
+                                </th>
+                                <th scope="col" class="relative px-6 py-3">
+                                    <span class="sr-only">Delete</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <!-- Rows will be inserted here -->
+                        </tbody>
+                    `;
+
+            const tbody = table.querySelector("tbody");
+            posts.forEach((post) => {
+              const row = document.createElement("tr");
+              const displayText =
+                post.url.length > 60
+                  ? post.url.substring(0, 60) + "..."
+                  : post.url;
+              const dateString = formatTimestamp(post.timestamp, savedTimezone);
+
+              row.innerHTML = `
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                <a href="${post.url}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:text-indigo-900 hover:underline" title="${post.url}">
+                                    ${displayText}
+                                </a>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                ${dateString}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <button type="button" class="delete-btn text-red-500 hover:text-red-700" data-url="${post.url}" aria-label="Delete URL">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>`;
+              tbody.appendChild(row);
+            });
+
+            urlContainer.appendChild(table);
+          }
+        };
+
+        // --- Event Listener for Clear Table Button ---
+        if (clearTableBtn) {
+          clearTableBtn.addEventListener("click", () => {
+            clearTableBtn.classList.add("hidden");
+            clearTableConfirm.classList.remove("hidden");
+            clearTableConfirm.classList.add("flex");
+          });
+        }
+
+        // --- Event Listener for "No" on Clear Confirmation ---
+        if (clearTableNo) {
+          clearTableNo.addEventListener("click", () => {
+            clearTableConfirm.classList.add("hidden");
+            clearTableConfirm.classList.remove("flex");
+            clearTableBtn.classList.remove("hidden");
+          });
+        }
+
+        // --- Event Listener for "Yes" on Clear Confirmation ---
+        if (clearTableYes) {
+          clearTableYes.addEventListener("click", () => {
+            localStorage.removeItem(POSTS_STORAGE_KEY);
+            renderUrls();
+
+            // Reset the buttons
+            clearTableConfirm.classList.add("hidden");
+            clearTableConfirm.classList.remove("flex");
+            clearTableBtn.classList.remove("hidden");
+          });
+        }
+
+        // --- Event Listener for URL container (for delete buttons) ---
+        if (urlContainer) {
+          urlContainer.addEventListener("click", (event) => {
+            const deleteBtn = event.target.closest(".delete-btn");
+            if (deleteBtn) {
+              const urlToDelete = deleteBtn.dataset.url;
+              if (urlToDelete) {
+                let posts =
+                  JSON.parse(localStorage.getItem(POSTS_STORAGE_KEY)) || [];
+                posts = posts.filter((post) => post.url !== urlToDelete);
+                localStorage.setItem(POSTS_STORAGE_KEY, JSON.stringify(posts));
+                renderUrls(); // Re-render the list
+              }
+            }
+          });
+        }
+
+        // --- Event Listener for URL input ---
+        if (urlInput && addBtn) {
+          urlInput.addEventListener("input", () => {
+            if (urlInput.value.trim() !== "") {
+              addBtn.disabled = false;
+            } else {
+              addBtn.disabled = true;
+            }
+          });
+        }
+
+        // --- Event Listener for Add button ---
+        if (addBtn) {
+          addBtn.addEventListener("click", () => {
+            const url = urlInput.value.trim();
+            if (url) {
+              const posts =
+                JSON.parse(localStorage.getItem(POSTS_STORAGE_KEY)) || [];
+              if (!posts.some((p) => p.url === url)) {
+                const timestamp = getTimestampFromUrl(url);
+                posts.unshift({ url: url, timestamp: timestamp }); // Add to the beginning of the list
+              }
+              localStorage.setItem(POSTS_STORAGE_KEY, JSON.stringify(posts));
+
+              urlInput.value = ""; // Clear input
+              addBtn.disabled = true; // Disable button
+              renderUrls(); // Re-render the list
+            }
+          });
+        }
+
+        // --- Initial Setup on Page Load ---
+        const loadSettings = () => {
+          const savedTimezone =
+            localStorage.getItem(SETTINGS_KEY) || "Europe/London";
+          timezoneSelect.value = savedTimezone;
+        };
+
+        loadSettings();
+        // Initial render on page load
+        renderUrls();
+      });
+    </script>
+  </body>
+</html>
