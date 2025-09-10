@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Markdownify</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* Custom base styles */
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f3f4f6; /* A light gray background */
+      }
+    </style>
+  </head>
+  <body class="antialiased text-gray-800">
+    <!-- App Container -->
+    <div id="app" class="min-h-screen">
+      <!-- Top Navigation Bar -->
+      <nav class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <!-- Left side: Brand/Logo -->
+            <div class="flex-shrink-0">
+              <a
+                href="https://chuffedcoaching.com/toolkit"
+                target="_blank"
+                class="text-2xl font-bold text-gray-900 hover:text-indigo-600 transition-colors"
+              >
+                Chuffed Toolkit
+              </a>
+            </div>
+
+            <!-- Right side: Settings Icon -->
+            <div class="flex items-center">
+              <button
+                id="settings-btn"
+                type="button"
+                class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                aria-label="Open settings"
+              >
+                <i class="fas fa-cog text-xl"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content Area -->
+      <main class="p-4 sm:p-6 lg:p-8">
+        <div class="max-w-7xl mx-auto">
+          <div
+            class="bg-white p-8 rounded-lg shadow mb-8 flex flex-col items-stretch"
+          >
+            <h1 class="text-3xl font-bold mb-2">Markdownify</h1>
+            <p class="text-gray-600 mb-6">
+              Scrape Reddit from one Subreddit to create a file for AI context
+            </p>
+
+            <!-- Scraper Input -->
+            <div class="flex flex-col sm:flex-row gap-4 mb-4">
+              <input
+                id="reddit-url"
+                type="text"
+                placeholder="AskReddit"
+                class="flex-1 p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+              <button
+                id="scrape-btn"
+                class="bg-indigo-600 text-white font-semibold py-3 px-6 rounded-md hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <i class="fas fa-search mr-2"></i> Discover
+              </button>
+            </div>
+
+            <p id="credentials-message" class="text-sm text-red-500 hidden">
+              Add Reddit credentials to begin.
+              <a
+                href="https://www.reddit.com/prefs/apps"
+                target="_blank"
+                class="text-indigo-600 hover:underline font-medium"
+                >Create here</a
+              >.
+            </p>
+
+            <!-- Discover Progress Bar -->
+            <div
+              id="discover-progress-container"
+              class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 mt-4 hidden"
+            >
+              <div
+                id="discover-progress-bar"
+                class="h-2.5 rounded-full transition-all duration-300 ease-in-out bg-indigo-600"
+                style="width: 0%"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Results Container -->
+          <div id="results-container" class="mt-8 hidden">
+            <!-- Results Table and Post Scrape Controls -->
+            <div
+              id="results-table"
+              class="bg-white p-8 rounded-lg shadow hidden w-full"
+            >
+              <h2 class="text-2xl font-bold mb-4">
+                Top 5 Subreddits by Engagement
+              </h2>
+              <p class="text-gray-600 mb-4">
+                Based on the activity of comment authors.
+              </p>
+              <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 mb-6">
+                  <thead class="bg-gray-50">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Subreddit
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Count
+                      </th>
+                      <th scope="col" class="relative px-6 py-3">
+                        <span class="sr-only">Delete</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    id="subreddit-table-body"
+                    class="bg-white divide-y divide-gray-200"
+                  >
+                    <!-- Table rows will be inserted here by JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Post Scrape Controls -->
+              <div
+                id="scrape-posts-controls"
+                class="flex flex-col items-end w-full"
+              >
+                <div
+                  id="scrape-progress-container"
+                  class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 mb-4 hidden"
+                >
+                  <div
+                    id="scrape-progress-bar"
+                    class="h-2.5 rounded-full transition-all duration-300 ease-in-out bg-green-600"
+                    style="width: 0%"
+                  ></div>
+                </div>
+                <div
+                  id="scrape-status-container"
+                  class="flex flex-col items-end w-full space-y-4 hidden"
+                >
+                  <p
+                    id="scrape-status-message"
+                    class="text-lg font-semibold text-gray-800"
+                  ></p>
+                  <button
+                    id="download-btn"
+                    class="bg-gray-600 text-white font-semibold py-3 px-6 rounded-md hover:bg-gray-700 transition-colors"
+                  >
+                    <i class="fas fa-download mr-2"></i> Download
+                  </button>
+                </div>
+                <button
+                  id="scrape-posts-btn"
+                  class="bg-green-600 text-white font-semibold py-3 px-6 rounded-md hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed hidden"
+                >
+                  <i class="fas fa-file-export mr-2"></i> Scrape Top 100 Posts
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Settings Modal -->
+    <div
+      id="settings-modal"
+      class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
+      <div
+        class="bg-white rounded-xl shadow-2xl w-full max-w-lg m-4 transform transition-all"
+        id="modal-panel"
+      >
+        <!-- Modal Header -->
+        <div
+          class="flex items-start justify-between p-5 border-b border-gray-200 rounded-t-xl"
+        >
+          <h3 class="text-xl font-semibold text-gray-900" id="modal-title">
+            Settings
+          </h3>
+          <button
+            type="button"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+            id="close-modal-btn"
+            aria-label="Close modal"
+          >
+            <i class="fas fa-times w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="p-6 space-y-6">
+          <p class="text-base leading-relaxed text-gray-500">
+            Configure your Reddit API credentials to enable scraping.
+          </p>
+
+          <!-- API Credentials Fields -->
+          <div class="space-y-4">
+            <div>
+              <label
+                for="client-id"
+                class="block text-sm font-medium text-gray-700"
+                >Client ID</label
+              >
+              <input
+                type="text"
+                id="client-id"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2"
+                placeholder="Enter your Client ID"
+              />
+            </div>
+            <div>
+              <label
+                for="client-secret"
+                class="block text-sm font-medium text-gray-700"
+                >Client Secret</label
+              >
+              <input
+                type="text"
+                id="client-secret"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2"
+                placeholder="Enter your Client Secret"
+              />
+            </div>
+          </div>
+
+          <!-- Test Connection Section -->
+          <div class="flex items-center justify-start mt-4">
+            <div id="test-connection-container" class="relative">
+              <button
+                id="test-connection-btn"
+                type="button"
+                class="px-3 py-2 text-xs font-medium text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 transition-colors"
+              >
+                Test Connection
+              </button>
+              <div
+                id="test-spinner"
+                class="absolute inset-0 flex items-center justify-center hidden"
+              >
+                <i class="fas fa-spinner fa-spin text-gray-600"></i>
+              </div>
+              <p
+                id="test-success-msg"
+                class="text-sm text-green-600 font-semibold hidden"
+              >
+                Connection Successful!
+              </p>
+              <p
+                id="test-failure-msg"
+                class="text-sm text-red-600 font-semibold hidden"
+              >
+                Connection Failed. Please check credentials.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div
+          class="flex items-center justify-end p-6 space-x-3 border-t border-gray-200 rounded-b-xl bg-gray-50"
+        >
+          <button
+            id="cancel-btn"
+            type="button"
+            class="px-5 py-2.5 text-sm font-medium text-gray-700 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-indigo-300"
+          >
+            Cancel
+          </button>
+          <button
+            id="save-btn"
+            type="button"
+            class="px-5 py-2.5 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // --- DOM Elements ---
+        const settingsBtn = document.getElementById("settings-btn");
+        const settingsModal = document.getElementById("settings-modal");
+        const closeModalBtn = document.getElementById("close-modal-btn");
+        const cancelBtn = document.getElementById("cancel-btn");
+        const saveBtn = document.getElementById("save-btn");
+
+        const clientIdInput = document.getElementById("client-id");
+        const clientSecretInput = document.getElementById("client-secret");
+        const testConnectionBtn = document.getElementById(
+          "test-connection-btn"
+        );
+        const testSpinner = document.getElementById("test-spinner");
+        const testSuccessMsg = document.getElementById("test-success-msg");
+        const testFailureMsg = document.getElementById("test-failure-msg");
+
+        const scrapeBtn = document.getElementById("scrape-btn");
+        const scrapePostsBtn = document.getElementById("scrape-posts-btn");
+        const redditUrlInput = document.getElementById("reddit-url");
+        const credentialsMessage = document.getElementById(
+          "credentials-message"
+        );
+        const discoverProgressBarContainer = document.getElementById(
+          "discover-progress-container"
+        );
+        const discoverProgressBar = document.getElementById(
+          "discover-progress-bar"
+        );
+        const resultsContainer = document.getElementById("results-container");
+        const scrapeProgressContainer = document.getElementById(
+          "scrape-progress-container"
+        );
+        const scrapeProgressBar = document.getElementById(
+          "scrape-progress-bar"
+        );
+        const resultsTable = document.getElementById("results-table");
+        const subredditTableBody = document.getElementById(
+          "subreddit-table-body"
+        );
+        const scrapeStatusMessage = document.getElementById(
+          "scrape-status-message"
+        );
+        const scrapeStatusContainer = document.getElementById(
+          "scrape-status-container"
+        );
+
+        // --- Local Storage Keys ---
+        const CREDENTIALS_KEY = "api_credentials";
+        const ACCESS_TOKEN_KEY = "access_token";
+        const SCRAPED_SUBREDDITS_KEY = "scraped_subreddits";
+        const SCRAPED_POSTS_KEY = "scraped_posts";
+
+        // --- State Management ---
+        let appState = {
+          apiCredentials: {
+            clientId: "",
+            clientSecret: "",
+          },
+          accessToken: null,
+          scrapedSubreddits: {},
+          scrapedPosts: [],
+        };
+
+        // --- Function to save state to local storage ---
+        const saveState = () => {
+          try {
+            localStorage.setItem(
+              CREDENTIALS_KEY,
+              JSON.stringify(appState.apiCredentials)
+            );
+            localStorage.setItem(
+              ACCESS_TOKEN_KEY,
+              JSON.stringify(appState.accessToken)
+            );
+            localStorage.setItem(
+              SCRAPED_SUBREDDITS_KEY,
+              JSON.stringify(appState.scrapedSubreddits)
+            );
+            localStorage.setItem(
+              SCRAPED_POSTS_KEY,
+              JSON.stringify(appState.scrapedPosts)
+            );
+          } catch (e) {
+            console.error("Could not save to localStorage:", e);
+          }
+        };
+
+        // --- Function to load data from local storage ---
+        const loadState = () => {
+          try {
+            const savedCredentials = localStorage.getItem(CREDENTIALS_KEY);
+            const savedAccessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+            const savedSubreddits = localStorage.getItem(
+              SCRAPED_SUBREDDITS_KEY
+            );
+            const savedPosts = localStorage.getItem(SCRAPED_POSTS_KEY);
+
+            if (savedCredentials) {
+              appState.apiCredentials = JSON.parse(savedCredentials);
+            }
+            if (savedAccessToken) {
+              appState.accessToken = JSON.parse(savedAccessToken);
+            }
+            if (savedSubreddits) {
+              appState.scrapedSubreddits = JSON.parse(savedSubreddits);
+            }
+            if (savedPosts) {
+              appState.scrapedPosts = JSON.parse(savedPosts);
+            }
+          } catch (e) {
+            console.error("Could not load from localStorage:", e);
+          }
+        };
+
+        // --- Function to update scrape button state ---
+        const updateScrapeButtonState = () => {
+          const hasCredentials =
+            appState.apiCredentials.clientId &&
+            appState.apiCredentials.clientSecret;
+          if (hasCredentials) {
+            scrapeBtn.disabled = false;
+            credentialsMessage.classList.add("hidden");
+          } else {
+            scrapeBtn.disabled = true;
+            credentialsMessage.classList.remove("hidden");
+          }
+        };
+
+        // --- Function to get a Reddit API access token ---
+        const getAccessToken = async (clientId, clientSecret) => {
+          const tokenUrl = "https://www.reddit.com/api/v1/access_token";
+          const headers = {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
+          };
+          const body = "grant_type=client_credentials";
+
+          try {
+            const response = await fetch(tokenUrl, {
+              method: "POST",
+              headers: headers,
+              body: body,
+            });
+
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data.access_token;
+          } catch (error) {
+            console.error("Failed to get access token:", error);
+            return null;
+          }
+        };
+
+        // --- Function to test a connection ---
+        const testConnection = async (clientId, clientSecret) => {
+          const accessToken = await getAccessToken(clientId, clientSecret);
+          return { success: !!accessToken };
+        };
+
+        // --- Real Reddit API fetch function for top posts ---
+        const getTopPosts = async (subreddit, limit) => {
+          if (!appState.accessToken) {
+            console.error(
+              "No access token available. Please test and save credentials."
+            );
+            return null;
+          }
+
+          const postsUrl = `https://oauth.reddit.com/r/${subreddit}/top?t=month&limit=${limit}`;
+          const headers = {
+            Authorization: `Bearer ${appState.accessToken}`,
+            "User-Agent":
+              "reddit-product-scraper/1.0.0 (by /u/YOUR_REDDIT_USERNAME)", // Reddit requires a User-Agent
+          };
+
+          try {
+            const response = await fetch(postsUrl, {
+              method: "GET",
+              headers: headers,
+            });
+
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data.data.children;
+          } catch (error) {
+            console.error("Failed to get top posts:", error);
+            return null;
+          }
+        };
+
+        // --- Real Reddit API fetch function for top comments on a post ---
+        const getTopComments = async (postPermalink) => {
+          if (!appState.accessToken) {
+            console.error(
+              "No access token available. Please test and save credentials."
+            );
+            return null;
+          }
+
+          // The API endpoint for comments is based on the post's permalink.
+          const commentsUrl = `https://oauth.reddit.com${postPermalink}.json?sort=top&limit=10`;
+          const headers = {
+            Authorization: `Bearer ${appState.accessToken}`,
+            "User-Agent":
+              "reddit-product-scraper/1.0.0 (by /u/YOUR_REDDIT_USERNAME)",
+          };
+
+          try {
+            const response = await fetch(commentsUrl, {
+              method: "GET",
+              headers: headers,
+            });
+
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            // The comments are in the second array of the response.
+            if (
+              data &&
+              data.length > 1 &&
+              data[1].data &&
+              data[1].data.children
+            ) {
+              return data[1].data.children;
+            }
+            return null;
+          } catch (error) {
+            console.error("Failed to get top comments:", error);
+            return null;
+          }
+        };
+
+        // --- Real Reddit API fetch function for user submissions ---
+        const getAuthorSubmissions = async (author) => {
+          if (!appState.accessToken || author === "[deleted]") {
+            return null;
+          }
+
+          const userUrl = `https://oauth.reddit.com/user/${author}/submitted.json?sort=new&limit=10`;
+          const headers = {
+            Authorization: `Bearer ${appState.accessToken}`,
+            "User-Agent":
+              "reddit-product-scraper/1.0.0 (by /u/YOUR_REDDIT_USERNAME)",
+          };
+
+          try {
+            const response = await fetch(userUrl, {
+              method: "GET",
+              headers: headers,
+            });
+
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            if (data && data.data && data.data.children) {
+              return data.data.children.map(
+                (submission) => submission.data.subreddit
+              );
+            }
+            return null;
+          } catch (error) {
+            console.error(`Failed to get submissions for ${author}:`, error);
+            return null;
+          }
+        };
+
+        const discoverSubreddits = async (subreddit) => {
+          // Check for credentials before scraping
+          if (
+            !appState.apiCredentials.clientId ||
+            !appState.apiCredentials.clientSecret
+          ) {
+            console.log("No credentials found. Cannot scrape.");
+            return;
+          }
+
+          // Reset state
+          appState.scrapedSubreddits = {};
+
+          // Reset UI and show progress bar
+          scrapeBtn.disabled = true;
+          const originalButtonContent = scrapeBtn.innerHTML;
+          scrapeBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> Discovering...`;
+          resultsContainer.classList.add("hidden");
+          discoverProgressBarContainer.classList.remove("hidden");
+          discoverProgressBar.style.width = "0%";
+
+          // Corrected totalSteps calculation for Discover
+          const totalPosts = 10;
+          const commentsPerPost = 10;
+          const submissionsPerAuthor = 10;
+          let currentStep = 0;
+          const totalSteps =
+            totalPosts +
+            totalPosts * commentsPerPost +
+            totalPosts * commentsPerPost * submissionsPerAuthor;
+
+          const updateProgress = () => {
+            currentStep++;
+            const percentage = Math.round((currentStep / totalSteps) * 100);
+            discoverProgressBar.style.width = `${percentage}%`;
+          };
+
+          try {
+            // Step 1: Get top posts
+            const posts = await getTopPosts(subreddit, totalPosts);
+            if (!posts) {
+              throw new Error("Could not retrieve top posts.");
+            }
+
+            console.log("--- Top 10 Post URLs ---");
+            for (const post of posts) {
+              const postUrl = `https://www.reddit.com${post.data.permalink}`;
+              console.log(postUrl);
+              updateProgress();
+
+              // Step 2: Get top comments for each post
+              const topComments = await getTopComments(post.data.permalink);
+
+              if (topComments && topComments.length > 0) {
+                console.log("Top 10 Comment URLs and Authors:");
+                for (const comment of topComments) {
+                  if (comment.data.author && comment.data.permalink) {
+                    console.log(
+                      `📝 https://www.reddit.com${comment.data.permalink}`
+                    );
+                    console.log(`🧑🏾‍🦲 ${comment.data.author}`);
+                    updateProgress();
+
+                    // Step 3: Fetch and log subreddits from author's submissions
+                    const submissions = await getAuthorSubmissions(
+                      comment.data.author
+                    );
+
+                    if (submissions) {
+                      submissions.forEach((sub) => {
+                        console.log(`➡️ r/${sub}`);
+                        // Update the count in our state
+                        if (appState.scrapedSubreddits[sub]) {
+                          appState.scrapedSubreddits[sub]++;
+                        } else {
+                          appState.scrapedSubreddits[sub] = 1;
+                        }
+                        updateProgress();
+                      });
+                    }
+                  }
+                }
+              }
+            }
+
+            // Finalize and save state
+            saveState();
+            console.log(
+              "Discovery finished. Subreddit counts:",
+              appState.scrapedSubreddits
+            );
+
+            // Render the table
+            renderTable();
+
+            // Hide progress bar and show results table and scrape button
+            discoverProgressBarContainer.classList.add("hidden");
+            resultsContainer.classList.remove("hidden");
+            resultsTable.classList.remove("hidden");
+            scrapePostsBtn.classList.remove("hidden");
+            scrapeBtn.innerHTML = `Discovery Complete!`;
+
+            setTimeout(() => {
+              scrapeBtn.innerHTML = originalButtonContent;
+              updateScrapeButtonState();
+            }, 2000);
+          } catch (error) {
+            console.error("Discovery failed:", error);
+
+            // Handle UI on failure
+            discoverProgressBarContainer.classList.add("hidden");
+            scrapeBtn.innerHTML = `Discovery Failed`;
+            setTimeout(() => {
+              scrapeBtn.innerHTML = originalButtonContent;
+              updateScrapeButtonState();
+            }, 2000);
+          }
+        };
+
+        const scrapePostsForSubreddits = async () => {
+          // Check for credentials before scraping
+          if (
+            !appState.apiCredentials.clientId ||
+            !appState.apiCredentials.clientSecret
+          ) {
+            console.log("No credentials found. Cannot scrape.");
+            return;
+          }
+
+          // Get the subreddits from the currently rendered table
+          const top5Subreddits = Object.entries(appState.scrapedSubreddits)
+            .sort(([, countA], [, countB]) => countB - countA)
+            .slice(0, 5);
+
+          if (top5Subreddits.length === 0) {
+            console.log("No subreddits to scrape. Please run Discovery first.");
+            return;
+          }
+
+          // Reset UI and show progress bar
+          scrapePostsBtn.disabled = true;
+          const originalButtonContent = scrapePostsBtn.innerHTML;
+          scrapePostsBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> Scraping...`;
+          scrapePostsBtn.classList.add("hidden");
+          scrapeStatusContainer.classList.add("hidden");
+          scrapeProgressContainer.classList.remove("hidden");
+          scrapeProgressBar.style.width = "0%";
+
+          appState.scrapedPosts = []; // Reset the posts list
+
+          const totalSteps = top5Subreddits.length * 100;
+          let currentStep = 0;
+
+          const updateProgress = () => {
+            currentStep++;
+            const percentage = Math.round((currentStep / totalSteps) * 100);
+            scrapeProgressBar.style.width = `${percentage}%`;
+          };
+
+          try {
+            for (const [subreddit] of top5Subreddits) {
+              console.log(`--- Scraping r/${subreddit} for top 100 posts ---`);
+              const posts = await getTopPosts(subreddit, 100);
+
+              if (posts) {
+                posts.forEach((post) => {
+                  const postData = {
+                    title: post.data.title,
+                    author: post.data.author,
+                    content: post.data.selftext,
+                    url: `https://www.reddit.com${post.data.permalink}`,
+                  };
+                  appState.scrapedPosts.push(postData);
+                  updateProgress();
+                });
+              }
+            }
+
+            saveState();
+            console.log(
+              "Scraped posts saved to localStorage:",
+              appState.scrapedPosts
+            );
+
+            scrapeProgressContainer.classList.add("hidden");
+
+            // Show completion message and download button
+            scrapeStatusMessage.textContent = `Scraped ${appState.scrapedPosts.length} posts.`;
+            scrapeStatusContainer.classList.remove("hidden");
+          } catch (error) {
+            console.error("Post scraping failed:", error);
+            scrapeProgressContainer.classList.add("hidden");
+            scrapePostsBtn.innerHTML = `Scrape Failed`;
+            scrapePostsBtn.classList.remove("hidden");
+            setTimeout(() => {
+              scrapePostsBtn.innerHTML = originalButtonContent;
+              scrapePostsBtn.disabled = false;
+            }, 2000);
+          }
+        };
+
+        const renderTable = () => {
+          // Sort subreddits and display top 5
+          const sortedSubreddits = Object.entries(appState.scrapedSubreddits)
+            .sort(([, countA], [, countB]) => countB - countA)
+            .slice(0, 5);
+
+          // Clear and populate table
+          subredditTableBody.innerHTML = "";
+          if (sortedSubreddits.length > 0) {
+            sortedSubreddits.forEach(([subreddit, count]) => {
+              const row = document.createElement("tr");
+              row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            <a href="https://www.reddit.com/r/${subreddit}" target="_blank" class="text-indigo-600 hover:text-indigo-800 hover:underline">
+                                /r/${subreddit}
+                            </a>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${count}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <button class="text-red-600 hover:text-red-900 delete-btn" data-subreddit="${subreddit}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    `;
+              subredditTableBody.appendChild(row);
+            });
+          } else {
+            const row = document.createElement("tr");
+            row.innerHTML = `<td class="px-6 py-4 text-sm text-gray-500" colspan="3">No subreddits found.</td>`;
+            subredditTableBody.appendChild(row);
+          }
+        };
+
+        const handleDownload = () => {
+          let markdownContent = "";
+          appState.scrapedPosts.forEach((post) => {
+            markdownContent += `## ${post.title}\n\n`;
+            markdownContent += `**Author:** u/${post.author}\n`;
+            markdownContent += `**URL:** ${post.url}\n\n`;
+            markdownContent += `${post.content}\n\n`;
+            markdownContent += "---\n\n";
+          });
+
+          const blob = new Blob([markdownContent], { type: "text/markdown" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "reddit-scraped-posts.md";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        };
+
+        // --- Event Listeners ---
+
+        // Open modal when settings icon is clicked
+        settingsBtn.addEventListener("click", () => {
+          // Load credentials and populate inputs when the modal opens
+          loadState();
+          clientIdInput.value = appState.apiCredentials.clientId;
+          clientSecretInput.value = appState.apiCredentials.clientSecret;
+
+          settingsModal.classList.remove("hidden");
+        });
+
+        // Close modal with 'X' button
+        closeModalBtn.addEventListener("click", () => {
+          settingsModal.classList.add("hidden");
+        });
+
+        // Close modal with 'Cancel' button
+        cancelBtn.addEventListener("click", () => {
+          settingsModal.classList.add("hidden");
+        });
+
+        // Save settings and close modal
+        saveBtn.addEventListener("click", () => {
+          // Update state with current input values and save to localStorage
+          appState.apiCredentials.clientId = clientIdInput.value;
+          appState.apiCredentials.clientSecret = clientSecretInput.value;
+          saveState();
+          updateScrapeButtonState();
+          settingsModal.classList.add("hidden");
+        });
+
+        // Test Connection Button Click Handler
+        testConnectionBtn.addEventListener("click", async () => {
+          const clientId = clientIdInput.value;
+          const clientSecret = clientSecretInput.value;
+
+          // Hide button, messages, and show spinner
+          testConnectionBtn.classList.add("hidden");
+          testSuccessMsg.classList.add("hidden");
+          testFailureMsg.classList.add("hidden");
+          testSpinner.classList.remove("hidden");
+
+          const result = await testConnection(clientId, clientSecret);
+
+          // Hide spinner and show result
+          testSpinner.classList.add("hidden");
+          if (result.success) {
+            testSuccessMsg.classList.remove("hidden");
+            // Automatically save credentials on successful test
+            appState.apiCredentials.clientId = clientId;
+            appState.apiCredentials.clientSecret = clientSecret;
+            appState.accessToken = await getAccessToken(clientId, clientSecret);
+            saveState();
+            updateScrapeButtonState();
+          } else {
+            testFailureMsg.classList.remove("hidden");
+            testConnectionBtn.classList.remove("hidden"); // Re-show button on failure
+          }
+        });
+
+        // Close modal when clicking on the background overlay
+        settingsModal.addEventListener("click", (event) => {
+          if (event.target === settingsModal) {
+            settingsModal.classList.add("hidden");
+          }
+        });
+
+        // Close modal with the 'Escape' key
+        document.addEventListener("keydown", (event) => {
+          if (
+            event.key === "Escape" &&
+            !settingsModal.classList.contains("hidden")
+          ) {
+            settingsModal.classList.add("hidden");
+          }
+        });
+
+        // Handle scraping button click
+        scrapeBtn.addEventListener("click", async () => {
+          const subreddit = redditUrlInput.value.trim();
+          if (subreddit) {
+            await discoverSubreddits(subreddit);
+          } else {
+            console.log("Please enter a subreddit name.");
+          }
+        });
+
+        // Handle delete button clicks in the table
+        subredditTableBody.addEventListener("click", (event) => {
+          if (event.target.closest(".delete-btn")) {
+            const button = event.target.closest(".delete-btn");
+            const subreddit = button.getAttribute("data-subreddit");
+
+            // Remove the subreddit from our state
+            delete appState.scrapedSubreddits[subreddit];
+
+            // Re-render the table and save to local storage
+            renderTable();
+            saveState();
+          }
+        });
+
+        // Handle post scraping button click
+        scrapePostsBtn.addEventListener("click", async () => {
+          await scrapePostsForSubreddits();
+        });
+
+        // Handle download button click
+        document
+          .getElementById("scrape-posts-controls")
+          .addEventListener("click", (event) => {
+            if (event.target.closest("#download-btn")) {
+              handleDownload();
+            }
+          });
+
+        // --- Initial Load ---
+        loadState();
+        updateScrapeButtonState();
+        renderTable(); // Render table on initial load if data exists
+      });
+    </script>
+  </body>
+</html>
