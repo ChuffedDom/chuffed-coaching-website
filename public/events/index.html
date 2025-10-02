@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech Events in London - Chuffed Coaching</title>
+    <meta name="title" content="Tech Events in London - Chuffed Coaching" />
+    <meta
+      name="description"
+      content="A curated list of interesting tech events happening in London."
+    />
+    <meta
+      name="author"
+      content="Dom, Head of Product and Professional Tinkerer"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="../reset.css" />
+    <link rel="stylesheet" href="../colour.css" />
+    <link rel="stylesheet" href="../typography.css" />
+    <link rel="stylesheet" href="../layout.css" />
+    <link rel="stylesheet" href="../call-to-action.css" />
+
+    <style>
+      /* Style adjustments to ensure content is readable on the dark background */
+      body {
+        background-color: var(--bg-grey);
+        color: var(--text-white);
+      }
+
+      .site-header {
+        text-align: center;
+        padding: 1rem 0;
+        background-color: var(--card-grey);
+      }
+
+      .site-header a {
+        color: var(--accent-gold);
+        text-decoration: none;
+        font-family: var(--font-jetbrains-mono);
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+
+      /* Override .grid class for a single-column layout on this page */
+      .grid-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem; /* 32px */
+      }
+
+      .event-card {
+        background-color: var(--card-grey);
+        padding: 2rem; /* 32px */
+        border-radius: 1rem; /* 16px */
+        display: flex;
+        flex-direction: row; /* Changed to row for side-by-side layout */
+        gap: 2rem; /* 32px */
+        align-items: flex-start; /* Align items to the top */
+        height: 100%;
+      }
+
+      .event-card img {
+        width: 150px; /* Made image smaller */
+        height: 150px;
+        aspect-ratio: 1 / 1; /* Enforce 1:1 ratio for square images */
+        object-fit: cover;
+        border-radius: 0.5rem; /* 8px */
+        flex-shrink: 0; /* Prevent image from shrinking */
+      }
+
+      .event-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        flex-grow: 1; /* Allow content to fill remaining space */
+        min-width: 0; /* Prevents text overflow issues in flexbox */
+      }
+
+      .event-content h3 {
+        color: var(--accent-gold);
+        margin-top: 0; /* Removed top margin */
+      }
+
+      .event-card .details {
+        font-size: 0.9rem;
+        opacity: 0.8;
+      }
+
+      .event-content .description {
+        flex-grow: 1; /* Allows description to fill space, pushing buttons to the bottom */
+      }
+
+      .online-icon {
+        color: var(--accent-cyan);
+        margin-left: 0.5rem; /* 8px */
+      }
+
+      .featured-event {
+        background-color: var(--card-blue);
+        border: 2px solid var(--accent-cyan);
+      }
+
+      .rss-feed-link {
+        text-align: center;
+        margin-top: 4rem; /* 64px */
+      }
+
+      .event-buttons {
+        margin-top: auto; /* Pushes this container to the bottom of the card */
+        padding-top: 1rem; /* 16px, adds space above buttons */
+        display: flex;
+        align-items: center;
+        gap: 1rem; /* 16px */
+      }
+
+      .social-icon-button img {
+        width: 32px;
+        height: 32px;
+        transition: transform 0.2s ease-in-out;
+      }
+      .social-icon-button:hover img {
+        transform: scale(1.1);
+      }
+
+      .summary-label {
+        margin: 0;
+        font-size: 0.9rem;
+        opacity: 0.8;
+      }
+
+      .section-title {
+        font-family: var(--font-jetbrains-mono);
+        font-size: 2rem; /* 32px */
+        color: var(--accent-cyan);
+        margin-bottom: 2rem; /* 32px */
+        padding-bottom: 1rem; /* 16px */
+        border-bottom: 1px solid var(--card-grey);
+      }
+
+      .switch-container {
+        display: inline-flex;
+        background-color: var(--card-grey);
+        border-radius: 1rem;
+        padding: 0.5rem;
+      }
+
+      .switch-btn {
+        padding: 0.5rem 1.5rem;
+        border: none;
+        background-color: transparent;
+        color: var(--text-white);
+        font-family: var(--font-jetbrains-mono);
+        font-weight: 700;
+        border-radius: 0.75rem;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+      }
+
+      .switch-btn.active {
+        background-color: var(--accent-cyan);
+        color: var(--bg-grey);
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      /* Responsive styles for mobile devices */
+      @media (max-width: 600px) {
+        .event-card {
+          flex-direction: column; /* Stack vertically on small screens */
+        }
+
+        .event-card img {
+          width: 100%; /* Image takes full width of the card */
+          height: auto; /* Height adjusts to maintain aspect ratio */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a href="https://chuffedcoaching.com">Chuffed Coaching</a>
+    </header>
+    <section>
+      <div class="sized-box-massive"></div>
+      <div class="component">
+        <header class="text-center">
+          <h1>London Tech Events</h1>
+          <div class="sized-box-medium"></div>
+          <p>
+            A curated list of interesting tech events happening in and around
+            London. Updated regularly.
+          </p>
+        </header>
+        <div class="sized-box-massive"></div>
+
+        <h2 class="section-title">Next 7 Days</h2>
+        <div id="next-7-days-container" class="grid-layout">
+          <p>Loading upcoming events...</p>
+        </div>
+        <div class="sized-box-large"></div>
+
+        <div class="flex justify-center">
+          <div class="switch-container">
+            <button id="future-btn" class="switch-btn active">Future</button>
+            <button id="past-btn" class="switch-btn">Past</button>
+          </div>
+        </div>
+        <div class="sized-box-large"></div>
+
+        <div id="future-events-container" class="grid-layout">
+          <p>Loading future events...</p>
+        </div>
+
+        <div id="past-events-container" class="grid-layout hidden">
+          <p>Loading past events...</p>
+        </div>
+
+        <div class="rss-feed-link">
+          <a href="tech-events-london-rss.xml"
+            ><i class="fas fa-rss"></i> Subscribe to the RSS Feed</a
+          >
+        </div>
+      </div>
+      <div class="sized-box-massive"></div>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const next7DaysContainer = document.getElementById(
+          "next-7-days-container"
+        );
+        const futureEventsContainer = document.getElementById(
+          "future-events-container"
+        );
+        const pastEventsContainer = document.getElementById(
+          "past-events-container"
+        );
+        const futureBtn = document.getElementById("future-btn");
+        const pastBtn = document.getElementById("past-btn");
+
+        const createEventCard = (el, now) => {
+          const getContent = (selector) =>
+            el.querySelector(selector)?.innerHTML.trim() || "";
+          const title = getContent("title");
+          const link = getContent("link");
+          const description = getContent("description");
+          const eventDate = new Date(getContent("pubDate"));
+          const isPastEvent = eventDate < now;
+          const pubDate = eventDate.toLocaleDateString("en-GB", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+          const location = getContent("location");
+          const isOnline = getContent("online") === "true";
+          const isFeatured = getContent("featured") === "true";
+          const summaryLinkTikTok = getContent("summaryLinkTikTok");
+          const summaryLinkYouTube = getContent("summaryLinkYouTube");
+          const image = getContent("image");
+          const imgSrc = image
+            ? image
+            : `https://placehold.co/600x600/303030/CECECE?text=${encodeURIComponent(
+                title
+              )}`;
+          const placeholderOnError = `this.onerror=null;this.src='https://placehold.co/600x600/303030/CECECE?text=${encodeURIComponent(
+            title
+          )}';`;
+          const onlineIcon = isOnline
+            ? '<i class="fas fa-wifi online-icon" title="Online Event"></i>'
+            : "";
+          const bookNowButton = !isPastEvent
+            ? `<a href="${link}" target="_blank" rel="noopener noreferrer">
+                     <button class="cta-button" style="font-size: 1.2rem; padding: 0.5rem 1rem;">Book Now</button>
+                   </a>`
+            : "";
+
+          const summaryLabel =
+            summaryLinkTikTok || summaryLinkYouTube
+              ? `<p class="summary-label">Summary</p>`
+              : "";
+
+          const tiktokButton = summaryLinkTikTok
+            ? `<a href="${summaryLinkTikTok}" target="_blank" rel="noopener noreferrer" class="social-icon-button" title="View TikTok Summary">
+                   <img src="tiktok.svg" alt="TikTok Summary">
+                 </a>`
+            : "";
+          const youtubeButton = summaryLinkYouTube
+            ? `<a href="${summaryLinkYouTube}" target="_blank" rel="noopener noreferrer" class="social-icon-button" title="View YouTube Summary">
+                   <img src="youtube.svg" alt="YouTube Summary">
+                 </a>`
+            : "";
+
+          return `
+                <div class="grid-item">
+                  <div class="event-card ${isFeatured ? "featured-event" : ""}">
+                    <img src="${imgSrc}" alt="${title} event image" onerror="${placeholderOnError}">
+                    <div class="event-content">
+                        <h3>${title}</h3>
+                        <p class="details"><strong>Date:</strong> ${pubDate}</p>
+                        <p class="details"><strong>Location:</strong> ${location} ${onlineIcon}</p>
+                        <p class="description">${description}</p>
+                        <div class="event-buttons">
+                            ${bookNowButton}
+                            ${summaryLabel}
+                            ${tiktokButton}
+                            ${youtubeButton}
+                        </div>
+                    </div>
+                  </div>
+                </div>`;
+        };
+
+        fetch("tech-events-london-rss.xml")
+          .then((response) => {
+            if (!response.ok)
+              throw new Error(
+                `Network response was not ok: ${response.statusText}`
+              );
+            return response.text();
+          })
+          .then((str) =>
+            new window.DOMParser().parseFromString(str, "text/xml")
+          )
+          .then((data) => {
+            const items = data.querySelectorAll("item");
+            const now = new Date();
+            const sevenDaysFromNow = new Date();
+            sevenDaysFromNow.setDate(now.getDate() + 7);
+
+            let next7DaysHtml = "";
+            let futureHtml = "";
+            let pastHtml = "";
+
+            if (items.length === 0) {
+              next7DaysContainer.innerHTML = "<p>No upcoming events found.</p>";
+              futureEventsContainer.innerHTML =
+                "<p>No future events scheduled.</p>";
+              pastEventsContainer.innerHTML = "<p>No past events to show.</p>";
+              return;
+            }
+
+            Array.from(items)
+              .sort(
+                (a, b) =>
+                  new Date(a.querySelector("pubDate").innerHTML) -
+                  new Date(b.querySelector("pubDate").innerHTML)
+              )
+              .forEach((el) => {
+                const eventDate = new Date(
+                  el.querySelector("pubDate")?.innerHTML.trim() || ""
+                );
+                const cardHtml = createEventCard(el, now);
+
+                if (eventDate < now) {
+                  pastHtml = cardHtml + pastHtml; // Prepend to show most recent past events first
+                } else if (eventDate >= now && eventDate <= sevenDaysFromNow) {
+                  next7DaysHtml += cardHtml;
+                } else {
+                  futureHtml += cardHtml;
+                }
+              });
+
+            next7DaysContainer.innerHTML =
+              next7DaysHtml || "<p>No events in the next 7 days.</p>";
+            futureEventsContainer.innerHTML =
+              futureHtml || "<p>No other future events scheduled.</p>";
+            pastEventsContainer.innerHTML =
+              pastHtml || "<p>No past events to show.</p>";
+
+            futureBtn.addEventListener("click", () => {
+              futureEventsContainer.classList.remove("hidden");
+              pastEventsContainer.classList.add("hidden");
+              futureBtn.classList.add("active");
+              pastBtn.classList.remove("active");
+            });
+
+            pastBtn.addEventListener("click", () => {
+              futureEventsContainer.classList.add("hidden");
+              pastEventsContainer.classList.remove("hidden");
+              futureBtn.classList.remove("active");
+              pastBtn.classList.add("active");
+            });
+          })
+          .catch((error) => {
+            console.error("Error fetching or parsing RSS feed:", error);
+            next7DaysContainer.innerHTML =
+              "<p>Could not load events. Please try again later.</p>";
+            futureEventsContainer.innerHTML = "";
+            pastEventsContainer.innerHTML = "";
+          });
+      });
+    </script>
+  </body>
+</html>

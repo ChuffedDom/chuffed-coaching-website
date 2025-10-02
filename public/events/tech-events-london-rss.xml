@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+  <title>London Tech Events by Chuffed Coaching</title>
+  <link>https://chuffedcoaching.com/tech-events-london</link>
+  <description>A curated list of interesting tech events in London for developers and entrepreneurs.</description>
+  <item>
+    <title>Vibe Coding Meetup</title>
+    <link>https://www.meetup.com/vibe-coders-london/events/310973881/</link>
+    <description>This meetup is a social coding jam where we use AI to quickly turn fun ideas into functional prototypes.</description>
+    <pubDate>Tue, 23 Sept 2025 19:00:00 GMT</pubDate>
+    <location>The Chapel Market Tavern 58 Penton St, London N1 9PZ, United Kingdom · London</location>
+    <online>false</online>
+    <featured>false</featured>
+    <summaryLinkTikTok>https://www.tiktok.com/@chuffeddom/video/7553675289964989718</summaryLinkTikTok>
+    <summaryLinkYouTube>https://www.youtube.com/shorts/NzU6oBd3Qeo</summaryLinkYouTube>
+    <image>https://secure.meetupstatic.com/photos/event/4/9/7/2/highres_530118802.webp?w=750</image>
+  </item>
+  <item>
+    <title>MCP Server Builder Series - London</title>
+    <link>https://luma.com/u3t3obd9?tk=yfB4y0</link>
+    <description>Join fellow developers and creators for an interactive event dedicated to Model Context Protocol (MCP) server development.</description>
+    <pubDate>Wed, 24 Sept 2025 18:30:00 GMT</pubDate>
+    <location>Soho Works Shoreditch London, England</location>
+    <online>false</online>
+    <featured>false</featured>
+    <summaryLink>https://www.tiktok.com/@chuffeddom/video/7554432106156461335</summaryLink>
+    <image>https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=1,background=white,quality=75,width=400,height=400/event-covers/ox/7ec8fe05-c087-4607-83eb-f1b9ec3ad671.png</image>
+  </item>
+  <item>
+    <title>JavaScript London in Collaboration with Newday</title>
+    <link>https://www.meetup.com/javascript-london/events/310726211</link>
+    <description>We have some fantastic tech talks lined up, there will be plenty of pizzas 🍕, and of course drinks 🍻, plus plenty of networking with fellow tech enthusiasts.</description>
+    <pubDate>Thu, 25 Sept 2025 18:00:00 GMT</pubDate>
+    <location>NewDay 7 Handyside Street · London</location>
+    <online>false</online>
+    <featured>false</featured>
+    <summaryLink>https://www.tiktok.com/@chuffeddom/video/7554889041292856598</summaryLink>
+    <image>https://secure-content.meetupstatic.com/images/classic-events/520005836/72x72.jpg</image>
+  </item>
+    <item>
+    <title>Product Pints: September Drinks 🍻</title>
+    <link>https://www.meetup.com/product-pints/events/310847839</link>
+    <description>An informal gathering for startup founders to practice their pitch, get feedback, and connect over a drink.</description>
+    <pubDate>Fri, 07 Oct 2025 19:00:00 GMT</pubDate>
+    <location>Serata Hall, 207 Old St, London EC1V 9NR, London EC1V 9NR</location>
+    <online>false</online>
+    <featured>false</featured>
+    <summaryLink></summaryLink>
+    <image>https://secure-content.meetupstatic.com/images/classic-events/512612320/72x72.jpg?w=72?w=256</image>
+  </item>
+</channel>
+</rss>
