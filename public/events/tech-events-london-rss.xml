@@ -5,6 +5,42 @@
   <link>https://chuffedcoaching.com/tech-events-london</link>
   <description>A curated list of interesting tech events in London for developers and entrepreneurs.</description>
   <item>
+    <title>Django London Meetup October</title>
+    <link>https://www.meetup.com/vibe-coders-london/events/310973881/</link>
+    <description>We will chat, code, hack, connect and make it count! It is an open invitation, you can bring your laptop, or you can come to chat/help/mentor.</description>
+    <pubDate>Tue, 07 Oct 2025 18:15:00 GMT</pubDate>
+    <location>Kraken, 182 Oxford Street, London, W1D 1NN, GB</location>
+    <online>false</online>
+    <featured>false</featured>
+    <summaryLinkTikTok></summaryLinkTikTok>
+    <summaryLinkYouTube></summaryLinkYouTube>
+    <image>https://secure.meetupstatic.com/photos/event/d/4/b/b/event_505014459.jpeg?w=256</image>
+  </item>
+  <item>
+    <title>Vibe Coding Meetup</title>
+    <link>https://www.meetup.com/vibe-coders-london/events/311198244/</link>
+    <description>This meetup is a social coding jam where we use AI to quickly turn fun ideas into functional prototypes.</description>
+    <pubDate>Tue, 07 Oct 2025 19:00:00 GMT</pubDate>
+    <location>The Chapel Market Tavern 58 Penton St, London N1 9PZ</location>
+    <online>false</online>
+    <featured>false</featured>
+    <summaryLinkTikTok></summaryLinkTikTok>
+    <summaryLinkYouTube></summaryLinkYouTube>
+    <image>https://secure.meetupstatic.com/photos/event/a/f/4/f/event_529124879.jpeg?w=256</image>
+  </item>
+  <item>
+    <title>Ruby in London</title>
+    <link>https://www.meetup.com/ruby-in-london/events/311044018</link>
+    <description>All things Ruby.</description>
+    <pubDate>Thu, 09 Oct 2025 17:30:00 GMT</pubDate>
+    <location>Intercom, 9th Floor, The Warehouse, 211 Old St, London EC1V 9NR</location>
+    <online>false</online>
+    <featured>false</featured>
+    <summaryLinkTikTok></summaryLinkTikTok>
+    <summaryLinkYouTube></summaryLinkYouTube>
+    <image>https://secure.meetupstatic.com/photos/event/e/1/7/b/highres_530337723.webp?w=1080</image>
+  </item>
+  <item>
     <title>Vibe Coding Meetup</title>
     <link>https://www.meetup.com/vibe-coders-london/events/310973881/</link>
     <description>This meetup is a social coding jam where we use AI to quickly turn fun ideas into functional prototypes.</description>
@@ -24,7 +60,8 @@
     <location>Soho Works Shoreditch London, England</location>
     <online>false</online>
     <featured>false</featured>
-    <summaryLink>https://www.tiktok.com/@chuffeddom/video/7554432106156461335</summaryLink>
+    <summaryLinkTikTok>https://www.tiktok.com/@chuffeddom/video/7554432106156461335</summaryLinkTikTok>
+    <summaryLinkYouTube>https://www.youtube.com/shorts/twXjqmJCluY</summaryLinkYouTube>
     <image>https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=1,background=white,quality=75,width=400,height=400/event-covers/ox/7ec8fe05-c087-4607-83eb-f1b9ec3ad671.png</image>
   </item>
   <item>
@@ -35,19 +72,9 @@
     <location>NewDay 7 Handyside Street · London</location>
     <online>false</online>
     <featured>false</featured>
-    <summaryLink>https://www.tiktok.com/@chuffeddom/video/7554889041292856598</summaryLink>
+    <summaryLinkTikTok>https://www.tiktok.com/@chuffeddom/video/7554889041292856598</summaryLinkTikTok>
+    <summaryLinkYouTube>https://www.youtube.com/shorts/8HrHE46Wac8</summaryLinkYouTube>
     <image>https://secure-content.meetupstatic.com/images/classic-events/520005836/72x72.jpg</image>
-  </item>
-    <item>
-    <title>Product Pints: September Drinks 🍻</title>
-    <link>https://www.meetup.com/product-pints/events/310847839</link>
-    <description>An informal gathering for startup founders to practice their pitch, get feedback, and connect over a drink.</description>
-    <pubDate>Fri, 07 Oct 2025 19:00:00 GMT</pubDate>
-    <location>Serata Hall, 207 Old St, London EC1V 9NR, London EC1V 9NR</location>
-    <online>false</online>
-    <featured>false</featured>
-    <summaryLink></summaryLink>
-    <image>https://secure-content.meetupstatic.com/images/classic-events/512612320/72x72.jpg?w=72?w=256</image>
   </item>
 </channel>
 </rss>
