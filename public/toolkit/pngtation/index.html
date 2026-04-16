@@ -53,8 +53,19 @@
               </a>
             </div>
 
-            <!-- Right side: Settings Icon -->
+            <!-- Right side: Actions -->
             <div class="flex items-center">
+              <!-- Present Button -->
+              <button
+                id="present-btn"
+                type="button"
+                class="mr-4 px-3 py-2 rounded-lg text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 flex items-center"
+                aria-label="Present slides"
+              >
+                <i class="fas fa-play mr-2"></i>
+                Present
+              </button>
+              <!-- Settings Icon Button -->
               <button
                 id="settings-btn"
                 type="button"
@@ -192,6 +203,19 @@
       </div>
     </div>
 
+    <!-- Presentation Mode Overlay -->
+    <div
+      id="presentation-overlay"
+      class="fixed inset-0 bg-gray-900 bg-opacity-95 flex items-center justify-center z-[100] hidden"
+    >
+      <img
+        id="presenter-img"
+        src=""
+        alt="Presentation Slide"
+        class="max-w-full max-h-full object-contain w-full h-full"
+      />
+    </div>
+
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         // Get modal elements
@@ -207,6 +231,15 @@
         );
         const presentationView = document.getElementById("presentation-view");
         let currentSelectedFile = null; // Track the currently selected file name
+
+        // --- Presentation Mode Elements ---
+        const presentBtn = document.getElementById("present-btn");
+        const presentationOverlay = document.getElementById(
+          "presentation-overlay"
+        );
+        const presenterImg = document.getElementById("presenter-img");
+        const closePresenterBtn = null; // Removed this button
+        let isPresenting = false;
 
         // --- IndexedDB Setup ---
         const dbName = "PngtationDB";
@@ -249,23 +282,78 @@
           }
         };
 
+        // --- Presentation Mode Functions ---
+        const enterPresentationMode = () => {
+          const currentSlide =
+            document.querySelector(".slide-item.ring-2") ||
+            document.querySelector(".slide-item");
+
+          if (!currentSlide) {
+            console.log("No slides to present.");
+            return; // No slides to present
+          }
+
+          presenterImg.src = currentSlide.dataset.objecturl;
+          presentationOverlay.classList.remove("hidden");
+          // Request fullscreen on the overlay element
+          presentationOverlay.requestFullscreen().catch((err) => {
+            console.error(
+              `Error attempting to enable full-screen mode: ${err.message} (${err.name})`
+            );
+            // If fullscreen fails, we'll just show the overlay as a fallback
+          });
+          isPresenting = true;
+        };
+
+        const exitPresentationMode = () => {
+          // Check if we are in fullscreen mode and exit if so
+          if (document.fullscreenElement) {
+            document.exitFullscreen();
+          } else {
+            // Fallback for cases where fullscreen might not have initiated
+            // but the overlay is still visible.
+            presentationOverlay.classList.add("hidden");
+            presenterImg.src = ""; // Clear src
+            isPresenting = false;
+          }
+        };
+
+        // Add a listener for when fullscreen state changes (e.g., user presses Esc)
+        const handleFullscreenChange = () => {
+          if (!document.fullscreenElement && isPresenting) {
+            // We have exited fullscreen (e.g., via Esc key)
+            presentationOverlay.classList.add("hidden");
+            presenterImg.src = ""; // Clear src
+            isPresenting = false;
+          }
+        };
+
         // --- Event Listeners ---
         if (settingsBtn) settingsBtn.addEventListener("click", openModal);
         if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
         if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
         if (clearAllBtn) clearAllBtn.addEventListener("click", clearAllData);
 
+        // Listen for fullscreen changes
+        document.addEventListener("fullscreenchange", handleFullscreenChange);
+
+        // Presentation listeners
+        if (presentBtn)
+          presentBtn.addEventListener("click", enterPresentationMode);
+        // if (closePresenterBtn) // Removed this listener
+        //   closePresenterBtn.addEventListener("click", exitPresentationMode);
+
+        if (presentationOverlay) {
+          presentationOverlay.addEventListener("click", (e) => {
+            // Only exit if clicking the backdrop, not the image
+            if (e.target === presentationOverlay) {
+              exitPresentationMode();
+            }
+          });
+        }
+
         settingsModal.addEventListener("click", (event) => {
           if (event.target === settingsModal) closeModal();
-        });
-
-        document.addEventListener("keydown", (event) => {
-          if (
-            event.key === "Escape" &&
-            !settingsModal.classList.contains("hidden")
-          ) {
-            closeModal();
-          }
         });
 
         // --- Drag and Drop Uploader with IndexedDB ---
@@ -468,6 +556,11 @@
           });
           slideItem.classList.add("ring-2", "ring-offset-2", "ring-indigo-500");
           currentSelectedFile = fileName;
+
+          // If we are in presentation mode, update the presenter image
+          if (isPresenting) {
+            presenterImg.src = objectURL;
+          }
         };
 
         if (dropZone) {
@@ -609,7 +702,7 @@
           ).element;
         }
 
-        // --- Keyboard Navigation ---
+        // --- Slide Advancement Logic ---
         const advanceSlide = () => {
           const allSlides = document.querySelectorAll(".slide-item");
           if (allSlides.length === 0) return; // Do nothing if there are no slides
@@ -627,14 +720,46 @@
           const nextSlide = allSlides[nextSlideIndex];
           if (nextSlide) {
             displaySlide(nextSlide);
+            // Update presenter image if in presentation mode
+            if (isPresenting) {
+              presenterImg.src = nextSlide.dataset.objecturl;
+            }
           }
         };
 
+        // --- Combined Keyboard Navigation ---
         document.addEventListener("keydown", (event) => {
+          // 1. Presentation Mode Controls
+          if (isPresenting) {
+            if (event.code === "KeyQ") {
+              event.preventDefault();
+              exitPresentationMode();
+            }
+            if (event.code === "Space") {
+              event.preventDefault();
+              advanceSlide();
+            }
+            // In presentation mode, don't let other keys interfere
+            return;
+          }
+
+          // 2. Main App Controls (when not presenting)
           const hasSlides = document.querySelectorAll(".slide-item").length > 0;
-          if (event.code === "Space" && hasSlides) {
+          if (
+            event.code === "Space" &&
+            hasSlides &&
+            settingsModal.classList.contains("hidden")
+          ) {
             event.preventDefault();
             advanceSlide();
+          }
+
+          // 3. Modal Escape
+          if (
+            event.key === "Escape" &&
+            !settingsModal.classList.contains("hidden")
+          ) {
+            closeModal();
           }
         });
 

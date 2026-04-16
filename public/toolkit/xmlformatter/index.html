@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XML Formatter</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* Custom base styles */
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f3f4f6; /* A light gray background */
+      }
+    </style>
+  </head>
+  <body class="antialiased text-gray-800">
+    <!-- App Container -->
+    <div id="app" class="min-h-screen">
+      <!-- Top Navigation Bar -->
+      <nav class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <!-- Left side: Brand/Logo -->
+            <div class="flex-shrink-0">
+              <a
+                href="https://chuffedcoaching.com/toolkit"
+                target="_blank"
+                class="text-2xl font-bold text-gray-900 hover:text-indigo-600 transition-colors"
+              >
+                Chuffed Toolkit
+              </a>
+            </div>
+
+            <!-- Right side: Settings Icon -->
+            <div class="flex items-center">
+              <button
+                id="settings-btn"
+                type="button"
+                class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                aria-label="Open settings"
+              >
+                <i class="fas fa-cog text-xl"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content Area -->
+      <main class="p-4 sm:p-6 lg:p-8">
+        <div class="max-w-7xl mx-auto">
+          <!-- NEW: XML Generator Grid -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Column 1: Input Form -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+              <h2 class="text-2xl font-bold mb-6 text-gray-900">
+                Create XML Item
+              </h2>
+              <form id="xml-generator-form" class="space-y-4">
+                <!-- Title -->
+                <div>
+                  <label
+                    for="xml-title"
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                    >Title</label
+                  >
+                  <input
+                    type="text"
+                    id="xml-title"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  />
+                </div>
+
+                <!-- Link -->
+                <div>
+                  <label
+                    for="xml-link"
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                    >Link</label
+                  >
+                  <input
+                    type="url"
+                    id="xml-link"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  />
+                </div>
+
+                <!-- Description -->
+                <div>
+                  <label
+                    for="xml-description"
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                    >Description</label
+                  >
+                  <textarea
+                    id="xml-description"
+                    rows="3"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  ></textarea>
+                </div>
+
+                <!-- PubDate -->
+                <div>
+                  <label
+                    for="xml-pubDate"
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                    >Publication Date</label
+                  >
+                  <input
+                    type="text"
+                    id="xml-pubDate"
+                    placeholder="Wed, 15 Oct 2025 19:00:00 GMT"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  />
+                </div>
+
+                <!-- Location -->
+                <div>
+                  <label
+                    for="xml-location"
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                    >Location</label
+                  >
+                  <input
+                    type="text"
+                    id="xml-location"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  />
+                </div>
+
+                <!-- Bools: Online & Featured -->
+                <div class="flex items-center gap-8 pt-2">
+                  <div class="flex items-center">
+                    <input
+                      id="xml-online"
+                      type="checkbox"
+                      class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                    />
+                    <label
+                      for="xml-online"
+                      class="ml-2 block text-sm text-gray-900"
+                      >Online</label
+                    >
+                  </div>
+                  <div class="flex items-center">
+                    <input
+                      id="xml-featured"
+                      type="checkbox"
+                      class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                    />
+                    <label
+                      for="xml-featured"
+                      class="ml-2 block text-sm text-gray-900"
+                      >Featured</label
+                    >
+                  </div>
+                </div>
+
+                <!-- Summary Links -->
+                <div>
+                  <label
+                    for="xml-summaryLinkTikTok"
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                    >Summary Link (TikTok)</label
+                  >
+                  <input
+                    type="url"
+                    id="xml-summaryLinkTikTok"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="xml-summaryLinkYouTube"
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                    >Summary Link (YouTube)</label
+                  >
+                  <input
+                    type="url"
+                    id="xml-summaryLinkYouTube"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  />
+                </div>
+
+                <!-- Image -->
+                <div>
+                  <label
+                    for="xml-image"
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                    >Image URL</label
+                  >
+                  <input
+                    type="url"
+                    id="xml-image"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  />
+                </div>
+              </form>
+            </div>
+
+            <!-- Column 2: Output -->
+            <div class="bg-white p-6 rounded-lg shadow-md sticky top-20 h-max">
+              <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold text-gray-900">Generated XML</h2>
+                <button
+                  id="copy-xml-btn"
+                  type="button"
+                  class="px-4 py-2 text-sm font-medium text-indigo-700 bg-indigo-100 rounded-lg hover:bg-indigo-200 focus:ring-4 focus:outline-none focus:ring-indigo-300 inline-flex items-center"
+                >
+                  <i class="fas fa-copy mr-2"></i>Copy
+                </button>
+              </div>
+
+              <pre
+                id="xml-output-container"
+                class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto min-h-[400px]"
+              ><code>&lt;!-- XML will appear here as you type --&gt;</code></pre>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Settings Modal -->
+    <div
+      id="settings-modal"
+      class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
+      <div
+        class="bg-white rounded-xl shadow-2xl w-full max-w-lg m-4 transform transition-all"
+        id="modal-panel"
+      >
+        <!-- Modal Header -->
+        <div
+          class="flex items-start justify-between p-5 border-b border-gray-200 rounded-t-xl"
+        >
+          <h3 class="text-xl font-semibold text-gray-900" id="modal-title">
+            Settings
+          </h3>
+          <button
+            type="button"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+            id="close-modal-btn"
+            aria-label="Close modal"
+          >
+            <i class="fas fa-times w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="p-6 space-y-4">
+          <p class="text-base leading-relaxed text-gray-500">
+            This is where the user configuration settings will go. You can add
+            form fields, toggles, and other options here to customize the
+            application experience.
+          </p>
+          <p class="text-base leading-relaxed text-gray-500">
+            For now, it's just placeholder text demonstrating the modal's
+            functionality. All settings saved will be persisted to local
+            storage.
+          </p>
+        </div>
+
+        <!-- Modal Footer -->
+        <div
+          class="flex items-center justify-end p-6 space-x-3 border-t border-gray-200 rounded-b-xl bg-gray-50"
+        >
+          <button
+            id="cancel-btn"
+            type="button"
+            class="btn btn-outline px-5 py-2.5 text-sm font-medium text-gray-700 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-indigo-300"
+          >
+            Cancel
+          </button>
+          <button
+            id="save-btn"
+            type="button"
+            class="btn btn-soft btn-primary px-5 py-2.5 text-sm font-medium text-indigo-700 bg-indigo-100 rounded-lg hover:bg-indigo-200 focus:ring-4 focus:outline-none focus:ring-indigo-300"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // === Modal Logic (Existing) ===
+        const settingsBtn = document.getElementById("settings-btn");
+        const settingsModal = document.getElementById("settings-modal");
+        const closeModalBtn = document.getElementById("close-modal-btn");
+        const cancelBtn = document.getElementById("cancel-btn");
+        const saveBtn = document.getElementById("save-btn");
+        const modalPanel = document.getElementById("modal-panel");
+
+        const openModal = () => {
+          if (settingsModal) settingsModal.classList.remove("hidden");
+        };
+        const closeModal = () => {
+          if (settingsModal) settingsModal.classList.add("hidden");
+          _;
+        };
+
+        if (settingsBtn) settingsBtn.addEventListener("click", openModal);
+        if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
+        if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
+        if (saveBtn) {
+          saveBtn.addEventListener("click", () => {
+            console.log("Settings saved to localStorage (simulation)");
+            closeModal();
+          });
+        }
+        if (settingsModal) {
+          settingsModal.addEventListener("click", (event) => {
+            if (event.target === settingsModal) closeModal();
+          });
+        }
+        document.addEventListener("keydown", (event) => {
+          if (
+            event.key === "Escape" &&
+            !settingsModal.classList.contains("hidden")
+          ) {
+            closeModal();
+          }
+        });
+
+        // === NEW: XML Generator Logic ===
+
+        // Get elements for XML generator
+        const xmlForm = document.getElementById("xml-generator-form");
+        const xmlOutputCode = document
+          .getElementById("xml-output-container")
+          ?.querySelector("code");
+        const copyXmlBtn = document.getElementById("copy-xml-btn");
+
+        // Helper function to escape special XML characters
+        const escapeXML = (str) => {
+          if (typeof str !== "string") return "";
+          return str.replace(/[<>&"']/g, function (match) {
+            switch (match) {
+              case "<":
+                return "&lt;";
+              case ">":
+                return "&gt;";
+              case "&":
+                return "&amp;";
+              case '"':
+                return "&quot;";
+              case "'":
+                return "&#39;"; // Using numeric code for apostrophe
+              default:
+                return match;
+            }
+          });
+        };
+
+        // Function to update the XML output
+        const updateXmlOutput = () => {
+          if (!xmlForm || !xmlOutputCode) return; // Exit if elements aren't found
+
+          // Get all form values
+          const title = document.getElementById("xml-title").value;
+          const link = document.getElementById("xml-link").value;
+          const description = document.getElementById("xml-description").value;
+          const pubDate = document.getElementById("xml-pubDate").value;
+          const location = document.getElementById("xml-location").value;
+          const isOnline = document.getElementById("xml-online").checked;
+          const isFeatured = document.getElementById("xml-featured").checked;
+          const summaryLinkTikTok = document.getElementById(
+            "xml-summaryLinkTikTok"
+          ).value;
+          const summaryLinkYouTube = document.getElementById(
+            "xml-summaryLinkYouTube"
+          ).value;
+          const image = document.getElementById("xml-image").value;
+
+          // Build the XML string using template literals
+          const xmlString = `
+<item>
+  <title>${escapeXML(title)}</title>
+  <link>${escapeXML(link)}</link>
+  <description>${escapeXML(description)}</description>
+  <pubDate>${escapeXML(pubDate)}</pubDate>
+  <location>${escapeXML(location)}</location>
+  <online>${isOnline}</online>
+  <featured>${isFeatured}</featured>
+  <summaryLinkTikTok>${escapeXML(summaryLinkTikTok)}</summaryLinkTikTok>
+  <summaryLinkYouTube>${escapeXML(summaryLinkYouTube)}</summaryLinkYouTube>
+  <image>${escapeXML(image)}</image>
+</item>
+`.trim(); // .trim() removes leading/trailing whitespace
+
+          // Display the generated XML
+          xmlOutputCode.textContent = xmlString;
+        };
+
+        // Add event listener to the form
+        if (xmlForm) {
+          // Update the XML output on any input change
+          xmlForm.addEventListener("input", updateXmlOutput);
+
+          // Initial call to populate the output area on page load
+          updateXmlOutput();
+        }
+
+        // Add event listener to the copy button
+        if (copyXmlBtn) {
+          copyXmlBtn.addEventListener("click", () => {
+            const xmlToCopy = xmlOutputCode.textContent;
+
+            // Use fallback for insecure contexts (like stackblitz)
+            if (navigator.clipboard && window.isSecureContext) {
+              navigator.clipboard
+                .writeText(xmlToCopy)
+                .then(() => {
+                  showCopySuccess();
+                })
+                .catch((err) => {
+                  console.error("Failed to copy XML: ", err);
+                  copyFallback(xmlToCopy); // Try fallback on error
+                });
+            } else {
+              console.warn("Clipboard API not available. Using fallback.");
+              copyFallback(xmlToCopy);
+            }
+          });
+
+          const copyFallback = (text) => {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "absolute";
+            textArea.style.left = "-9999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+              document.execCommand("copy");
+              showCopySuccess();
+            } catch (err) {
+              console.error("Fallback copy failed: ", err);
+              // Optionally show an error message to the user
+            }
+            document.body.removeChild(textArea);
+          };
+
+          const showCopySuccess = () => {
+            // Success feedback
+            const originalHtml = copyXmlBtn.innerHTML;
+            copyXmlBtn.innerHTML = '<i class="fas fa-check mr-2"></i>Copied!';
+            copyXmlBtn.disabled = true;
+
+            setTimeout(() => {
+              copyXmlBtn.innerHTML = originalHtml;
+              copyXmlBtn.disabled = false;
+            }, 2000); // Reset after 2 seconds
+          };
+        }
+      });
+    </script>
+  </body>
+</html>
