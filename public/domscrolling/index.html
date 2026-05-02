@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Weeknotes: April 26, 2026</title>
+     <meta name="description" content="Weekly social media digest from Dom - 100% human-made">
+     <meta property="og:title" content="Weeknotes: April 26, 2026">
+     <meta property="og:description" content="Weekly social media digest from Dom - 100% human-made">
+     <meta property="og:url" content="https://chuffedcoaching.com/domscrolling">
+     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <style>
+         
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background-color: #191919;
+        background-image: radial-gradient(circle, rgba(206, 206, 206, 0.1) 1px, transparent 1px);
+        background-size: 16px 16px;
+        color: #CECECE;
+        line-height: 1.6;
+        min-height: 100vh;
+        padding: 32px 16px;
+    }
+
+    .container {
+         max-width: 960px;
+         margin: 0 auto;
+         padding: 0 16px;
+     }
+
+     .site-header {
+         margin-bottom: 64px;
+         padding-bottom: 48px;
+         border-bottom: 2px solid #303030;
+     }
+
+      .site-title {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 32px;
+          font-weight: 700;
+          color: #CECECE;
+          margin-bottom: 12px;
+          letter-spacing: -0.02em;
+      }
+
+     .site-description {
+         font-size: 18px;
+         color: #CECECE;
+         opacity: 0.7;
+         margin: 0;
+     }
+
+     header {
+         margin-bottom: 48px;
+         border-bottom: 1px solid #303030;
+         padding-bottom: 32px;
+     }
+
+    h1 {
+         font-family: 'JetBrains Mono', monospace;
+         font-size: 56px;
+         font-weight: 700;
+         margin-bottom: 8px;
+         color: #CECECE;
+         letter-spacing: -0.02em;
+     }
+
+    .date {
+         font-family: 'JetBrains Mono', monospace;
+         font-size: 18px;
+         color: #F6084C;
+         text-transform: uppercase;
+         letter-spacing: 0.05em;
+     }
+
+     .description {
+         font-size: 20px;
+         color: #CECECE;
+         opacity: 0.8;
+         margin-top: 16px;
+     }
+
+    main {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 48px;
+        margin-bottom: 48px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .block {
+        background-color: #303030;
+        border: 1px solid #3a3a3a;
+        border-radius: 4px;
+        padding: 32px;
+        transition: all 0.3s ease;
+        margin-bottom: 32px;
+        margin-top: 0;
+    }
+
+    .block:hover {
+        border-color: #F6084C;
+        box-shadow: 0 0 20px rgba(246, 8, 76, 0.1);
+    }
+
+    .block-type {
+         font-family: 'JetBrains Mono', monospace;
+         font-size: 14px;
+         color: #F6084C;
+         text-transform: uppercase;
+         letter-spacing: 0.05em;
+         margin-bottom: 12px;
+         display: inline-block;
+     }
+
+    .block h3 {
+         font-family: 'JetBrains Mono', monospace;
+         font-size: 32px;
+         margin-bottom: 16px;
+         color: #CECECE;
+     }
+
+     .block p {
+         font-size: 18px;
+         line-height: 1.8;
+         margin-bottom: 20px;
+         color: #CECECE;
+     }
+
+    .block p:last-child {
+        margin-bottom: 0;
+    }
+
+    .block-note {
+        border-left: 4px solid #F6084C;
+        background-color: rgba(246, 8, 76, 0.05);
+    }
+
+    .block-abstract {
+        background-color: rgba(206, 206, 206, 0.05);
+        border-left: 4px solid #CECECE;
+        font-style: italic;
+    }
+
+    .block-quote {
+        border-left: 4px solid #F6084C;
+        font-style: italic;
+    }
+
+    .block-video {
+         padding: 32px;
+         overflow: visible;
+     }
+
+     .block-video a {
+         display: block;
+         border: none;
+     }
+
+     .block-video img {
+         display: block;
+         width: 100%;
+         border-radius: 10px;
+     }
+
+    .block-todo {
+        background-color: rgba(246, 8, 76, 0.05);
+        border-left: 4px solid #F6084C;
+    }
+
+    .event-details {
+         display: block;
+         margin-bottom: 16px;
+         font-size: 16px;
+     }
+
+     .event-detail-item {
+         display: inline-block;
+         width: 48%;
+         margin-right: 4%;
+         margin-bottom: 12px;
+         vertical-align: top;
+     }
+
+     .event-detail-item:nth-child(even) {
+         margin-right: 0;
+     }
+
+    .event-detail-label {
+         font-family: 'JetBrains Mono', monospace;
+         color: #F6084C;
+         text-transform: uppercase;
+         font-size: 12px;
+         letter-spacing: 0.05em;
+         margin-bottom: 4px;
+     }
+
+    .event-detail-value {
+        color: #CECECE;
+    }
+
+    a {
+        color: #F6084C;
+        text-decoration: none;
+        border-bottom: 1px solid #F6084C;
+        transition: opacity 0.3s ease;
+    }
+
+    a:hover {
+        opacity: 0.7;
+    }
+
+    footer {
+         text-align: center;
+         padding-top: 32px;
+         border-top: 1px solid #303030;
+         font-size: 16px;
+         color: #CECECE;
+         opacity: 0.6;
+     }
+
+    footer a {
+        color: #F6084C;
+    }
+
+    /* Email specific styles */
+    @media only screen and (max-width: 768px) {
+        body {
+            padding: 16px 8px;
+        }
+
+        h1 {
+            font-size: 32px;
+        }
+
+        .site-title {
+            font-size: 24px;
+        }
+
+        main {
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .block {
+            padding: 24px;
+        }
+
+        .event-details {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+     </style>
+ </head>
+ <body>
+     <div class="container">
+         <div class="site-header">
+             <h2 class="site-title">DOMSCROLLING</h2>
+             <p class="site-description">Weekly social media digest from Dom - 100% human-made</p>
+         </div>
+         <header>
+             <div class="date">April 26, 2026</div>
+             <h1>Weeknotes: April 26, 2026</h1>
+         </header>
+         <main>
+             
+        <div class="block block-note">
+            <div class="block-type">Note</div>
+            <p>Welcome to <strong>Domscrolling</strong>. I had so many folks say they end up missing some of my posts and events because of algorithms, so here are the important parts for any new founder to digest and look forward to.</p>
+
+        </div>
+        
+        <div class="block block-abstract">
+            <div class="block-type">Idea</div>
+            <p>Been working a lot on my Local LLM setup and how to have AI-assistance when coding. I am just experimenting, but with just local models I have managed to get from a product requirements document to a to-do list for me to now tackle taking on the code generation.</p>
+
+        </div>
+        
+        <div class="block block-quote">
+            <div class="block-type">Highlight</div>
+            <p><strong>More Layoffs</strong>
+Oracle with 30,000 staff in the last couple of weeks and Meta to cut 10% last week.
+<a href="https://www.linkedin.com/posts/dom-maurice_here-we-fing-go-again-meta-to-lay-off-activity-7453469961936732160-TF4I">Read my opinions on the matter</a></p>
+
+        </div>
+        
+        <div class="block block-video">
+            <div class="block-type">Video</div>
+            
+                <a href="https://www.youtube.com/watch?v=ue-tYDxCDuw" target="_blank">
+                    <img src="https://img.youtube.com/vi/ue-tYDxCDuw/maxresdefault.jpg" alt="YouTube Video" style="width:100%; border-radius:10px;" />
+                </a>
+                
+        </div>
+        
+        <div class="block block-video">
+            <div class="block-type">Video</div>
+            
+                <a href="https://www.youtube.com/watch?v=Ein661sSh0M" target="_blank">
+                    <img src="https://img.youtube.com/vi/Ein661sSh0M/maxresdefault.jpg" alt="YouTube Video" style="width:100%; border-radius:10px;" />
+                </a>
+                
+        </div>
+        
+        <div class="block block-quote">
+            <div class="block-type">Highlight</div>
+            <p><strong>All Software Developers and Engineers should get into Vibe Coding</strong>
+There is a ton of value in knocking up a quick something-something to get an idea how to move forward, and everyone should get into it.
+<a href="https://chuffeddom.substack.com/p/all-software-developers-and-engineers">Read more</a></p>
+
+        </div>
+        
+        <div class="block block-todo">
+            <div class="block-type">Event</div>
+            <h3>Coding Co-Working Club <em>FREE</em></h3><div class="event-details">
+                    <div class="event-detail-item">
+                        <div class="event-detail-label">date</div>
+                        <div class="event-detail-value">May 2, 2026</div>
+                    </div>
+                    
+                    <div class="event-detail-item">
+                        <div class="event-detail-label">time</div>
+                        <div class="event-detail-value">12:00 PM</div>
+                    </div>
+                    
+                    <div class="event-detail-item">
+                        <div class="event-detail-label">location</div>
+                        <div class="event-detail-value">Santander Kensington Work Cafe</div>
+                    </div>
+                    </div><p>People with side-project and learning just getting together to show up for the week and get some accountability</p>
+
+        </div>
+        
+        <div class="block block-todo">
+            <div class="block-type">Event</div>
+            <h3>Tuesday Deep Dive <em>FREE</em></h3><div class="event-details">
+                    <div class="event-detail-item">
+                        <div class="event-detail-label">date</div>
+                        <div class="event-detail-value">April 28, 2026</div>
+                    </div>
+                    
+                    <div class="event-detail-item">
+                        <div class="event-detail-label">time</div>
+                        <div class="event-detail-value">12:00 PM</div>
+                    </div>
+                    
+                    <div class="event-detail-item">
+                        <div class="event-detail-label">location</div>
+                        <div class="event-detail-value">https://meet.google.com/rpi-feao-zax</div>
+                    </div>
+                    </div><p>Will be discussing what is go-to-market for software developers and engineers looking to build and monetise an app</p>
+
+        </div>
+        
+        <div class="block block-note">
+            <div class="block-type">Note</div>
+            <p>I'm building an app for people building apps!! The latest in that journey is doing outreach. How can that help you in your app that you are looking to monetise? Watch below. 👇🏾</p>
+
+        </div>
+        
+        <div class="block block-video">
+            <div class="block-type">Video</div>
+            
+                <a href="https://www.youtube.com/watch?v=afYCBW9eJ7k" target="_blank">
+                    <img src="https://img.youtube.com/vi/afYCBW9eJ7k/maxresdefault.jpg" alt="YouTube Video" style="width:100%; border-radius:10px;" />
+                </a>
+                
+        </div>
+        
+         </main>
+         <footer>
+             <p>Made with human love 🩷 <a href="https://chuffedcoaching.com/domscrolling/">Domscrolling</a></p>
+         </footer>
+     </div>
+ </body>
+ </html>
+ 

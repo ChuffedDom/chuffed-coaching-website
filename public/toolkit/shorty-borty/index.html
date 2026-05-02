@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shorts Asset Tool - BGout</title>
+    <title>Shorty-Borty - YouTube Image Link Generator</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -95,8 +95,8 @@
                             <i class="fa-brands fa-youtube text-2xl"></i>
                         </div>
                         <div>
-                            <h1 class="text-2xl font-bold text-gray-900 leading-tight">Shorts Asset Tool</h1>
-                            <p class="text-sm text-gray-500 italic">Part of the BGout suite</p>
+                            <h1 class="text-2xl font-bold text-gray-900 leading-tight">Shorty-Borty</h1>
+                            <p class="text-sm text-gray-500 italic">Create HTML image links from YouTube videos</p>
                         </div>
                     </div>
 
@@ -210,7 +210,7 @@
 
         <!-- Footer -->
         <footer class="py-6 text-center text-gray-400 text-xs">
-            &copy; <span id="current-year"></span> Chuffed Coaching Toolkit - BGout Tool
+            &copy; <span id="current-year"></span> Chuffed Coaching Toolkit - Shorty-Borty
         </footer>
     </div>
 
@@ -327,7 +327,7 @@
                     emptyState.classList.add("hidden");
 
                     // Save to localStorage
-                    localStorage.setItem('bgout_last_url', val);
+                    localStorage.setItem('shortyborty_last_url', val);
                 } else {
                     resultsArea.classList.add("hidden");
                     emptyState.classList.remove("hidden");
@@ -379,7 +379,7 @@
             urlInput.addEventListener("input", updateTool);
 
             // Load last session
-            const lastUrl = localStorage.getItem('bgout_last_url');
+            const lastUrl = localStorage.getItem('shortyborty_last_url');
             if (lastUrl) {
                 urlInput.value = lastUrl;
                 updateTool();
