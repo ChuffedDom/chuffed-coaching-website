@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chuffed Accent Colour Picker</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <!-- Google Fonts - Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f3f4f6;
+      }
+
+      .font-jetbrains {
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      /* Custom Hue Slider Styling */
+      input[type="range"]#hue-slider {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 12px;
+        border-radius: 6px;
+        background: linear-gradient(
+          to right,
+          #ff0000 0%,
+          #ffff00 17%,
+          #00ff00 33%,
+          #00ffff 50%,
+          #0000ff 67%,
+          #ff00ff 83%,
+          #ff0000 100%
+        );
+        outline: none;
+      }
+
+      input[type="range"]#hue-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: white;
+        border: 3px solid #111827;
+        cursor: pointer;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      }
+
+      input[type="range"]#hue-slider::-moz-range-thumb {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: white;
+        border: 3px solid #111827;
+        cursor: pointer;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      }
+
+      /* Sticky adjustment for the slider bar */
+      .sticky-control {
+        top: 64px; /* Height of the navbar */
+      }
+    </style>
+  </head>
+  <body class="antialiased text-gray-800">
+    <div id="app" class="min-h-screen">
+      <!-- Top Navigation Bar -->
+      <nav class="bg-white shadow-sm sticky top-0 z-50 h-16 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <div class="flex-shrink-0">
+              <a
+                href="https://chuffedcoaching.com/toolkit"
+                target="_blank"
+                class="text-2xl font-bold text-gray-900 hover:text-indigo-600 transition-colors"
+              >
+                Chuffed Toolkit
+              </a>
+            </div>
+            <div class="flex items-center">
+              <button
+                id="info-btn"
+                type="button"
+                class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
+              >
+                <i class="fas fa-info-circle text-xl"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Sticky Slider Control Bar -->
+      <div class="sticky sticky-control z-40 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm py-4 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto flex flex-col sm:flex-row items-center gap-4">
+          <div class="flex-shrink-0 flex items-center gap-2">
+            <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Hue</span>
+            <span id="hue-value-display" class="text-xl font-bold text-indigo-600 min-w-[50px]">200&deg;</span>
+          </div>
+          <div class="w-full">
+            <input 
+              type="range" 
+              id="hue-slider" 
+              min="0" 
+              max="360" 
+              value="200"
+              class="cursor-pointer"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content Area -->
+      <main class="p-4 sm:p-6 lg:p-8">
+        <div class="max-w-3xl mx-auto space-y-6">
+          
+          <!-- Primary Accent Card -->
+          <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 space-y-8">
+            <div>
+              <h1 class="text-3xl font-bold mb-2 text-gray-900">Accent Colour Picker</h1>
+              <p class="text-gray-600">
+                Adjust the hue above to generate a perfectly balanced branded palette and neutral system.
+              </p>
+            </div>
+
+            <!-- Main Colour Preview Block -->
+            <div 
+              id="colour-preview-block" 
+              class="w-full h-32 rounded-xl shadow-inner border-4 border-white ring-1 ring-gray-200"
+              style="background-color: hsl(200, 100%, 50%);"
+            ></div>
+
+            <!-- Value Outputs -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <!-- HEX -->
+              <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <label class="block text-xs font-bold text-gray-400 uppercase mb-1">HEX</label>
+                <div class="flex items-center justify-between">
+                  <span id="hex-text" class="font-mono text-lg text-gray-800 uppercase">#00AAFF</span>
+                  <button onclick="copyColour('hex-text')" class="text-gray-400 hover:text-indigo-600 p-1" title="Copy HEX">
+                    <i class="far fa-copy"></i>
+                  </button>
+                </div>
+              </div>
+              
+              <!-- RGB -->
+              <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <label class="block text-xs font-bold text-gray-400 uppercase mb-1">RGB</label>
+                <div class="flex items-center justify-between">
+                  <span id="rgb-text" class="font-mono text-sm text-gray-800">rgb(0, 170, 255)</span>
+                  <button onclick="copyColour('rgb-text')" class="text-gray-400 hover:text-indigo-600 p-1" title="Copy RGB">
+                    <i class="far fa-copy"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- HSL -->
+              <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <label class="block text-xs font-bold text-gray-400 uppercase mb-1">HSL</label>
+                <div class="flex items-center justify-between">
+                  <span id="hsl-text" class="font-mono text-sm text-gray-800">hsl(200, 100%, 50%)</span>
+                  <button onclick="copyColour('hsl-text')" class="text-gray-400 hover:text-indigo-600 p-1" title="Copy HSL">
+                    <i class="far fa-copy"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <hr class="border-gray-100">
+
+            <!-- Accent Variations Section -->
+            <div class="space-y-6">
+              <div>
+                <h2 class="text-xl font-bold text-gray-900">Accent Variations</h2>
+                <p class="text-sm text-gray-500 mt-1">Lightness and saturation shifts of your primary accent.</p>
+              </div>
+
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <!-- Soft -->
+                <div class="space-y-2">
+                  <div id="soft-accent-box" class="h-16 w-full rounded-lg border border-gray-100 shadow-sm transition-colors duration-200"></div>
+                  <div class="flex items-center justify-between px-1">
+                    <span class="text-[10px] font-bold text-gray-400 uppercase">Soft (BG)</span>
+                    <button onclick="copyColour('soft-accent-hex')" class="text-gray-400 hover:text-indigo-600"><i class="far fa-copy text-[10px]"></i></button>
+                  </div>
+                  <div id="soft-accent-hex" class="text-xs font-mono text-center bg-gray-50 py-1 rounded">#000000</div>
+                </div>
+
+                <!-- Muted -->
+                <div class="space-y-2">
+                  <div id="muted-accent-box" class="h-16 w-full rounded-lg border border-gray-100 shadow-sm transition-colors duration-200"></div>
+                  <div class="flex items-center justify-between px-1">
+                    <span class="text-[10px] font-bold text-gray-400 uppercase">Muted (UI)</span>
+                    <button onclick="copyColour('muted-accent-hex')" class="text-gray-400 hover:text-indigo-600"><i class="far fa-copy text-[10px]"></i></button>
+                  </div>
+                  <div id="muted-accent-hex" class="text-xs font-mono text-center bg-gray-50 py-1 rounded">#000000</div>
+                </div>
+
+                <!-- Deep -->
+                <div class="space-y-2">
+                  <div id="deep-accent-box" class="h-16 w-full rounded-lg border border-gray-100 shadow-sm transition-colors duration-200"></div>
+                  <div class="flex items-center justify-between px-1">
+                    <span class="text-[10px] font-bold text-gray-400 uppercase">Deep (Text)</span>
+                    <button onclick="copyColour('deep-accent-hex')" class="text-gray-400 hover:text-indigo-600"><i class="far fa-copy text-[10px]"></i></button>
+                  </div>
+                  <div id="deep-accent-hex" class="text-xs font-mono text-center bg-gray-50 py-1 rounded">#000000</div>
+                </div>
+              </div>
+            </div>
+
+            <hr class="border-gray-100">
+
+            <!-- Complementary Greys Section -->
+            <div class="space-y-6">
+              <div>
+                <h2 class="text-xl font-bold text-gray-900">Complementary Greys</h2>
+                <p class="text-sm text-gray-500 mt-1">Derived from the opposite side of the wheel (+180&deg;).</p>
+              </div>
+
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <!-- Black -->
+                <div class="space-y-2">
+                  <div id="near-black-box" class="h-16 w-full rounded-lg border border-gray-200 shadow-sm transition-colors duration-200"></div>
+                  <div class="px-1"><span class="text-[10px] font-bold text-gray-400 uppercase">Black</span></div>
+                  <div class="space-y-1">
+                    <div class="flex items-center justify-between bg-gray-50 px-2 py-1 rounded">
+                      <span id="near-black-hex" class="text-[10px] font-mono uppercase">#000000</span>
+                      <button onclick="copyColour('near-black-hex')" class="text-gray-400 hover:text-indigo-600"><i class="far fa-copy text-[10px]"></i></button>
+                    </div>
+                    <div class="flex items-center justify-between bg-gray-50 px-2 py-1 rounded">
+                      <span id="near-black-hsl" class="text-[9px] font-mono text-gray-500">hsl(0, 0%, 0%)</span>
+                      <button onclick="copyColour('near-black-hsl')" class="text-gray-400 hover:text-indigo-600"><i class="far fa-copy text-[10px]"></i></button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Dark Grey -->
+                <div class="space-y-2">
+                  <div id="dark-grey-box" class="h-16 w-full rounded-lg border border-gray-200 shadow-sm transition-colors duration-200"></div>
+                  <div class="px-1"><span class="text-[10px] font-bold text-gray-400 uppercase">Dark Grey</span></div>
+                  <div class="space-y-1">
+                    <div class="flex items-center justify-between bg-gray-50 px-2 py-1 rounded">
+                      <span id="dark-grey-hex" class="text-[10px] font-mono uppercase">#000000</span>
+                      <button onclick="copyColour('dark-grey-hex')" class="text-gray-400 hover:text-indigo-600"><i class="far fa-copy text-[10px]"></i></button>
+                    </div>
+                    <div class="flex items-center justify-between bg-gray-50 px-2 py-1 rounded">
+                      <span id="dark-grey-hsl" class="text-[9px] font-mono text-gray-500">hsl(0, 0%, 0%)</span>
+                      <button onclick="copyColour('dark-grey-hsl')" class="text-gray-400 hover:text-indigo-600"><i class="far fa-copy text-[10px]"></i></button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Light Grey -->
+                <div class="space-y-2">
+                  <div id="light-grey-box" class="h-16 w-full rounded-lg border border-gray-200 shadow-sm transition-colors duration-200"></div>
+                  <div class="px-1"><span class="text-[10px] font-bold text-gray-400 uppercase">Light Grey</span></div>
+                  <div class="space-y-1">
+                    <div class="flex items-center justify-between bg-gray-50 px-2 py-1 rounded">
+                      <span id="light-grey-hex" class="text-[10px] font-mono uppercase">#000000</span>
+                      <button onclick="copyColour('light-grey-hex')" class="text-gray-400 hover:text-indigo-600"><i class="far fa-copy text-[10px]"></i></button>
+                    </div>
+                    <div class="flex items-center justify-between bg-gray-50 px-2 py-1 rounded">
+                      <span id="light-grey-hsl" class="text-[9px] font-mono text-gray-500">hsl(0, 0%, 0%)</span>
+                      <button onclick="copyColour('light-grey-hsl')" class="text-gray-400 hover:text-indigo-600"><i class="far fa-copy text-[10px]"></i></button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- White -->
+                <div class="space-y-2">
+                  <div id="near-white-box" class="h-16 w-full rounded-lg border border-gray-200 shadow-sm transition-colors duration-200"></div>
+                  <div class="px-1"><span class="text-[10px] font-bold text-gray-400 uppercase">White</span></div>
+                  <div class="space-y-1">
+                    <div class="flex items-center justify-between bg-gray-50 px-2 py-1 rounded">
+                      <span id="near-white-hex" class="text-[10px] font-mono uppercase">#000000</span>
+                      <button onclick="copyColour('near-white-hex')" class="text-gray-400 hover:text-indigo-600"><i class="far fa-copy text-[10px]"></i></button>
+                    </div>
+                    <div class="flex items-center justify-between bg-gray-50 px-2 py-1 rounded">
+                      <span id="near-white-hsl" class="text-[9px] font-mono text-gray-500">hsl(0, 0%, 0%)</span>
+                      <button onclick="copyColour('near-white-hsl')" class="text-gray-400 hover:text-indigo-600"><i class="far fa-copy text-[10px]"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dynamic AI Export Box -->
+            <div class="space-y-3 pt-4 border-t border-gray-50">
+              <div class="flex items-center justify-between">
+                <label class="text-xs font-bold text-gray-400 uppercase tracking-widest">AI Style Guide Export</label>
+                <button 
+                  onclick="copyColour('ai-export-text')" 
+                  class="flex items-center gap-2 px-3 py-1 bg-indigo-50 text-indigo-600 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-indigo-100 transition-colors"
+                >
+                  <i class="far fa-copy"></i> Copy for AI
+                </button>
+              </div>
+              <div 
+                id="ai-export-text" 
+                class="w-full p-4 bg-gray-900 text-gray-300 rounded-xl font-jetbrains text-[10px] leading-relaxed whitespace-pre overflow-x-auto border border-gray-800"
+              ></div>
+            </div>
+
+            <hr class="border-gray-100">
+
+            <!-- Component Examples Section -->
+            <div class="space-y-6">
+              <div>
+                <h2 class="text-xl font-bold text-gray-900">Component Examples</h2>
+                <p class="text-sm text-gray-500 mt-1">Four combinations of containers and text using your neutral palette.</p>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Example 1: Dark Grey Theme -->
+                <div id="ex1-bg" class="p-6 rounded-xl border border-transparent shadow-sm flex flex-col items-start transition-colors duration-200">
+                  <h3 id="ex1-title" class="text-xs font-extrabold uppercase tracking-widest font-jetbrains">Dark Grey Theme</h3>
+                  <div id="ex1-line" class="h-0.5 w-10 my-3 transition-colors duration-200"></div>
+                  <p id="ex1-text" class="text-sm leading-relaxed font-sans mb-4">
+                    Light Grey text on a Dark Grey background. This creates a soft, professional dark interface that reduces eye strain.
+                  </p>
+                  <button id="ex1-btn" class="mt-auto py-1 font-extrabold text-[10px] uppercase tracking-widest hover:underline transition-colors font-jetbrains">Explore Theme</button>
+                </div>
+
+                <!-- Example 2: Light Grey Theme -->
+                <div id="ex2-bg" class="p-6 rounded-xl border border-transparent shadow-sm flex flex-col items-start transition-colors duration-200">
+                  <h3 id="ex2-title" class="text-xs font-extrabold uppercase tracking-widest font-jetbrains">Light Grey Theme</h3>
+                  <div id="ex2-line" class="h-0.5 w-10 my-3 transition-colors duration-200"></div>
+                  <p id="ex2-text" class="text-sm leading-relaxed font-sans mb-4">
+                    Black text on a Light Grey background. A clean, modern aesthetic for primary content cards and dashboard widgets.
+                  </p>
+                  <button id="ex2-btn" class="mt-auto py-1 font-extrabold text-[10px] uppercase tracking-widest hover:underline transition-colors font-jetbrains">Explore Theme</button>
+                </div>
+
+                <!-- Example 3: High Contrast -->
+                <div id="ex3-bg" class="p-6 rounded-xl border border-transparent shadow-sm flex flex-col items-start transition-colors duration-200">
+                  <h3 id="ex3-title" class="text-xs font-extrabold uppercase tracking-widest font-jetbrains">High Contrast</h3>
+                  <div id="ex3-line" class="h-0.5 w-10 my-3 transition-colors duration-200"></div>
+                  <p id="ex3-text" class="text-sm leading-relaxed font-sans mb-4">
+                    White text on a Black background. Best used for high-impact callouts or secondary footers that need to stand out.
+                  </p>
+                  <button id="ex3-btn" class="mt-auto py-1 font-extrabold text-[10px] uppercase tracking-widest hover:underline transition-colors font-jetbrains">Explore Theme</button>
+                </div>
+
+                <!-- Example 4: Soft Minimal -->
+                <div id="ex4-bg" class="p-6 rounded-xl border border-transparent shadow-sm flex flex-col items-start transition-colors duration-200">
+                  <h3 id="ex4-title" class="text-xs font-extrabold uppercase tracking-widest font-jetbrains">Soft Minimal</h3>
+                  <div id="ex4-line" class="h-0.5 w-10 my-3 transition-colors duration-200"></div>
+                  <p id="ex4-text" class="text-sm leading-relaxed font-sans mb-4">
+                    Dark Grey text on a White background. This provides a softer alternative to pure black-on-white text for long-form reading.
+                  </p>
+                  <button id="ex4-btn" class="mt-auto py-1 font-extrabold text-[10px] uppercase tracking-widest hover:underline transition-colors font-jetbrains">Explore Theme</button>
+                </div>
+              </div>
+            </div>
+
+            <hr class="border-gray-100">
+
+            <!-- Button Collection Section -->
+            <div class="space-y-6">
+              <div>
+                <h2 class="text-xl font-bold text-gray-900">Button Collection</h2>
+                <p class="text-sm text-gray-500 mt-1">Applying your accent palette to interactive elements.</p>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-4">
+                <!-- Primary Button -->
+                <button 
+                  id="btn-primary"
+                  class="px-6 py-2.5 rounded-lg font-extrabold text-white shadow-lg transition-transform active:scale-95 focus:outline-none font-jetbrains"
+                  style="background-color: hsl(200, 100%, 50%);"
+                >
+                  Primary Button
+                </button>
+
+                <!-- Secondary Button -->
+                <button 
+                  id="btn-secondary"
+                  class="px-6 py-2.5 rounded-lg font-extrabold transition-transform active:scale-95 focus:outline-none font-jetbrains"
+                  style="background-color: hsl(200, 85%, 94%); color: hsl(200, 95%, 24%);"
+                >
+                  Secondary
+                </button>
+
+                <!-- Text Button -->
+                <button 
+                  id="btn-text"
+                  class="px-4 py-2.5 rounded-lg font-extrabold hover:underline underline-offset-4 focus:outline-none font-jetbrains"
+                  style="color: hsl(200, 95%, 24%);"
+                >
+                  Text Button
+                </button>
+              </div>
+            </div>
+
+            <hr class="border-gray-100">
+
+            <!-- Navigation Bar Example -->
+            <div class="space-y-6">
+              <div>
+                <h2 class="text-xl font-bold text-gray-900">Navigation Bar Example</h2>
+                <p class="text-sm text-gray-500 mt-1">Branded header layout using your accent and neutral tones.</p>
+              </div>
+
+              <div id="example-nav-bg" class="rounded-xl border border-gray-200 overflow-hidden shadow-sm transition-colors duration-200">
+                <div class="px-6 py-4 flex items-center justify-between">
+                  <!-- Example Logo -->
+                  <div id="example-nav-logo" class="font-jetbrains font-extrabold text-lg tracking-tighter">BRAND_UI</div>
+                  
+                  <!-- Nav Links -->
+                  <div class="hidden sm:flex items-center gap-6">
+                    <a href="#" onclick="return false;" class="font-jetbrains text-[10px] font-bold uppercase tracking-widest relative group">
+                      Home
+                      <span id="example-nav-active-line" class="absolute -bottom-1 left-0 h-0.5 w-full"></span>
+                    </a>
+                    <a href="#" onclick="return false;" id="example-nav-link" class="font-jetbrains text-[10px] font-bold uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity">Docs</a>
+                    <a href="#" onclick="return false;" id="example-nav-link-2" class="font-jetbrains text-[10px] font-bold uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity">Blog</a>
+                  </div>
+
+                  <!-- CTA Button -->
+                  <button id="example-nav-cta" class="px-4 py-1.5 rounded font-jetbrains font-extrabold text-[10px] uppercase tracking-widest shadow-sm transition-transform active:scale-95">Get Started</button>
+                </div>
+              </div>
+            </div>
+
+            <hr class="border-gray-100">
+
+            <!-- Form Elements Example -->
+            <div class="space-y-6 pb-4">
+              <div>
+                <h2 class="text-xl font-bold text-gray-900">Form Elements Example</h2>
+                <p class="text-sm text-gray-500 mt-1">Input controls and branded interactive form components.</p>
+              </div>
+
+              <div id="example-form-bg" class="p-8 rounded-xl border border-gray-200 shadow-sm transition-colors duration-200">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                  <!-- Text Input -->
+                  <div class="space-y-2">
+                    <label id="ex-label-1" for="ex-input" class="block text-[10px] font-extrabold uppercase tracking-widest font-jetbrains">Project Name</label>
+                    <input 
+                      type="text" 
+                      id="ex-input" 
+                      placeholder="e.g. Chuffed Coaching"
+                      class="w-full px-4 py-2.5 rounded-lg border outline-none transition-all font-sans text-sm surface-transition"
+                    />
+                  </div>
+
+                  <!-- Select Dropdown -->
+                  <div class="space-y-2">
+                    <label id="ex-label-2" for="ex-select" class="block text-[10px] font-extrabold uppercase tracking-widest font-jetbrains">Priority Level</label>
+                    <div class="relative">
+                      <select 
+                        id="ex-select" 
+                        class="w-full px-4 py-2.5 rounded-lg border outline-none transition-all font-jetbrains text-[10px] font-bold uppercase tracking-widest appearance-none cursor-pointer surface-transition bg-transparent pr-10"
+                      >
+                        <option>Normal Priority</option>
+                        <option>High Priority</option>
+                        <option>Urgent</option>
+                      </select>
+                      <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none opacity-50 text-[10px]">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Toggle/Checkbox Mock -->
+                  <div class="sm:col-span-2 flex items-center justify-between p-4 rounded-lg bg-white/50 border border-gray-100">
+                    <div class="flex flex-col">
+                      <span id="ex-label-3" class="text-[10px] font-extrabold uppercase tracking-widest font-jetbrains mb-0.5">Push Notifications</span>
+                      <span class="text-[10px] text-gray-400 font-sans">Get alerted when colours update.</span>
+                    </div>
+                    <div id="ex-toggle" class="w-12 h-6 rounded-full p-1 cursor-pointer transition-colors duration-200 flex items-center justify-end">
+                      <div class="bg-white w-4 h-4 rounded-full shadow-md"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </main>
+
+      <!-- Toast Notification -->
+      <div id="copy-toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-xl text-sm font-medium opacity-0 pointer-events-none transition-opacity duration-300 z-[60]">
+        <i class="fas fa-check-circle text-green-400 mr-2"></i> Copied to clipboard!
+      </div>
+    </div>
+
+    <script>
+      function hslToRgb(h, s, l) {
+        s /= 100; l /= 100;
+        const k = n => (n + h / 30) % 12;
+        const a = s * Math.min(l, 1 - l);
+        const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+        return [Math.round(255 * f(0)), Math.round(255 * f(8)), Math.round(255 * f(4))];
+      }
+
+      function rgbToHex(r, g, b) {
+        return "#" + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
+      }
+
+      const hueSlider = document.getElementById('hue-slider');
+      const hueValueDisplay = document.getElementById('hue-value-display');
+      const previewBlock = document.getElementById('colour-preview-block');
+      const hexText = document.getElementById('hex-text');
+      const rgbText = document.getElementById('rgb-text');
+      const hslText = document.getElementById('hsl-text');
+      const aiExportText = document.getElementById('ai-export-text');
+      const copyToast = document.getElementById('copy-toast');
+
+      // Buttons
+      const btnPrimary = document.getElementById('btn-primary');
+      const btnSecondary = document.getElementById('btn-secondary');
+      const btnTextComp = document.getElementById('btn-text');
+
+      // Nav Example
+      const navExBg = document.getElementById('example-nav-bg');
+      const navExLogo = document.getElementById('example-nav-logo');
+      const navExActiveLine = document.getElementById('example-nav-active-line');
+      const navExLink = document.getElementById('example-nav-link');
+      const navExLink2 = document.getElementById('example-nav-link-2');
+      const navExCta = document.getElementById('example-nav-cta');
+
+      // Form Example
+      const formExBg = document.getElementById('example-form-bg');
+      const formExInput = document.getElementById('ex-input');
+      const formExSelect = document.getElementById('ex-select');
+      const formExToggle = document.getElementById('ex-toggle');
+      const formExLabels = [document.getElementById('ex-label-1'), document.getElementById('ex-label-2'), document.getElementById('ex-label-3')];
+
+      // Variations
+      const softBox = document.getElementById('soft-accent-box');
+      const softHex = document.getElementById('soft-accent-hex');
+      const mutedBox = document.getElementById('muted-accent-box');
+      const mutedHex = document.getElementById('muted-accent-hex');
+      const deepBox = document.getElementById('deep-accent-box');
+      const deepHex = document.getElementById('deep-accent-hex');
+
+      // Greys
+      const nbBox = document.getElementById('near-black-box');
+      const nbHex = document.getElementById('near-black-hex');
+      const nbHsl = document.getElementById('near-black-hsl');
+      const dgBox = document.getElementById('dark-grey-box');
+      const dgHex = document.getElementById('dark-grey-hex');
+      const dgHsl = document.getElementById('dark-grey-hsl');
+      const lgBox = document.getElementById('light-grey-box');
+      const lgHex = document.getElementById('light-grey-hex');
+      const lgHsl = document.getElementById('light-grey-hsl');
+      const nwBox = document.getElementById('near-white-box');
+      const nwHex = document.getElementById('near-white-hex');
+      const nwHsl = document.getElementById('near-white-hsl');
+
+      // Examples
+      const ex1 = { bg: document.getElementById('ex1-bg'), title: document.getElementById('ex1-title'), text: document.getElementById('ex1-text'), line: document.getElementById('ex1-line'), btn: document.getElementById('ex1-btn') };
+      const ex2 = { bg: document.getElementById('ex2-bg'), title: document.getElementById('ex2-title'), text: document.getElementById('ex2-text'), line: document.getElementById('ex2-line'), btn: document.getElementById('ex2-btn') };
+      const ex3 = { bg: document.getElementById('ex3-bg'), title: document.getElementById('ex3-title'), text: document.getElementById('ex3-text'), line: document.getElementById('ex3-line'), btn: document.getElementById('ex3-btn') };
+      const ex4 = { bg: document.getElementById('ex4-bg'), title: document.getElementById('ex4-title'), text: document.getElementById('ex4-text'), line: document.getElementById('ex4-line'), btn: document.getElementById('ex4-btn') };
+
+      function updateUI(h) {
+        h = parseInt(h);
+        const s = 100;
+        const l = 50;
+        
+        hueValueDisplay.innerHTML = `${h}&deg;`;
+        const hslString = `hsl(${h}, ${s}%, ${l}%)`;
+        previewBlock.style.backgroundColor = hslString;
+
+        // Accent Strings
+        const rgbArr = hslToRgb(h, s, l);
+        const accentHex = rgbToHex(...rgbArr).toUpperCase();
+        hexText.innerText = accentHex;
+        rgbText.innerText = `rgb(${rgbArr.join(', ')})`;
+        hslText.innerText = hslString;
+
+        // Variations
+        const softHsl = `hsl(${h}, 85%, 94%)`;
+        const mutedHsl = `hsl(${h}, 50%, 60%)`;
+        const deepHsl = `hsl(${h}, 95%, 24%)`;
+        
+        const updateVar = (sat, light, box, label) => {
+          const vHsl = `hsl(${h}, ${sat}%, ${light}%)`;
+          box.style.backgroundColor = vHsl;
+          const [vr, vg, vb] = hslToRgb(h, sat, light);
+          const vHexValue = rgbToHex(vr, vg, vb).toUpperCase();
+          label.innerText = vHexValue;
+          return vHexValue;
+        };
+        const softHexValue = updateVar(85, 94, softBox, softHex);
+        const mutedHexValue = updateVar(50, 60, mutedBox, mutedHex);
+        const deepHexValue = updateVar(95, 24, deepBox, deepHex);
+
+        // Update Button Collection
+        btnPrimary.style.backgroundColor = hslString;
+        btnSecondary.style.backgroundColor = softHsl;
+        btnSecondary.style.color = deepHsl;
+        btnTextComp.style.color = deepHsl;
+
+        // Greys
+        const compHue = (h + 180) % 360;
+        const compSat = 8;
+        const gBlack = `hsl(${compHue}, ${compSat}%, 10%)`;
+        const gDarkGrey = `hsl(${compHue}, ${compSat}%, 20%)`;
+        const gLightGrey = `hsl(${compHue}, ${compSat}%, 95%)`;
+        const gWhite = `hsl(${compHue}, ${compSat}%, 98%)`;
+
+        const updateGrey = (lightness, box, hexEl, hslEl) => {
+          const fullHsl = `hsl(${compHue}, ${compSat}%, ${lightness}%)`;
+          box.style.backgroundColor = fullHsl;
+          const [gr, gg, gb] = hslToRgb(compHue, compSat, lightness);
+          const greyHexValue = rgbToHex(gr, gg, gb).toUpperCase();
+          hexEl.innerText = greyHexValue;
+          hslEl.innerText = fullHsl;
+          return { hex: greyHexValue, hsl: fullHsl };
+        };
+        const blackG = updateGrey(10, nbBox, nbHex, nbHsl);
+        const darkG = updateGrey(20, dgBox, dgHex, dgHsl);
+        const lightG = updateGrey(95, lgBox, lgHex, lgHsl);
+        const whiteG = updateGrey(98, nwBox, nwHex, nwHsl);
+
+        // Update AI Export Text
+        aiExportText.innerText = `BRAND STYLE GUIDE
+Accent Palette:
+- Primary Accent: ${accentHex} (${hslString})
+- Soft Accent: ${softHexValue} (${softHsl})
+- Muted Accent: ${mutedHexValue} (${mutedHsl})
+- Deep Accent: ${deepHexValue} (${deepHsl})
+
+Neutral System (Complementary):
+- Black: ${blackG.hex} (${blackG.hsl})
+- Dark Grey: ${darkG.hex} (${darkG.hsl})
+- Light Grey: ${lightG.hex} (${lightG.hsl})
+- White: ${whiteG.hex} (${whiteG.hsl})`;
+
+        // Update Nav Example
+        navExBg.style.backgroundColor = gWhite;
+        navExLogo.style.color = gDarkGrey;
+        navExActiveLine.style.backgroundColor = hslString;
+        navExLink.style.color = gDarkGrey;
+        navExLink2.style.color = gDarkGrey;
+        navExCta.style.backgroundColor = hslString;
+        navExCta.style.color = "white";
+
+        // Update Form Example
+        formExBg.style.backgroundColor = gWhite;
+        formExInput.style.borderColor = gDarkGrey;
+        formExInput.style.backgroundColor = gWhite;
+        formExSelect.style.borderColor = gDarkGrey;
+        formExToggle.style.backgroundColor = hslString;
+        formExLabels.forEach(label => label.style.color = gDarkGrey);
+
+        // Update Examples
+        // Example 1: Dark Grey Theme
+        ex1.bg.style.backgroundColor = gDarkGrey;
+        ex1.title.style.color = gLightGrey;
+        ex1.text.style.color = gLightGrey;
+        ex1.line.style.backgroundColor = hslString;
+        ex1.btn.style.color = hslString;
+
+        // Example 2: Light Grey Theme
+        ex2.bg.style.backgroundColor = gLightGrey;
+        ex2.title.style.color = gBlack;
+        ex2.text.style.color = gBlack;
+        ex2.line.style.backgroundColor = hslString;
+        ex2.btn.style.color = deepHsl;
+
+        // Example 3: High Contrast (Black BG)
+        ex3.bg.style.backgroundColor = gBlack;
+        ex3.title.style.color = gWhite;
+        ex3.text.style.color = gWhite;
+        ex3.line.style.backgroundColor = hslString;
+        ex3.btn.style.color = hslString;
+
+        // Example 4: Soft Minimal (White BG)
+        ex4.bg.style.backgroundColor = gWhite;
+        ex4.title.style.color = gDarkGrey;
+        ex4.text.style.color = gDarkGrey;
+        ex4.line.style.backgroundColor = hslString;
+        ex4.btn.style.color = deepHsl;
+      }
+
+      window.copyColour = function(elementId) {
+        const textToCopy = document.getElementById(elementId).innerText;
+        const textArea = document.createElement("textarea");
+        textArea.value = textToCopy;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand('copy');
+          showToast();
+        } catch (err) {
+          console.error('Unable to copy', err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function showToast() {
+        copyToast.style.opacity = "1";
+        setTimeout(() => { copyToast.style.opacity = "0"; }, 2000);
+      }
+
+      hueSlider.addEventListener('input', (e) => updateUI(e.target.value));
+      document.addEventListener('DOMContentLoaded', () => updateUI(hueSlider.value));
+    </script>
+  </body>
+</html>
