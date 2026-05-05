@@ -3,9 +3,9 @@
  <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Weeknotes: April 26, 2026</title>
+     <title>Domscrolling Weeknotes</title>
      <meta name="description" content="Weekly social media digest from Dom - 100% human-made">
-     <meta property="og:title" content="Weeknotes: April 26, 2026">
+     <meta property="og:title" content="Domscrolling Weeknotes">
      <meta property="og:description" content="Weekly social media digest from Dom - 100% human-made">
      <meta property="og:url" content="https://chuffedcoaching.com/domscrolling">
      <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -19,79 +19,152 @@
 
     body {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        background-color: #191919;
-        background-image: radial-gradient(circle, rgba(206, 206, 206, 0.1) 1px, transparent 1px);
-        background-size: 16px 16px;
-        color: #CECECE;
+        background-color: #0a0b0a;
+        color: #7d827d;
         line-height: 1.6;
         min-height: 100vh;
-        padding: 32px 16px;
+        padding: 96px 24px;
+        max-width: 1080px;
+        margin: 0 auto;
+        border-left: 1px solid #2c2e2c;
+        border-right: 1px solid #2c2e2c;
+    }
+
+    html {
+        background-color: #0a0b0a;
     }
 
     .container {
-         max-width: 960px;
+         max-width: 100%;
          margin: 0 auto;
-         padding: 0 16px;
+         padding: 0 24px;
      }
 
      .site-header {
-         margin-bottom: 64px;
+         margin-bottom: 96px;
          padding-bottom: 48px;
-         border-bottom: 2px solid #303030;
+         border-bottom: 1px solid #2c2e2c;
      }
 
       .site-title {
           font-family: 'JetBrains Mono', monospace;
           font-size: 32px;
           font-weight: 700;
-          color: #CECECE;
+          color: #e4e6e4;
+          text-transform: uppercase;
+          letter-spacing: 0.15em;
           margin-bottom: 12px;
-          letter-spacing: -0.02em;
       }
 
      .site-description {
          font-size: 18px;
-         color: #CECECE;
-         opacity: 0.7;
+         color: #7d827d;
          margin: 0;
      }
 
      header {
-         margin-bottom: 48px;
-         border-bottom: 1px solid #303030;
+         margin-bottom: 64px;
+         border-bottom: 1px solid #2c2e2c;
          padding-bottom: 32px;
      }
 
     h1 {
          font-family: 'JetBrains Mono', monospace;
-         font-size: 56px;
+         font-size: 48px;
          font-weight: 700;
+         text-transform: uppercase;
+         letter-spacing: 0.15em;
          margin-bottom: 8px;
-         color: #CECECE;
-         letter-spacing: -0.02em;
+         color: #e4e6e4;
      }
 
     .date {
          font-family: 'JetBrains Mono', monospace;
          font-size: 18px;
-         color: #F6084C;
+         color: hsl(343, 93%, 52%);
          text-transform: uppercase;
-         letter-spacing: 0.05em;
+         letter-spacing: 0.15em;
      }
 
      .description {
          font-size: 20px;
-         color: #CECECE;
-         opacity: 0.8;
+         color: #7d827d;
          margin-top: 16px;
      }
+
+    .weeknote {
+        margin-bottom: 0;
+        padding: 96px 24px;
+        border-bottom: 1px solid #2c2e2c;
+    }
+
+    .weeknote:nth-of-type(even) {
+        background-color: #181a18;
+    }
+
+    .weeknote:last-of-type {
+        border-bottom: none;
+        margin-bottom: 96px;
+    }
+
+    footer {
+        padding: 64px 0;
+        border-top: 1px solid #2c2e2c;
+    }
+
+    .footer-column {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .footer-column a, .footer-column p {
+        font-size: 0.875rem;
+        margin-bottom: 8px;
+        color: #7d827d;
+        text-decoration: none;
+    }
+
+    .footer-column a:hover {
+        color: #e4e6e4;
+        text-decoration: underline;
+    }
+
+    h6, .label {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #e4e6e4;
+    }
+
+    .sized-box-small {
+        height: 16px;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 32px;
+    }
+
+    img {
+        border-radius: 2px;
+        border: 1px solid #2c2e2c;
+        filter: grayscale(100%) brightness(0.9) contrast(1.1) sepia(100%) hue-rotate(70deg) saturate(0.2);
+        transition: filter 0.3s ease;
+    }
+
+    img:hover {
+        filter: grayscale(0%) brightness(1) contrast(1) sepia(0%) hue-rotate(0deg) saturate(1);
+    }
 
     main {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 48px;
+        gap: 0;
         margin-bottom: 48px;
-        max-width: 600px;
+        max-width: 750px;
         margin-left: auto;
         margin-right: auto;
     }
@@ -267,12 +340,113 @@
              <h2 class="site-title">DOMSCROLLING</h2>
              <p class="site-description">Weekly social media digest from Dom - 100% human-made</p>
          </div>
-         <header>
-             <div class="date">April 26, 2026</div>
-             <h1>Weeknotes: April 26, 2026</h1>
-         </header>
          <main>
              
+        <article class="weeknote" >
+            <header>
+                <div class="date">May 04, 2026</div>
+                <h1>Weeknotes: May 04, 2026</h1>
+            </header>
+            <div class="blocks">
+                
+        <div class="block block-note">
+            <div class="block-type">Note</div>
+            <p>Welcome to <strong>Domscrolling</strong>. I have been working this week with some amazing technologists helping to get their products out into the world, and there is a clear smell in the air of people just not trusting their workplaces at the moment. Let me know if you are feeling the same.</p>
+
+        </div>
+        
+        <div class="block block-abstract">
+            <div class="block-type">Idea</div>
+            <p>More experimentation with Local LLMs, and I have started to put together a separate flow and chain of thought for design work. The results are really weird, and quite frankly a bit strange, so I will have to try out some other approaches, especially when it comes to layout.</p>
+
+        </div>
+        
+        <div class="block block-quote">
+            <div class="block-type">Highlight</div>
+            <p><strong>If you want everything to be familiar, then you will never learn anything new</strong>
+A message for Technical Founders: things are rarely hard; it’s just unfamiliar.
+<a href="https://www.linkedin.com/posts/dom-maurice_a-message-for-technical-founders-things-share-7455237638254678016-8r3j">Read the full post here</a></p>
+
+        </div>
+        
+        <div class="block block-video">
+            <div class="block-type">Video</div>
+            
+                <a href="https://www.youtube.com/watch?v=-7DvJ1wNs-k" target="_blank">
+                    <img src="https://img.youtube.com/vi/-7DvJ1wNs-k/maxresdefault.jpg" alt="YouTube Video" style="width:100%; border-radius:10px;" />
+                </a>
+                
+        </div>
+        
+        <div class="block block-video">
+            <div class="block-type">Video</div>
+            
+                <a href="https://www.youtube.com/watch?v=Ein661sSh0M" target="_blank">
+                    <img src="https://img.youtube.com/vi/Ein661sSh0M/maxresdefault.jpg" alt="YouTube Video" style="width:100%; border-radius:10px;" />
+                </a>
+                
+        </div>
+        
+        <div class="block block-quote">
+            <div class="block-type">Highlight</div>
+            <p><strong>The Terminal is an Egg</strong>
+Many new founders find themselves in a trap of trying to make the user experience as friction-free as possible, but the fact that developers adore Claude Code tells us that some good friction is key.
+<a href="https://chuffeddom.substack.com/p/the-terminal-is-an-egg">Read more</a></p>
+
+        </div>
+        
+        <div class="block block-todo">
+            <div class="block-type">Event</div>
+            <h3>Coding Co-Working Club <em>FREE</em></h3><div class="event-details">
+                    <div class="event-detail-item">
+                        <div class="event-detail-label">date</div>
+                        <div class="event-detail-value">May 2, 2026</div>
+                    </div>
+                    
+                    <div class="event-detail-item">
+                        <div class="event-detail-label">time</div>
+                        <div class="event-detail-value">12:00 PM</div>
+                    </div>
+                    
+                    <div class="event-detail-item">
+                        <div class="event-detail-label">location</div>
+                        <div class="event-detail-value">Santander Kensington Work Cafe</div>
+                    </div>
+                    </div><p>People with side-projects and learning just getting together to show up for the week and get some accountability</p>
+
+        </div>
+        
+        <div class="block block-todo">
+            <div class="block-type">Event</div>
+            <h3>Tuesday Deep Dive <em>FREE</em></h3><div class="event-details">
+                    <div class="event-detail-item">
+                        <div class="event-detail-label">date</div>
+                        <div class="event-detail-value">April 28, 2026</div>
+                    </div>
+                    
+                    <div class="event-detail-item">
+                        <div class="event-detail-label">time</div>
+                        <div class="event-detail-value">12:00 PM</div>
+                    </div>
+                    
+                    <div class="event-detail-item">
+                        <div class="event-detail-label">location</div>
+                        <div class="event-detail-value">https://meet.google.com/rpi-feao-zax</div>
+                    </div>
+                    </div><p>Will be discussing what is go-to-market for software developers and engineers looking to build and monetise an app</p>
+
+        </div>
+        
+            </div>
+        </article>
+        
+        <article class="weeknote" style="border-bottom: none; margin-bottom: 48px;">
+            <header>
+                <div class="date">April 26, 2026</div>
+                <h1>Weeknotes: April 26, 2026</h1>
+            </header>
+            <div class="blocks">
+                
         <div class="block block-note">
             <div class="block-type">Note</div>
             <p>Welcome to <strong>Domscrolling</strong>. I had so many folks say they end up missing some of my posts and events because of algorithms, so here are the important parts for any new founder to digest and look forward to.</p>
@@ -376,9 +550,37 @@ There is a ton of value in knocking up a quick something-something to get an ide
                 
         </div>
         
+            </div>
+        </article>
+        
          </main>
          <footer>
-             <p>Made with human love 🩷 <a href="https://chuffedcoaching.com/domscrolling/">Domscrolling</a></p>
+             <div class="grid">
+               <div class="footer-column">
+                 <h6 class="label">Journey</h6>
+                 <div class="sized-box-small"></div>
+                 <a href="https://chuffed.solutions/dom-maurice">Chuffed's Journey</a>
+               </div>
+               <div class="footer-column">
+                 <h6 class="label">Social</h6>
+                 <div class="sized-box-small"></div>
+                 <a href="https://www.linkedin.com/in/dom-maurice/">LinkedIn</a>
+                 <a href="https://www.youtube.com/@ChuffedDom">YouTube</a>
+               </div>
+               <div class="footer-column">
+                 <h6 class="label">Legal</h6>
+                 <div class="sized-box-small"></div>
+                 <p>
+                   Chuffed Solutions Limited <br />
+                   13 Whitchurch Lane Edgware, <br />
+                   Middlesex, HA8 6JZ
+                 </p>
+                 <p>
+                   Co. no.
+                   <a href="https://find-and-update.company-information.service.gov.uk/company/13492456">13492456</a>
+                 </p>
+               </div>
+             </div>
          </footer>
      </div>
  </body>

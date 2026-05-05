@@ -1,103 +1,65 @@
-button {
-  background-color: var(--call-to-action);
-  color: var(--black);
-  font-weight: bold;
-  font-size: calc(1.2rem * var(--scaling-factor));
-  padding: 1rem 2rem;
-  border: 2px solid var(--call-to-action);
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: transform 0.2s ease-in;
-}
-
-button:hover {
-  transform: scale(1.01);
-}
-
-button:active {
-  transform: scale(0.99);
-  background-color: var(--white);
-}
-
+button,
 .cta-button {
-  background-color: var(--accent-gold);
-  color: var(--bg-grey);
-  padding: 1rem 2rem; /* 16px 32px */
-  border: none;
-  border-radius: 0.5rem; /* 8px */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-text);
+  color: var(--background);
   font-family: "JetBrains Mono", monospace;
-  font-size: 2rem; /* 20px */
+  font-size: 1rem;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 2px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+button:hover,
 .cta-button:hover {
-  background-color: var(--text-white);
-  transform: scale(1.01);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 var(--accent-coral);
 }
 
+button:active,
 .cta-button:active {
-  transform: scale(0.99);
-  background-color: var(--white);
+  transform: translateY(0);
+  box-shadow: 0 2px 0 var(--accent-coral);
 }
 
-.subscribing {
-  background-color: transparent;
-  color: var(--call-to-action);
-  /* make button disabled and unclickable */
-  pointer-events: none;
-}
-
-.subscribed {
-  border: 2px solid transparent;
-  background-color: transparent;
-  color: var(--white);
-  pointer-events: none;
-}
-
-.disabled-button {
-  color: var(--white);
-  background-color: var(--primary-color);
-  pointer-events: none;
-  opacity: 0.8;
-  cursor: not-allowed;
-  border: 1px solid var(--call-to-action);
-}
-
-/* Additional styles for input field */
-input[type="email"] {
-  background-color: transparent;
-  color: var(--white);
-  outline: 2px solid var(--call-to-action);
-  padding: 1rem;
-  border-radius: 0.5rem;
-}
-
-.form-control::placeholder {
-  color: var(--white);
-  opacity: 0.75;
-  font-style: italic;
+.cta-button-large {
+  font-size: 1.25rem;
+  padding: 16px 32px;
 }
 
 form {
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 0.5rem;
+  gap: 16px;
 }
 
-.error-message {
+input[type="email"],
+input[type="text"],
+textarea {
+  background-color: var(--background);
+  color: var(--primary-text);
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 2px;
+  font-family: "Inter", sans-serif;
   font-size: 1rem;
-  color: var(--white);
-  background-color: rgb(218, 71, 71);
-  padding: 0.2rem;
-  text-align: center;
-  border-radius: 0.5rem;
-  margin-top: 0.5rem;
-  box-shadow: 0.1rem 0.1rem 0.1rem rgb(46, 46, 46);
 }
 
-.hide {
-  display: none;
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent-coral);
+}
+
+::placeholder {
+  color: var(--secondary-text);
+  opacity: 0.5;
 }

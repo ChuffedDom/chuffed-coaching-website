@@ -6,7 +6,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@500;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="reset.css" />
@@ -41,129 +41,110 @@
       property="og:image"
       content="https://chuffedcoaching.com/og-image.png"
     />
-    <style>
-      .grid-hero {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 4rem; /* Multiple of 16px */
-        grid-auto-rows: auto;
-      }
-
-      .grid-item-hero-text {
-        overflow: visible;
-        min-width: 280px;
-        width: 100%;
-      }
-
-      .profile {
-        height: 64px; /* Multiple of 16px */
-        width: 64px; /* Multiple of 16px */
-        margin-top: 16px; /* Multiple of 16px */
-      }
-
-      .domface {
-        height: 128px; /* Multiple of 16px */
-        width: 128px; /* Multiple of 16px */
-        transform: scaleX(-1);
-      }
-    </style>
   </head>
   <body>
     <section>
-      <div class="sized-box-medium"></div>
-      <div class="sized-box-medium"></div>
       <div class="component">
-        <div class="grid-hero">
-          <div class="grid-item-hero-text">
+        <div class="grid">
+          <div class="grid-item">
             <h1>
-              Engineer to
-              <span class="text-accent"> &lt;/Entrepreneur&gt;</span>
+              End Terminal Burnout<span class="text-accent">.</span>
             </h1>
             <div class="sized-box-small"></div>
             <h3>
-              Turn Your Coding Skills Into
-              <span class="text-accent-cyan">Financial Freedom</span>
+              Turn Your Coding Skills Into Financial Freedom
             </h3>
             <div class="sized-box-medium"></div>
-            <p>
+            <p class="lead-text">
               You’ve mastered software development—now it’s time to learn
               product, branding, and go-to-market so you can ship and monetise
               your own digital product.
             </p>
             <div class="sized-box-medium"></div>
             <button
-              class="cta-button"
+              class="cta-button cta-button-large"
               onclick="window.open('https://calendar.app.google/Vqe7pwokH5LKwLeb9', '_blank')"
             >
               Book Now
             </button>
-            <div class="sized-box-medium"></div>
           </div>
 
-          <img
-            style="transform: scaleX(-1)"
-            class="journey-graphic"
-            src="dom.jpg"
-            alt="A visual display of going from code through branding, marketing, product, and arriving at cash"
-          />
+          <div class="panel">
+            <img
+              style="transform: scaleX(-1); border: none; border-radius: 0; width: 100%; height: 100%; object-fit: cover;"
+              src="images/dom.jpg"
+              alt="A visual display of going from code through branding, marketing, product, and arriving at cash"
+            />
+          </div>
         </div>
       </div>
-      <div class="sized-box-large"></div>
     </section>
     <section>
       <div class="component">
-        <div class="sized-box-massive"></div>
         <h2>Answering Big Questions</h2>
-        <div class="sized-box-large"></div>
+        <div class="sized-box-medium"></div>
         <div class="grid">
-          <div class="grid-item card-coral">
-            <h4>How do I find an app idea?</h4>
-            <p>
-              With a decade in product, I have proven methodologies that will
-              help you find killer ideas that will be primed for the market.
-            </p>
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-marker"></div>
+              <span class="label">Ideation</span>
+            </div>
+            <div class="panel-content">
+              <h4>How do I find an app idea?</h4>
+              <p>
+                With a decade in product, I have proven methodologies that will
+                help you find killer ideas that will be primed for the market.
+              </p>
+            </div>
           </div>
-          <div class="grid-item card-coral">
-            <h4>How do I get users?</h4>
-            <p>
-              I will give you the keys to success by helping you build a launch
-              campaign and a custom go-to-market strategy for your app.
-            </p>
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-marker"></div>
+              <span class="label">Go-To-Market</span>
+            </div>
+            <div class="panel-content">
+              <h4>How do I get users?</h4>
+              <p>
+                I will give you the keys to success by helping you build a launch
+                campaign and a custom go-to-market strategy for your app.
+              </p>
+            </div>
           </div>
-          <div class="grid-item card-coral">
-            <h4>How do I know if anyone will use my app?</h4>
-            <p>
-              I get it, you don't want to waste a year's worth of weekends
-              building something no one wants. I have validation strategies that
-              will help you test your ideas before you build them.
-            </p>
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-marker"></div>
+              <span class="label">Validation</span>
+            </div>
+            <div class="panel-content">
+              <h4>How do I know if anyone will use my app?</h4>
+              <p>
+                I get it, you don't want to waste a year's worth of weekends
+                building something no one wants. I have validation strategies that
+                will help you test your ideas before you build them.
+              </p>
+            </div>
           </div>
         </div>
-        <div class="sized-box-massive"></div>
       </div>
     </section>
     <section>
-      <div class="sized-box-massive"></div>
       <div class="component">
-        <div class="grid">
-          <div class="grid-item card">
+        <div class="grid grid-spaced">
+          <div class="panel-minimal">
             <h3>For Software Engineers</h3>
-            <hr />
             <p>
               Just actionable, hands-on 1-to-1 coaching. Book sessions as often
               as you like.
             </p>
           </div>
-          <div class="grid-item card">
+          <div class="panel-minimal">
             <h3>No MBA Jargon No Nonsense</h3>
-            <hr />
             <p>
               Building successful products doesn't need its own secret language.
             </p>
           </div>
-          <div class="grid-item card">
+          <div class="panel-minimal">
             <h3>Accountability & Momentum</h3>
-            <hr />
             <p>
               Stop overthinking, start shipping. You will get a clear plan so
               you know the best way to spend your time, effort, and money.
@@ -171,18 +152,16 @@
           </div>
         </div>
       </div>
-      <div class="sized-box-massive"></div>
     </section>
     <section>
       <div class="component">
-        <div class="sized-box-massive"></div>
         <h2>Our Clients are Chuffed</h2>
-        <div class="sized-box-massive"></div>
+        <div class="sized-box-medium"></div>
         <div class="grid">
-          <div class="grid-item testimonial-card">
+          <div class="testimonial-card">
             <div class="testimonial-header">
               <img
-                src="nicholas.jpeg"
+                src="images/nicholas.jpeg"
                 alt="Portrait of Nicholas"
                 class="testimonial-avatar"
               />
@@ -197,10 +176,10 @@
               all the right ways. A truly productive and insightful session!
             </p>
           </div>
-          <div class="grid-item testimonial-card">
+          <div class="testimonial-card">
             <div class="testimonial-header">
               <img
-                src="vincent.jpeg"
+                src="images/vincent.jpeg"
                 alt="Portrait of Vincent"
                 class="testimonial-avatar"
               />
@@ -214,10 +193,10 @@
               project.
             </p>
           </div>
-          <div class="grid-item testimonial-card">
+          <div class="testimonial-card">
             <div class="testimonial-header">
               <img
-                src="sabare.jpeg"
+                src="images/sabare.jpeg"
                 alt="Portrait of Sabare"
                 class="testimonial-avatar"
               />
@@ -230,10 +209,10 @@
               clarity to think on the right direction!
             </p>
           </div>
-          <div class="grid-item testimonial-card">
+          <div class="testimonial-card">
             <div class="testimonial-header">
               <img
-                src="tim.jpeg"
+                src="images/tim.jpeg"
                 alt="Portrait of Tim"
                 class="testimonial-avatar"
               />
@@ -249,108 +228,123 @@
               come away with new excitement to work on my business.
             </p>
           </div>
-        </div>
-        <div class="sized-box-massive"></div>
-      </div>
-    </section>
-    <section>
-      <div class="component">
-        <div class="long-form letter">
-          <div class="sized-box-massive"></div>
-          <div class="grid">
-            <div class="grid-item">
-              <img src="me.webp" class="domface" alt="A picture of my face" />
-              <div class="sized-box-small"></div>
-              <h2><span class="text-accent-pink">Hi, I'm Dom</span></h2>
-              <div class="sized-box-small"></div>
-              <h6>Professional Tinkerer and Product Coach</h6>
+          <div class="testimonial-card">
+            <div class="testimonial-header">
+              <img
+                src="images/viktor.jpeg"
+                alt="Portrait of Viktor"
+                class="testimonial-avatar"
+              />
+              <h3>Viktor</h3>
             </div>
-            <div class="grid-item">
-              <p>
-                With a history of being a Head of Product, I built a company,
-                Chuffed Solutions, that has launched digital products for my
-                clients since 2021.
-              </p>
-              <p>I also own apps that I have monetised.</p>
-              <p>
-                That leads to me sitting with developers like yourself and
-                talking about what they are working on in their spare time.
-              </p>
-              <p>
-                But they get stuck levelling up the code when, in actual fact,
-                the most effective advice I give them are the easy wins for the
-                product management and go-to-market.
-              </p>
-              <p>
-                Therefore, I want to help you get your product out there and get
-                you to a place where financial indepence is in your hands, not
-                at the whims of Shareholders.
-              </p>
-              <p></p>
-              <p>
-                But the bigger picture is this; I want the next generation of
-                tech owners to be the people who genuinely innovate.
-              </p>
-              <p>
-                Let's build great products for great people by great creators.
-              </p>
-              <p>Dom</p>
-            </div>
+            <p>
+              Working with Dom has been exactly what I needed as a single
+              founder. While I have strong domain and technical expertise, I was
+              lacking the business acumen to move forward confidently. Dom has
+              been instrumental in filling that gap, providing strategic
+              guidance that's helped me make meaningful progress. He's
+              collaborative, insightful, and I highly recommend his services to
+              other (potential) founders facing similar challenges.
+            </p>
           </div>
         </div>
-        <div class="sized-box-massive"></div>
       </div>
     </section>
     <section>
       <div class="component">
-        <div class="sized-box-massive"></div>
-        <h2>Your Journey of becoming an Entrepreneur Starts Here</h2>
+        <div class="grid">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-marker"></div>
+              <span class="label">CEO | Founder</span>
+            </div>
+            <div class="panel-content">
+              <img src="images/me.webp" style="width: 64px; height: 64px; object-fit: cover; border: none; border-radius: 4px;" alt="A picture of Dom" />
+            </div>
+          </div>
+          <div class="grid-item">
+            <h2>Hi, I'm Dom</h2>
+            <div class="sized-box-small"></div>
+            <h4 class="label">Professional Tinkerer and Product Coach</h4>
+            <div class="sized-box-medium"></div>
+            <p>
+              With a history of being a Head of Product, I built a company,
+              Chuffed Solutions, that has launched digital products for my
+              clients since 2021.
+            </p>
+            <p>I also own apps that I have monetised.</p>
+            <p>
+              That leads to me sitting with developers like yourself and
+              talking about what they are working on in their spare time.
+            </p>
+            <p>
+              But they get stuck levelling up the code when, in actual fact,
+              the most effective advice I give them are the easy wins for the
+              product management and go-to-market.
+            </p>
+            <p>
+              Therefore, I want to help you get your product out there and get
+              you to a place where financial indepence is in your hands, not
+              at the whims of Shareholders.
+            </p>
+            <p>
+              But the bigger picture is this; I want the next generation of
+              tech owners to be the people who genuinely innovate.
+            </p>
+            <p>
+              Let's build great products for great people by great creators.
+            </p>
+            <p class="label">Dom</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="component">
+        <h2>Your Journey Starts Here</h2>
         <div class="sized-box-medium"></div>
-        <p>
+        <p class="lead-text">
           Begin taking control of your success with Chuffed in a 1-hour session,
           all info and data is kept private.
         </p>
         <div class="sized-box-medium"></div>
         <button
-          class="cta-button"
+          class="cta-button cta-button-large"
           onclick="window.open('https://calendar.app.google/Vqe7pwokH5LKwLeb9', '_blank')"
         >
           Book Now
         </button>
-        <div class="sized-box-massive"></div>
       </div>
     </section>
-    <section>
+    <footer>
       <div class="component">
-        <div class="sized-box-massive"></div>
-        <h2>Find Us</h2>
-        <div class="sized-box-large"></div>
         <div class="grid">
-          <div style="display: flex; flex-direction: column" class="grid-item">
-            <a href="https://chuffed.solutions/dom-maurice"
-              >Chuffed's Journey</a
-            >
-            <div class="sized-box-medium"></div>
+          <div class="footer-column">
+            <h6 class="label">Journey</h6>
+            <div class="sized-box-small"></div>
+            <a href="https://chuffed.solutions/dom-maurice">Chuffed's Journey</a>
+          </div>
+          <div class="footer-column">
+            <h6 class="label">Social</h6>
+            <div class="sized-box-small"></div>
             <a href="https://www.linkedin.com/in/dom-maurice/">LinkedIn</a>
-            <div class="sized-box-medium"></div>
             <a href="https://www.youtube.com/@ChuffedDom">YouTube</a>
           </div>
-          <div class="grid-item">
-            Chuffed Solutions Limited <br />
-            13 Whitchurch Lane Edgware, <br />
-            Middlesex <br />
-            England <br />
-            HA8 6JZ <br />
-            <br />
-            Registered Company no.
-            <a
-              href="https://find-and-update.company-information.service.gov.uk/company/13492456"
-              >13492456</a
-            >
+          <div class="footer-column">
+            <h6 class="label">Legal</h6>
+            <div class="sized-box-small"></div>
+            <p>
+              Chuffed Solutions Limited <br />
+              13 Whitchurch Lane Edgware, <br />
+              Middlesex, HA8 6JZ
+            </p>
+            <p>
+              Co. no.
+              <a href="https://find-and-update.company-information.service.gov.uk/company/13492456">13492456</a>
+            </p>
           </div>
         </div>
       </div>
-      <div class="sized-box-massive"></div>
-    </section>
+    </footer>
   </body>
 </html>
