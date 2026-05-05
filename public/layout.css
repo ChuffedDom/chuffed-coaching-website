@@ -71,6 +71,14 @@ img:hover {
   gap: 32px; /* Component Gap */
 }
 
+.grid-single {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 .grid-spaced {
   gap: 64px;
 }
@@ -112,6 +120,12 @@ img:hover {
 
 .panel-content {
   padding: 24px; /* Internal Padding */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+  flex: 1;
 }
 
 .panel-minimal {
@@ -122,6 +136,10 @@ img:hover {
 
 .panel-minimal p {
   text-align: justify;
+}
+
+.panel-hug {
+  align-self: start;
 }
 
 .card {
@@ -143,7 +161,51 @@ img:hover {
 .testimonial-header {
   display: flex;
   align-items: center;
+  gap: 16px;
   margin-bottom: 16px;
+}
+
+.testimonial-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.testimonial-text {
+  transition: all 0.3s ease;
+}
+
+.testimonial-text.expanded {
+  display: block;
+}
+
+.read-more-btn {
+  background: none;
+  border: none;
+  box-shadow: none !important;
+  outline: none;
+  color: var(--secondary-text);
+  cursor: pointer;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.875rem;
+  padding: 0;
+  margin-top: 8px;
+  text-decoration: none !important;
+  transform: none !important;
+}
+
+.read-more-btn:hover {
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.read-more-btn.expanded {
+  color: var(--primary-text);
+}
+
+.read-more-btn.expanded {
+  color: var(--primary-text);
 }
 
 .testimonial-avatar {
@@ -174,4 +236,13 @@ footer {
   font-size: 0.875rem;
   margin-bottom: 8px;
   max-width: none;
+}
+
+.footer-column a {
+  color: var(--primary-text);
+  transition: color 0.3s ease;
+}
+
+.footer-column a:hover {
+  color: var(--accent-coral);
 }
