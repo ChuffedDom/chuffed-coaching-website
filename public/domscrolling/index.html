@@ -19,144 +19,82 @@
 
     body {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        background-color: #0a0b0a;
-        color: #7d827d;
+        background-color: #191919;
+        background-image: radial-gradient(circle, rgba(206, 206, 206, 0.1) 1px, transparent 1px);
+        background-size: 16px 16px;
+        color: #CECECE;
         line-height: 1.6;
         min-height: 100vh;
-        padding: 96px 24px;
-        max-width: 1080px;
-        margin: 0 auto;
-        border-left: 1px solid #2c2e2c;
-        border-right: 1px solid #2c2e2c;
-    }
-
-    html {
-        background-color: #0a0b0a;
+        padding: 32px 16px;
     }
 
     .container {
-         max-width: 100%;
+         max-width: 960px;
          margin: 0 auto;
-         padding: 0 24px;
+         padding: 0 16px;
      }
 
      .site-header {
-         margin-bottom: 96px;
+         margin-bottom: 64px;
          padding-bottom: 48px;
-         border-bottom: 1px solid #2c2e2c;
+         border-bottom: 2px solid #303030;
      }
 
       .site-title {
           font-family: 'JetBrains Mono', monospace;
           font-size: 32px;
           font-weight: 700;
-          color: #e4e6e4;
-          text-transform: uppercase;
-          letter-spacing: 0.15em;
+          color: #CECECE;
           margin-bottom: 12px;
+          letter-spacing: -0.02em;
       }
 
      .site-description {
          font-size: 18px;
-         color: #7d827d;
+         color: #CECECE;
+         opacity: 0.7;
          margin: 0;
      }
 
      header {
-         margin-bottom: 64px;
-         border-bottom: 1px solid #2c2e2c;
+         margin-bottom: 48px;
+         border-bottom: 1px solid #303030;
          padding-bottom: 32px;
      }
 
     h1 {
          font-family: 'JetBrains Mono', monospace;
-         font-size: 48px;
+         font-size: 56px;
          font-weight: 700;
-         text-transform: uppercase;
-         letter-spacing: 0.15em;
          margin-bottom: 8px;
-         color: #e4e6e4;
+         color: #CECECE;
+         letter-spacing: -0.02em;
      }
 
     .date {
          font-family: 'JetBrains Mono', monospace;
          font-size: 18px;
-         color: hsl(343, 93%, 52%);
+         color: #F6084C;
          text-transform: uppercase;
-         letter-spacing: 0.15em;
+         letter-spacing: 0.05em;
      }
 
      .description {
          font-size: 20px;
-         color: #7d827d;
+         color: #CECECE;
+         opacity: 0.8;
          margin-top: 16px;
      }
 
     .weeknote {
-        margin-bottom: 0;
-        padding: 96px 24px;
-        border-bottom: 1px solid #2c2e2c;
-    }
-
-    .weeknote:nth-of-type(even) {
-        background-color: #181a18;
+        margin-bottom: 96px;
+        padding-bottom: 48px;
+        border-bottom: 2px solid #303030;
     }
 
     .weeknote:last-of-type {
         border-bottom: none;
-        margin-bottom: 96px;
-    }
-
-    footer {
-        padding: 64px 0;
-        border-top: 1px solid #2c2e2c;
-    }
-
-    .footer-column {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .footer-column a, .footer-column p {
-        font-size: 0.875rem;
-        margin-bottom: 8px;
-        color: #7d827d;
-        text-decoration: none;
-    }
-
-    .footer-column a:hover {
-        color: #e4e6e4;
-        text-decoration: underline;
-    }
-
-    h6, .label {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.75rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.15em;
-        color: #e4e6e4;
-    }
-
-    .sized-box-small {
-        height: 16px;
-    }
-
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 32px;
-    }
-
-    img {
-        border-radius: 2px;
-        border: 1px solid #2c2e2c;
-        filter: grayscale(100%) brightness(0.9) contrast(1.1) sepia(100%) hue-rotate(70deg) saturate(0.2);
-        transition: filter 0.3s ease;
-    }
-
-    img:hover {
-        filter: grayscale(0%) brightness(1) contrast(1) sepia(0%) hue-rotate(0deg) saturate(1);
+        margin-bottom: 48px;
     }
 
     main {
@@ -342,6 +280,118 @@
          </div>
          <main>
              
+        <article class="weeknote" >
+            <header>
+                <div class="date">May 11, 2026</div>
+                <h1>Weeknotes: May 11, 2026</h1>
+            </header>
+            <div class="blocks">
+                
+        <div class="block block-note">
+            <div class="block-type">Note</div>
+            <p>Welcome to <strong>Domscrolling</strong>. This week has been a long and tough week for me, as much of the outreach is still struggling to move forward from myself, however I am working on a new offering that I will be launching hopefully very soon.</p>
+
+        </div>
+        
+        <div class="block block-abstract">
+            <div class="block-type">Idea</div>
+            <p>More experimentation with Local LLMs, you can view the basics idea of the project <a href="https://adawiki-ui.web.app/">here.</a> I spoke to a friend at my Coding Co-Working Club and he gave me some good ideas and approaches. But for now more testing and building the basic pipeline.</p>
+
+        </div>
+        
+        <div class="block block-quote">
+            <div class="block-type">Highlight</div>
+            <p><strong>They lay you off to pay themselves.</strong> We saw this week that CEOs pay grew 20 times more than worker's wages. Future Founders need to be protecting their way of life.
+<a href="https://www.linkedin.com/posts/dom-maurice_if-you-think-that-the-huge-increase-in-redundancies-activity-7457421681247199232-DsxX">Read the full post here</a></p>
+
+        </div>
+        
+        <div class="block block-video">
+            <div class="block-type">Video</div>
+            
+                <a href="https://www.youtube.com/watch?v=NF2qlVkJWOg" target="_blank">
+                    <img src="https://img.youtube.com/vi/NF2qlVkJWOg/maxresdefault.jpg" alt="YouTube Video" style="width:100%; border-radius:10px;" />
+                </a>
+                
+        </div>
+        
+        <div class="block block-video">
+            <div class="block-type">Video</div>
+            
+                <a href="https://www.youtube.com/watch?v=m_i0a5zMUsA" target="_blank">
+                    <img src="https://img.youtube.com/vi/m_i0a5zMUsA/maxresdefault.jpg" alt="YouTube Video" style="width:100%; border-radius:10px;" />
+                </a>
+                
+        </div>
+        
+        <div class="block block-quote">
+            <div class="block-type">Highlight</div>
+            <p><strong>We Live in Stupid Times</strong>
+It is all too easy to feel like you are not good enough to make it, but you are. The ones at the top are not special and at times can be very thick.
+<a href="https://chuffeddom.substack.com/p/we-live-in-stupid-times">Read more</a></p>
+
+        </div>
+        
+        <div class="block block-todo">
+            <div class="block-type">Event</div>
+            <h3>Coding Co-Working Club <em>FREE</em></h3><div class="event-details">
+                    <div class="event-detail-item">
+                        <div class="event-detail-label">date</div>
+                        <div class="event-detail-value">May 16, 2026</div>
+                    </div>
+                    
+                    <div class="event-detail-item">
+                        <div class="event-detail-label">time</div>
+                        <div class="event-detail-value">12:00 PM</div>
+                    </div>
+                    
+                    <div class="event-detail-item">
+                        <div class="event-detail-label">location</div>
+                        <div class="event-detail-value">Santander Kensington Work Cafe</div>
+                    </div>
+                    </div><p>People with side-projects and learning just getting together to show up for the week and get some accountability</p>
+
+        </div>
+        
+        <div class="block block-todo">
+            <div class="block-type">Event</div>
+            <h3>Tuesday Deep Dive <em>FREE</em></h3><div class="event-details">
+                    <div class="event-detail-item">
+                        <div class="event-detail-label">date</div>
+                        <div class="event-detail-value">May 12, 2026</div>
+                    </div>
+                    
+                    <div class="event-detail-item">
+                        <div class="event-detail-label">time</div>
+                        <div class="event-detail-value">12:00 PM</div>
+                    </div>
+                    
+                    <div class="event-detail-item">
+                        <div class="event-detail-label">location</div>
+                        <div class="event-detail-value">https://www.youtube.com/@ChuffedDom</div>
+                    </div>
+                    </div><p>I will be joined by a friend and fellow content creator and we will go through his go-to-market strategy for an app he has built. Basically a live version of the service I offer.</p>
+
+        </div>
+        
+        <div class="block block-note">
+            <div class="block-type">Note</div>
+            <p>I'm building an app for people building apps!! The latest in that journey is doing outreach. How can that help you in your app that you are looking to monetise? Watch below. 👇🏾</p>
+
+        </div>
+        
+        <div class="block block-video">
+            <div class="block-type">Video</div>
+            
+                <a href="https://www.youtube.com/watch?v=3TiSrNkvWn8" target="_blank">
+                    <img src="https://img.youtube.com/vi/3TiSrNkvWn8/maxresdefault.jpg" alt="YouTube Video" style="width:100%; border-radius:10px;" />
+                </a>
+                
+        </div>
+        
+            </div>
+        </article>
+        
         <article class="weeknote" >
             <header>
                 <div class="date">May 04, 2026</div>
@@ -555,29 +605,7 @@ There is a ton of value in knocking up a quick something-something to get an ide
         
          </main>
          <footer>
-              <div class="grid">
-                <div class="footer-column">
-                 <h6 class="label">Social</h6>
-                 <div class="sized-box-small"></div>
-                  <a href="https://www.linkedin.com/in/dom-maurice/">LinkedIn</a>
-                  <a href="https://www.youtube.com/@ChuffedDom">YouTube</a>
-                  <a href="https://www.tiktok.com/@chuffeddom">TikTok</a>
-                  <a href="https://github.com/ChuffedDom">GitHub</a>
-               </div>
-               <div class="footer-column">
-                 <h6 class="label">Legal</h6>
-                 <div class="sized-box-small"></div>
-                 <p>
-                   Chuffed Solutions Limited <br />
-                   13 Whitchurch Lane Edgware, <br />
-                   Middlesex, HA8 6JZ
-                 </p>
-                 <p>
-                   Co. no.
-                   <a href="https://find-and-update.company-information.service.gov.uk/company/13492456">13492456</a>
-                 </p>
-               </div>
-             </div>
+             <p>Made with human love 🩷 <a href="https://chuffedcoaching.com/domscrolling/">Domscrolling</a></p>
          </footer>
      </div>
  </body>

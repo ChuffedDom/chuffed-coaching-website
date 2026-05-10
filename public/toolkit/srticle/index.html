@@ -3,478 +3,208 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Srticle</title>
-    <!-- comment here blah blah-->
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Srticle | Chuffed Toolkit</title>
 
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-
-    <!-- Google Fonts - Inter -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=JetBrains+Mono:wght@500;700&display=swap"
       rel="stylesheet"
     />
 
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="../../reset.css" />
+    <link rel="stylesheet" href="../../colour.css" />
+    <link rel="stylesheet" href="../../typography.css" />
+    <link rel="stylesheet" href="../../layout.css" />
+    <link rel="stylesheet" href="../../call-to-action.css" />
+
     <style>
-      /* Custom base styles */
-      body {
+      .drop-zone {
+        border: 2px dashed var(--border);
+        border-radius: 4px;
+        padding: 48px 24px;
+        text-align: center;
+        cursor: pointer;
+        transition: border-color 0.2s;
+      }
+
+      .drop-zone:hover {
+        border-color: var(--accent-coral);
+      }
+
+      .output-pre {
+        width: 100%;
+        background-color: var(--background);
+        border: 1px solid var(--border);
+        padding: 24px;
         font-family: "Inter", sans-serif;
-        background-color: #f3f4f6; /* A light gray background */
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--primary-text);
+        white-space: pre-wrap;
+        border-radius: 4px;
       }
-      /* Simple animation for the spinner SVG */
-      .animate-spin {
-        animation: spin 1s linear infinite;
+
+      /* Modal Styling */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
       }
-      @keyframes spin {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(360deg);
-        }
+
+      .modal-panel {
+        width: 100%;
+        max-width: 500px;
+        margin: 24px;
       }
     </style>
   </head>
-  <body class="antialiased text-gray-800">
-    <!-- App Container -->
-    <div id="app" class="min-h-screen">
-      <!-- Top Navigation Bar -->
-      <nav class="bg-white shadow-sm sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex items-center justify-between h-16">
-            <!-- Left side: Brand/Logo -->
-            <div class="flex-shrink-0">
-              <a
-                href="https://chuffedcoaching.com/toolkit"
-                target="_blank"
-                class="text-2xl font-bold text-gray-900 hover:text-indigo-600 transition-colors"
-              >
-                Chuffed Toolkit
-              </a>
-            </div>
+  <body>
+    <section>
+      <div class="container" style="max-width: 800px; margin: 0 auto;">
+        <header style="text-align: center; margin-bottom: 64px;">
+          <div style="display: flex; justify-content: flex-end; margin-bottom: -40px;">
+            <button id="settings-btn" class="read-more-btn" style="margin: 0">SETTINGS</button>
+          </div>
+          <h1>Srticle<span class="text-accent">.</span></h1>
+          <p class="lead-text">
+            Turn your webinar transcripts (.srt files) into engaging LinkedIn posts.
+          </p>
+        </header>
 
-            <!-- Right side: Settings Icon -->
-            <div class="flex items-center">
-              <button
-                id="settings-btn"
-                type="button"
-                class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                aria-label="Open settings"
-              >
-                <i class="fas fa-cog text-xl"></i>
-              </button>
+        <!-- Input Panel -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-marker"></div>
+            <span class="label">UPLOAD TRANSCRIPT</span>
+          </div>
+          <div class="panel-content">
+            <div id="drop-zone" class="drop-zone" style="width: 100%">
+              <p class="label">DRAG & DROP .SRT FILE OR CLICK TO BROWSE</p>
+              <input type="file" id="srt-file-input" class="hidden" accept=".srt">
+            </div>
+            <p id="file-error" class="label text-accent hidden" style="margin-top: 16px;"></p>
+            <div id="loading-indicator" class="hidden" style="margin-top: 16px;">
+              <p class="label">CRAFTING YOUR POST...</p>
             </div>
           </div>
         </div>
-      </nav>
 
-      <!-- Main Content Area -->
-      <main class="p-4 sm:p-6 lg:p-8">
-        <div class="max-w-7xl mx-auto">
-          <!-- Input Area -->
-          <div class="bg-white p-8 rounded-lg shadow mb-8">
-            <h1 class="text-3xl font-bold mb-2">Srticle</h1>
-            <p class="text-gray-600 mb-6">
-              Instantly turn your webinar transcripts (.srt files) into engaging
-              LinkedIn posts.
-            </p>
-            <div
-              id="drop-zone"
-              class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-indigo-500 transition-colors"
-            >
-              <div class="flex flex-col items-center justify-center space-y-4">
-                <svg
-                  class="w-10 h-10 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                  ></path>
-                </svg>
-                <p class="text-gray-500">
-                  Drag & drop your .srt file here, or
-                  <span class="text-indigo-600 font-semibold">browse</span>
-                </p>
-                <input
-                  type="file"
-                  id="srt-file-input"
-                  class="hidden"
-                  accept=".srt"
-                />
-              </div>
-            </div>
-            <p
-              id="file-error"
-              class="mt-3 text-sm text-red-600 text-center hidden"
-            ></p>
-            <div
-              id="loading-indicator"
-              class="mt-4 flex flex-col items-center justify-center hidden"
-            >
-              <svg
-                class="animate-spin h-8 w-8 text-indigo-600"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  class="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  stroke-width="4"
-                ></circle>
-                <path
-                  class="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
-              <p class="text-gray-600 mt-2">Crafting your post, one sec...</p>
-            </div>
+        <!-- Output Panel -->
+        <div id="gemini-output-container" class="panel hidden" style="margin-top: 48px;">
+          <div class="panel-header">
+            <div class="panel-marker"></div>
+            <span class="label">GENERATED POST</span>
           </div>
-
-          <!-- Gemini Output Area -->
-          <div
-            id="gemini-output-container"
-            class="bg-white p-8 rounded-lg shadow hidden"
-          >
-            <div class="flex items-center justify-between mb-4">
-              <h2 class="text-2xl font-bold">Your LinkedIn Post</h2>
-              <button
-                id="regenerate-btn"
-                class="flex items-center px-4 py-2 text-sm font-medium text-indigo-600 bg-indigo-100 rounded-lg hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
-              >
-                <svg
-                  class="w-4 h-4 mr-2"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0011.667 0l3.181-3.183m-4.991-2.691L7.985 5.944m0 0L4.804 9.126m3.181-3.182a8.25 8.25 0 0111.667 0l3.181 3.182"
-                  />
-                </svg>
-                Regenerate
-              </button>
-            </div>
-            <div class="bg-gray-50 border border-gray-200 rounded-md">
-              <div class="p-4">
-                <pre
-                  id="gemini-output"
-                  class="text-gray-800 font-sans"
-                  style="white-space: pre-wrap"
-                ></pre>
-              </div>
-              <div
-                class="flex justify-end p-2 border-t border-gray-200 bg-gray-100/50 rounded-b-md"
-              >
-                <button
-                  id="copy-btn"
-                  class="flex items-center px-3 py-1.5 text-xs font-medium text-gray-600 bg-transparent rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
-                  title="Copy to clipboard"
-                ></button>
-              </div>
+          <div class="panel-content">
+            <pre id="gemini-output" class="output-pre"></pre>
+            <div style="display: flex; justify-content: flex-end; gap: 16px; width: 100%; margin-top: 16px;">
+              <button id="regenerate-btn" class="read-more-btn">REGENERATE</button>
+              <button id="copy-btn" class="cta-button">COPY TEXT</button>
             </div>
           </div>
         </div>
-      </main>
-    </div>
+
+        <footer style="text-align: center; border: none; padding-top: 96px;">
+          <a href="../" class="label" style="color: var(--primary-text); text-decoration: none;">
+            ← Back to Toolkit
+          </a>
+        </footer>
+      </div>
+    </section>
 
     <!-- Settings Modal -->
-    <div
-      id="settings-modal"
-      class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modal-title"
-    >
-      <div
-        class="bg-white rounded-xl shadow-2xl w-full max-w-lg m-4 transform transition-all"
-        id="modal-panel"
-      >
-        <!-- Modal Header -->
-        <div
-          class="flex items-start justify-between p-5 border-b border-gray-200 rounded-t-xl"
-        >
-          <h3 class="text-xl font-semibold text-gray-900" id="modal-title">
-            Settings
-          </h3>
-          <button
-            type="button"
-            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-            id="close-modal-btn"
-            aria-label="Close modal"
-          >
-            <i class="fas fa-times w-5 h-5"></i>
-          </button>
+    <div id="settings-modal" class="modal-overlay hidden">
+      <div class="panel modal-panel">
+        <div class="panel-header">
+          <div class="panel-marker"></div>
+          <span class="label">GEMINI API SETTINGS</span>
         </div>
-
-        <!-- Modal Body -->
-        <div class="p-6 space-y-6">
-          <p class="text-base leading-relaxed text-gray-500">
-            Configure your Gemini API key to enable post generation.
-          </p>
-          <div class="space-y-4">
+        <div class="panel-content">
+          <div style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
+            <p class="body-text" style="font-size: 0.875rem">Configure your Gemini API key to enable post generation.</p>
             <div>
-              <label
-                for="gemini-api-key-input"
-                class="block text-sm font-medium text-gray-700"
-                >Gemini API Key</label
-              >
-              <div class="relative mt-1">
-                <input
-                  type="password"
-                  id="gemini-api-key-input"
-                  class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 pr-10"
-                  placeholder="Enter your API key"
-                  autocomplete="off"
-                />
-                <button
-                  id="toggle-api-key-visibility"
-                  type="button"
-                  class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 hover:text-gray-700 focus:outline-none"
-                >
-                  <i class="fas fa-eye"></i>
-                </button>
+              <span class="label">API KEY</span>
+              <input type="password" id="gemini-api-key-input" placeholder="Paste your API key here">
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px;">
+              <button id="test-connection-btn" class="read-more-btn" style="margin: 0">TEST CONNECTION</button>
+              <div style="display: flex; gap: 12px;">
+                <button id="cancel-btn" class="read-more-btn">CANCEL</button>
+                <button id="save-btn" class="cta-button">SAVE</button>
               </div>
             </div>
+            <p id="test-success-msg" class="label text-accent hidden">SUCCESSFUL</p>
+            <p id="test-failure-msg" class="label text-accent hidden">FAILED</p>
           </div>
-          <!-- Test Connection Section -->
-          <div class="flex items-center justify-start mt-4">
-            <div id="test-connection-container" class="relative">
-              <button
-                id="test-connection-btn"
-                type="button"
-                class="px-3 py-2 text-xs font-medium text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 transition-colors"
-              >
-                Test Connection
-              </button>
-              <div
-                id="test-spinner"
-                class="absolute inset-0 flex items-center justify-center hidden"
-              >
-                <svg
-                  class="animate-spin h-5 w-5 text-gray-600"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    class="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    stroke-width="4"
-                  ></circle>
-                  <path
-                    class="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
-              </div>
-              <p
-                id="test-success-msg"
-                class="text-sm text-green-600 font-semibold hidden"
-              >
-                Connection Successful!
-              </p>
-              <p
-                id="test-failure-msg"
-                class="text-sm text-red-600 font-semibold hidden"
-              >
-                Connection Failed. Please check credentials.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Modal Footer -->
-        <div
-          class="flex items-center justify-end p-6 space-x-3 border-t border-gray-200 rounded-b-xl bg-gray-50"
-        >
-          <button
-            id="cancel-btn"
-            type="button"
-            class="px-5 py-2.5 text-sm font-medium text-gray-700 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-indigo-300"
-          >
-            Cancel
-          </button>
-          <button
-            id="save-btn"
-            type="button"
-            class="px-5 py-2.5 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300"
-          >
-            Save
-          </button>
         </div>
       </div>
     </div>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // Get modal elements
         const settingsBtn = document.getElementById("settings-btn");
         const settingsModal = document.getElementById("settings-modal");
         const closeModalBtn = document.getElementById("close-modal-btn");
         const cancelBtn = document.getElementById("cancel-btn");
         const saveBtn = document.getElementById("save-btn");
-        const modalPanel = document.getElementById("modal-panel");
-        const geminiApiKeyInput = document.getElementById(
-          "gemini-api-key-input"
-        );
-        const toggleApiKeyVisibilityBtn = document.getElementById(
-          "toggle-api-key-visibility"
-        );
-        const testConnectionBtn = document.getElementById(
-          "test-connection-btn"
-        );
-        const testSpinner = document.getElementById("test-spinner");
+        const geminiApiKeyInput = document.getElementById("gemini-api-key-input");
+        const testConnectionBtn = document.getElementById("test-connection-btn");
         const testSuccessMsg = document.getElementById("test-success-msg");
         const testFailureMsg = document.getElementById("test-failure-msg");
-        const copyBtn = document.getElementById("copy-btn");
 
-        // --- Function to open the modal ---
         const openModal = () => {
-          if (settingsModal) {
-            const storedApiKey = localStorage.getItem("geminiApiKey");
-            geminiApiKeyInput.value = storedApiKey || "";
-
-            testConnectionBtn.classList.remove("hidden");
-            testSpinner.classList.add("hidden");
-            testSuccessMsg.classList.add("hidden");
-            testFailureMsg.classList.add("hidden");
-
-            settingsModal.classList.remove("hidden");
-          }
+          const storedApiKey = localStorage.getItem("geminiApiKey");
+          geminiApiKeyInput.value = storedApiKey || "";
+          testSuccessMsg.classList.add("hidden");
+          testFailureMsg.classList.add("hidden");
+          settingsModal.classList.remove("hidden");
         };
 
-        // --- Function to close the modal ---
-        const closeModal = () => {
-          if (settingsModal) {
-            settingsModal.classList.add("hidden");
-          }
-        };
+        const closeModal = () => settingsModal.classList.add("hidden");
 
-        // --- API Key Test Function ---
         const testApiKey = async (apiKey) => {
           const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
           try {
             const response = await fetch(url, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                contents: [{ parts: [{ text: "hello" }] }],
-              }),
+              body: JSON.stringify({ contents: [{ parts: [{ text: "hello" }] }] }),
             });
-            return {
-              success: response.ok,
-              message: response.ok
-                ? "Success"
-                : (await response.json()).error.message,
-            };
-          } catch (error) {
-            console.error("API Test Error:", error);
-            return {
-              success: false,
-              message: "Network error. Check connection.",
-            };
-          }
+            return { success: response.ok };
+          } catch (error) { return { success: false }; }
         };
 
-        // --- Event Listeners ---
+        settingsBtn.addEventListener("click", openModal);
+        cancelBtn.addEventListener("click", closeModal);
+        saveBtn.addEventListener("click", () => {
+          localStorage.setItem("geminiApiKey", geminiApiKeyInput.value.trim());
+          closeModal();
+        });
 
-        if (settingsBtn) settingsBtn.addEventListener("click", openModal);
-        if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
-        if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
+        testConnectionBtn.addEventListener("click", async () => {
+          testSuccessMsg.classList.add("hidden");
+          testFailureMsg.classList.add("hidden");
+          const result = await testApiKey(geminiApiKeyInput.value.trim());
+          if (result.success) testSuccessMsg.classList.remove("hidden");
+          else testFailureMsg.classList.remove("hidden");
+        });
 
-        if (saveBtn) {
-          saveBtn.addEventListener("click", () => {
-            const apiKeyToSave = geminiApiKeyInput.value.trim();
-            if (apiKeyToSave) {
-              localStorage.setItem("geminiApiKey", apiKeyToSave);
-            } else {
-              localStorage.removeItem("geminiApiKey");
-            }
-            closeModal();
-          });
-        }
-
-        if (toggleApiKeyVisibilityBtn) {
-          toggleApiKeyVisibilityBtn.addEventListener("click", () => {
-            const icon = toggleApiKeyVisibilityBtn.querySelector("i");
-            if (geminiApiKeyInput.type === "password") {
-              geminiApiKeyInput.type = "text";
-              icon.classList.remove("fa-eye");
-              icon.classList.add("fa-eye-slash");
-            } else {
-              geminiApiKeyInput.type = "password";
-              icon.classList.remove("fa-eye-slash");
-              icon.classList.add("fa-eye");
-            }
-          });
-        }
-
-        if (testConnectionBtn) {
-          testConnectionBtn.addEventListener("click", async () => {
-            const apiKey = geminiApiKeyInput.value.trim();
-
-            testConnectionBtn.classList.add("hidden");
-            testSuccessMsg.classList.add("hidden");
-            testFailureMsg.classList.add("hidden");
-            testSpinner.classList.remove("hidden");
-
-            if (!apiKey) {
-              testSpinner.classList.add("hidden");
-              testFailureMsg.textContent = "Please enter an API key.";
-              testFailureMsg.classList.remove("hidden");
-              testConnectionBtn.classList.remove("hidden");
-              return;
-            }
-
-            const result = await testApiKey(apiKey);
-            testSpinner.classList.add("hidden");
-
-            if (result.success) {
-              testSuccessMsg.classList.remove("hidden");
-            } else {
-              testFailureMsg.textContent = result.message;
-              testFailureMsg.classList.remove("hidden");
-              testConnectionBtn.classList.remove("hidden");
-            }
-          });
-        }
-
-        // --- File Upload Logic ---
         const dropZone = document.getElementById("drop-zone");
         const srtFileInput = document.getElementById("srt-file-input");
         const fileError = document.getElementById("file-error");
         const loadingIndicator = document.getElementById("loading-indicator");
-        const geminiOutputContainer = document.getElementById(
-          "gemini-output-container"
-        );
+        const geminiOutputContainer = document.getElementById("gemini-output-container");
         const geminiOutput = document.getElementById("gemini-output");
         const regenerateBtn = document.getElementById("regenerate-btn");
+        const copyBtn = document.getElementById("copy-btn");
         let lastFileContent = null;
 
         const generateLinkedInPost = async (prompt, apiKey) => {
@@ -483,181 +213,53 @@
             const response = await fetch(url, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                contents: [{ parts: [{ text: prompt }] }],
-                generationConfig: {
-                  temperature: 0.8,
-                },
-              }),
+              body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: 0.8 } }),
             });
-
             if (response.ok) {
               const data = await response.json();
-              const text =
-                data.candidates[0]?.content?.parts[0]?.text ||
-                "No content generated.";
-              return { success: true, text: text };
-            } else {
-              const errorData = await response.json();
-              return {
-                success: false,
-                message: errorData.error?.message || "Failed to generate post.",
-              };
+              return { success: true, text: data.candidates[0]?.content?.parts[0]?.text || "" };
             }
-          } catch (error) {
-            console.error("Gemini API Error:", error);
-            return {
-              success: false,
-              message: "Network error during post generation.",
-            };
-          }
+            return { success: false };
+          } catch (error) { return { success: false }; }
         };
 
         const processAndGenerate = async (content) => {
           const apiKey = localStorage.getItem("geminiApiKey");
           if (!apiKey) {
-            fileError.textContent =
-              "Gemini API Key not found. Please set it in settings.";
+            fileError.textContent = "API Key not found. Set it in settings.";
             fileError.classList.remove("hidden");
             return;
           }
-
           loadingIndicator.classList.remove("hidden");
           geminiOutputContainer.classList.add("hidden");
-          fileError.classList.add("hidden");
-
-          const systemPrompt = `You are a LinkedIn content expert, much like Lara Acosta or Jasmin Alić. Your task is to craft a LinkedIn text post for me. It needs to be casual, in British English, and use millennial slang and emojis.
-
-Provided will be a transcript of a Webinar I recently did. When completing the task, take a subject point in the transcript as a basis for an idea, in the form of a value that the reader can take away.
-
-Keep as close to the language and vernacular of the transcript to keep my tone of voice as close as possible.
-
-Start with a hook of this form.
-
-I asked 100 of my customers why they paid me 2k+.
-I've spent 6 months creating viral LinkedIn videos.
-I've used 100s of tools to grow my LinkedIn. Here are my 3 (free) must-use tools.
-
-- I've never talked about this X hack before.
-- The number 1 mistake developers make.
-- Here's my biggest X hack I've used
-- My secret technique for X.
-
-* 🔑 Key moments and "aha!" insights. 
-* 🤣 Funny or emotional moments. 
-* 🤔 Controversial or thought-provoking statements. 
-* 📈 Sections that provide a clear tip, a quick tutorial, or a surprising fact. 
-* ❓ Answers to a specific question or a clear problem/solution. 
-
-Your response should only contain the LinkedIn post itself, with no introductory or concluding text.`;
-          const fullPrompt = systemPrompt + "\n\n" + content;
-          const result = await generateLinkedInPost(fullPrompt, apiKey);
-
+          const systemPrompt = `You are a LinkedIn expert. Craft a casual millennial text post from this transcript. responded with ONLY the post text.`;
+          const result = await generateLinkedInPost(systemPrompt + "\n\n" + content, apiKey);
           loadingIndicator.classList.add("hidden");
-
           if (result.success) {
             geminiOutput.textContent = result.text;
             geminiOutputContainer.classList.remove("hidden");
           } else {
-            fileError.textContent = `API Error: ${result.message}`;
+            fileError.textContent = "Failed to generate post.";
             fileError.classList.remove("hidden");
           }
         };
 
-        const handleFile = (file) => {
-          fileError.classList.add("hidden");
-          if (!file || !file.name.toLowerCase().endsWith(".srt")) {
-            fileError.textContent =
-              "Invalid file type. Please upload a .srt file.";
-            fileError.classList.remove("hidden");
-            return;
+        dropZone.addEventListener("click", () => srtFileInput.click());
+        srtFileInput.addEventListener("change", (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (ev) => { lastFileContent = ev.target.result; processAndGenerate(lastFileContent); };
+            reader.readAsText(file);
           }
+        });
 
-          const reader = new FileReader();
-          reader.readAsText(file);
-          reader.onload = (event) => {
-            lastFileContent = event.target.result;
-            console.log("--- First 10 lines of the uploaded file ---");
-            console.log(lastFileContent.split("\n").slice(0, 10).join("\n"));
-            processAndGenerate(lastFileContent);
-          };
-        };
-
-        const setCopyButtonState = (state) => {
-          if (state === "copied") {
-            copyBtn.innerHTML = `<i class="fas fa-check mr-2"></i> Copied!`;
-            copyBtn.disabled = true;
-          } else {
-            // default
-            copyBtn.innerHTML = `<i class="fas fa-copy mr-2"></i> Copy`;
-            copyBtn.disabled = false;
-          }
-        };
-
-        setCopyButtonState("default"); // Set initial state
-
-        if (dropZone) {
-          dropZone.addEventListener("click", () => srtFileInput.click());
-          dropZone.addEventListener("dragover", (e) => {
-            e.preventDefault();
-            dropZone.classList.add("border-indigo-500", "bg-indigo-50");
-          });
-          dropZone.addEventListener("dragleave", (e) => {
-            e.preventDefault();
-            dropZone.classList.remove("border-indigo-500", "bg-indigo-50");
-          });
-          dropZone.addEventListener("drop", (e) => {
-            e.preventDefault();
-            dropZone.classList.remove("border-indigo-500", "bg-indigo-50");
-            if (e.dataTransfer.files.length)
-              handleFile(e.dataTransfer.files[0]);
-          });
-          srtFileInput.addEventListener("change", (e) => {
-            if (e.target.files.length) handleFile(e.target.files[0]);
-          });
-        }
-
-        if (regenerateBtn) {
-          regenerateBtn.addEventListener("click", () => {
-            if (lastFileContent) processAndGenerate(lastFileContent);
-          });
-        }
-
-        if (copyBtn) {
-          copyBtn.addEventListener("click", () => {
-            if (!geminiOutput.textContent) return;
-            const textArea = document.createElement("textarea");
-            textArea.value = geminiOutput.textContent;
-            textArea.style.position = "fixed";
-            textArea.style.top = "-9999px";
-            document.body.appendChild(textArea);
-            textArea.select();
-            try {
-              document.execCommand("copy");
-              setCopyButtonState("copied");
-              setTimeout(() => {
-                setCopyButtonState("default");
-              }, 2000);
-            } catch (err) {
-              console.error("Failed to copy text: ", err);
-            }
-            document.body.removeChild(textArea);
-          });
-        }
-
-        if (settingsModal) {
-          settingsModal.addEventListener("click", (event) => {
-            if (event.target === settingsModal) closeModal();
-          });
-        }
-
-        document.addEventListener("keydown", (event) => {
-          if (
-            event.key === "Escape" &&
-            !settingsModal.classList.contains("hidden")
-          ) {
-            closeModal();
-          }
+        regenerateBtn.addEventListener("click", () => { if (lastFileContent) processAndGenerate(lastFileContent); });
+        copyBtn.addEventListener("click", () => {
+          navigator.clipboard.writeText(geminiOutput.textContent);
+          const originalText = copyBtn.innerText;
+          copyBtn.innerText = "COPIED!";
+          setTimeout(() => copyBtn.innerText = originalText, 2000);
         });
       });
     </script>

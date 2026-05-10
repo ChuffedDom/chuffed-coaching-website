@@ -3,67 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinkedIn Connection Viewer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <title>LinkedOut | Chuffed Toolkit</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=JetBrains+Mono:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="../../reset.css" />
+    <link rel="stylesheet" href="../../colour.css" />
+    <link rel="stylesheet" href="../../typography.css" />
+    <link rel="stylesheet" href="../../layout.css" />
+    <link rel="stylesheet" href="../../call-to-action.css" />
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
+        .control-panel {
+            margin-bottom: 48px;
+            width: 100%;
         }
 
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 8px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: flex-end;
+            width: 100%;
         }
 
-        .copy-toast {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1e293b;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 9999px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-            z-index: 100;
+        .filter-item {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .copy-toast.show {
-            opacity: 1;
-        }
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
-        }
-
-        #fileInput {
-            display: none;
-        }
-
-        /* Toggle Switch Styles */
+        /* Toggle Switch */
         .switch {
             position: relative;
             display: inline-block;
-            width: 44px;
-            height: 24px;
+            width: 40px;
+            height: 20px;
         }
         .switch input {
             opacity: 0;
@@ -77,120 +61,167 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #cbd5e1;
-            transition: .4s;
-            border-radius: 24px;
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            transition: .2s;
+            border-radius: 10px;
         }
         .slider:before {
             position: absolute;
             content: "";
-            height: 18px;
-            width: 18px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: .4s;
+            height: 14px;
+            width: 14px;
+            left: 2px;
+            bottom: 2px;
+            background-color: var(--secondary-text);
+            transition: .2s;
             border-radius: 50%;
         }
         input:checked + .slider {
-            background-color: #2563eb;
+            background-color: var(--surface);
+            border-color: var(--accent-coral);
         }
         input:checked + .slider:before {
             transform: translateX(20px);
+            background-color: var(--accent-coral);
+        }
+
+        .connection-card {
+            height: 100%;
+        }
+
+        .connection-details {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .info-row {
+            padding: 8px;
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-row .label {
+            font-size: 0.65rem;
+            color: var(--secondary-text);
+            margin-bottom: 2px;
+        }
+
+        .info-row .value {
+            font-size: 0.75rem;
+            color: var(--primary-text);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--secondary-text);
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .copy-btn:hover {
+            color: var(--accent-coral);
+        }
+
+        #empty-state {
+            padding: 96px 24px;
+            text-align: center;
+            border: 1px dashed var(--border);
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        .sticky-controls {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: var(--background);
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 48px;
         }
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
-<body class="p-4 md:p-8">
-
-    <div class="max-w-6xl mx-auto">
-        <!-- Header Section -->
-        <header class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-                <h1 class="text-3xl font-bold text-slate-800">Connection Manager</h1>
-                <p class="text-slate-600 mt-2">View your connections and track CRM status.</p>
-            </div>
-            <div class="flex items-center gap-3">
-                <label for="fileInput" class="cursor-pointer inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-xl shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                    </svg>
+<body>
+    <section>
+        <div class="container">
+            <header style="text-align: center; margin-bottom: 64px;">
+                <h1>LinkedOut<span class="text-accent">.</span></h1>
+                <p class="lead-text">View connections and track CRM status from your exported CSV.</p>
+                
+                <label for="fileInput" class="cta-button" style="margin-top: 24px;">
                     Upload CSV
                 </label>
-                <input type="file" id="fileInput" accept=".csv" onchange="handleFileSelect(event)">
-            </div>
-        </header>
+                <input type="file" id="fileInput" accept=".csv" onchange="handleFileSelect(event)" style="display: none;">
+            </header>
 
-        <!-- Control Bar -->
-        <div id="controlBar" class="hidden bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row gap-4 items-center justify-between sticky top-4 z-50">
-            <div class="flex flex-col md:flex-row gap-4 items-center flex-1">
-                <div class="relative w-full md:w-80">
-                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                    </span>
-                    <input 
-                        type="text" 
-                        id="search" 
-                        oninput="applyFilters()"
-                        placeholder="Search name, company, or role..." 
-                        class="block w-full pl-10 pr-3 py-2 border border-slate-300 rounded-lg leading-5 bg-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    >
+            <!-- Control Bar -->
+            <div id="controlBar" class="panel control-panel hidden">
+                <div class="panel-header">
+                    <div class="panel-marker"></div>
+                    <span class="label">FILTERS & SEARCH</span>
                 </div>
-
-                <!-- Date Range Picker -->
-                <div class="relative w-full md:w-64">
-                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                    </span>
-                    <input 
-                        type="text" 
-                        id="dateRange" 
-                        placeholder="Filter by date range..." 
-                        class="block w-full pl-10 pr-3 py-2 border border-slate-300 rounded-lg leading-5 bg-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    >
-                </div>
-
-                <!-- Toggle Switch -->
-                <div class="flex items-center gap-3 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
-                    <span class="text-xs font-semibold text-slate-600 uppercase tracking-wider">Hide CRM</span>
-                    <label class="switch">
-                        <input type="checkbox" id="hideCRM" onchange="applyFilters()">
-                        <span class="slider"></span>
-                    </label>
+                <div class="panel-content">
+                    <div class="filter-group">
+                        <div class="filter-item">
+                            <span class="label">SEARCH</span>
+                            <input type="text" id="search" oninput="applyFilters()" placeholder="Name, role, or company...">
+                        </div>
+                        <div class="filter-item">
+                            <span class="label">DATE RANGE</span>
+                            <input type="text" id="dateRange" placeholder="Select range...">
+                        </div>
+                        <div class="filter-item" style="flex: 0; min-width: auto; align-items: center;">
+                            <span class="label">HIDE CRM</span>
+                            <label class="switch">
+                                <input type="checkbox" id="hideCRM" onchange="applyFilters()">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="filter-item" style="flex: 0; min-width: auto;">
+                            <button onclick="resetView()" class="read-more-btn" style="margin: 0; padding: 12px 0;">RESET</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="flex items-center gap-4 w-full md:w-auto justify-end">
-                <span id="stats" class="text-sm font-medium text-slate-500 whitespace-nowrap"></span>
-                <button 
-                    onclick="resetView()" 
-                    class="px-4 py-2 text-sm font-medium text-slate-700 bg-slate-100 rounded-lg hover:bg-slate-200 transition-colors"
-                >
-                    Clear
-                </button>
+
+            <div id="stats" class="label" style="margin-bottom: 16px; text-align: right;"></div>
+
+            <!-- Connection Grid -->
+            <main id="connectionContainer" class="grid"></main>
+
+            <!-- Initial/Empty State -->
+            <div id="emptyState" class="panel">
+                <div class="panel-content" style="align-items: center; padding: 96px 24px;">
+                    <p class="lead-text" id="emptyText">Upload your Connections.csv to begin.</p>
+                    <p class="body-text" style="text-align: center;">CRM status is saved locally to your browser.</p>
+                </div>
             </div>
+
+            <footer style="text-align: center; border: none; padding-top: 96px;">
+              <a href="../" class="label" style="color: var(--primary-text); text-decoration: none;">
+                ← Back to Toolkit
+              </a>
+            </footer>
         </div>
+    </section>
 
-        <!-- Connection Grid -->
-        <div id="connectionContainer" class="card-grid"></div>
-
-        <!-- Initial/Empty State -->
-        <div id="emptyState" class="flex flex-col items-center justify-center py-32 text-slate-400 border-2 border-dashed border-slate-200 rounded-2xl">
-            <div class="bg-slate-100 p-4 rounded-full mb-4">
-                <svg class="w-12 h-12 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-            </div>
-            <p id="emptyText" class="text-xl font-medium text-slate-600">Upload your Connections.csv to begin</p>
-            <p class="text-sm text-slate-400 mt-1">CRM status is saved automatically to your profile.</p>
-        </div>
+    <div id="copy-toast" style="position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background-color: var(--highlight); color: var(--background); padding: 8px 16px; border-radius: 2px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 100;">
+      COPIED
     </div>
 
-    <div id="toast" class="copy-toast">Copied!</div>
-
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         const STORAGE_KEY = 'linkedout_crm_statuses';
         let crmStatuses = new Map();
@@ -201,9 +232,7 @@
             datePicker = flatpickr("#dateRange", {
                 mode: "range",
                 dateFormat: "Y-m-d",
-                onChange: function(selectedDates, dateStr, instance) {
-                    applyFilters();
-                }
+                onChange: function() { applyFilters(); }
             });
         });
 
@@ -214,17 +243,13 @@
                     const data = JSON.parse(stored);
                     crmStatuses = new Map(Object.entries(data));
                 }
-            } catch (err) {
-                console.error("Load error:", err);
-            }
+            } catch (err) { console.error("Load error:", err); }
         }
 
         function saveCRMStatuses() {
             try {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(Object.fromEntries(crmStatuses)));
-            } catch (err) {
-                console.error("Save error:", err);
-            }
+            } catch (err) { console.error("Save error:", err); }
         }
 
         function toggleCRM(url, checked) {
@@ -235,7 +260,6 @@
 
         loadCRMStatuses();
 
-        // --- CSV Handling ---
         window.handleFileSelect = function(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -258,22 +282,17 @@
             const lines = text.split(/\r?\n/);
             let headerIndex = -1;
             for(let i = 0; i < Math.min(lines.length, 10); i++) {
-                if(lines[i].includes('First Name')) {
-                    headerIndex = i;
-                    break;
-                }
+                if(lines[i].includes('First Name')) { headerIndex = i; break; }
             }
             if (headerIndex === -1) headerIndex = 3; 
 
             const dataLines = lines.slice(headerIndex);
-            
             allConnections = dataLines.slice(1)
                 .filter(line => line.trim() !== '')
                 .map(line => {
                     const row = parseCSVLine(line);
                     const connectedOnStr = row[6] || '';
                     const connectedOnDate = new Date(connectedOnStr);
-                    
                     return {
                         firstName: row[0] || '',
                         lastName: row[1] || '',
@@ -307,7 +326,6 @@
             return result;
         }
 
-        // --- Filter & UI Logic ---
         window.applyFilters = function() {
             const searchTerm = document.getElementById('search').value.toLowerCase();
             const hideCRM = document.getElementById('hideCRM').checked;
@@ -326,17 +344,14 @@
                 if (selectedDates.length === 2 && c.connectedOnDate) {
                     const start = selectedDates[0];
                     const end = selectedDates[1];
-                    // Normalize to start/end of day
                     const connDate = new Date(c.connectedOnDate);
                     connDate.setHours(0, 0, 0, 0);
                     const startDate = new Date(start);
                     startDate.setHours(0, 0, 0, 0);
                     const endDate = new Date(end);
                     endDate.setHours(23, 59, 59, 999);
-                    
                     matchesDateFilter = connDate >= startDate && connDate <= endDate;
                 }
-
                 return matchesSearch && matchesCRMFilter && matchesDateFilter;
             });
 
@@ -353,7 +368,7 @@
             
             if (connections.length === 0 && allConnections.length > 0) {
                 emptyState.classList.remove('hidden');
-                emptyText.textContent = "No connections match your filters.";
+                emptyText.textContent = "No connections match filters.";
             } else if (connections.length > 0) {
                 emptyState.classList.add('hidden');
             }
@@ -361,58 +376,42 @@
             connections.forEach(conn => {
                 const isInCRM = crmStatuses.get(conn.url) || false;
                 const card = document.createElement('div');
-                card.className = "bg-white rounded-xl shadow-sm border border-slate-200 p-5 hover:shadow-md transition-shadow flex flex-col justify-between relative overflow-hidden";
+                card.className = "panel connection-card";
                 
                 card.innerHTML = `
-                    <div class="mb-4">
-                        <div class="flex items-start justify-between mb-2">
-                            <div class="flex-1 min-w-0">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <h3 class="text-lg font-bold text-slate-900 truncate">${conn.fullName}</h3>
-                                    <button onclick="copyToClipboard('${conn.fullName.replace(/'/g, "\\'")}')" class="p-1 hover:bg-slate-100 rounded text-slate-400 hover:text-blue-600">
-                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                                    </button>
+                    <div class="panel-header">
+                        <div class="panel-marker" style="${isInCRM ? '' : 'background-color: var(--secondary-text)'}"></div>
+                        <span class="label">${conn.connectedOn}</span>
+                    </div>
+                    <div class="panel-content">
+                        <h3 style="margin-bottom: 0;">${conn.fullName}</h3>
+                        <p class="body-text" style="font-size: 0.875rem; margin-bottom: 8px;">${conn.position} at ${conn.company}</p>
+                        
+                        <div class="connection-details">
+                            <div class="info-row">
+                                <div style="flex: 1; overflow: hidden;">
+                                    <span class="label">LINKEDIN</span>
+                                    <div class="value">${conn.url}</div>
                                 </div>
-                                <p class="text-sm text-blue-600 font-medium truncate">${conn.position}</p>
-                                <p class="text-sm text-slate-500 truncate">${conn.company}</p>
-                            </div>
-                        </div>
-
-                        <div class="space-y-2 mt-4">
-                            <div class="flex items-center justify-between p-2 bg-slate-50 rounded-lg group">
-                                <div class="truncate mr-2 flex-1">
-                                    <span class="text-[10px] uppercase font-bold text-slate-400 block leading-none mb-1">LinkedIn</span>
-                                    <a href="${conn.url}" target="_blank" class="text-xs text-blue-500 hover:underline truncate block">${conn.url}</a>
-                                </div>
-                                <button onclick="copyToClipboard('${conn.url}')" class="p-1.5 hover:bg-white hover:shadow-sm rounded transition-all text-slate-400 hover:text-blue-600">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                                </button>
+                                <button onclick="window.open('${conn.url}', '_blank')" class="copy-btn"><i class="fas fa-external-link-alt"></i></button>
+                                <button onclick="copyToClipboard('${conn.url}')" class="copy-btn"><i class="far fa-copy"></i></button>
                             </div>
                             
-                            ${conn.email ? `
-                                <div class="flex items-center justify-between p-2 bg-slate-50 rounded-lg group">
-                                    <div class="truncate mr-2 flex-1">
-                                        <span class="text-[10px] uppercase font-bold text-slate-400 block leading-none mb-1">Email</span>
-                                        <span class="text-sm text-slate-700">${conn.email}</span>
-                                    </div>
-                                    <button onclick="copyToClipboard('${conn.email.replace(/'/g, "\\'")}')" class="p-1.5 hover:bg-white hover:shadow-sm rounded transition-all text-slate-400 hover:text-blue-600">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                                    </button>
+                            <div class="info-row">
+                                <div style="flex: 1; overflow: hidden;">
+                                    <span class="label">EMAIL</span>
+                                    <div class="value">${conn.email || 'N/A'}</div>
                                 </div>
-                            ` : `<div class="p-2 bg-slate-50 rounded-lg opacity-50 italic text-xs text-slate-400">No email</div>`}
-                        </div>
-                    </div>
-
-                    <div class="mt-2 pt-4 border-t border-slate-100">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                                <input type="checkbox" id="crm-${btoa(conn.url).slice(0, 10)}" 
-                                    class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500 cursor-pointer" 
-                                    ${isInCRM ? 'checked' : ''}
-                                    onchange="handleCRMChange('${conn.url}', this.checked)">
-                                <label for="crm-${btoa(conn.url).slice(0, 10)}" class="text-sm font-medium text-slate-600 cursor-pointer">In CRM</label>
+                                ${conn.email ? `<button onclick="copyToClipboard('${conn.email}')" class="copy-btn"><i class="far fa-copy"></i></button>` : ''}
                             </div>
-                            <span class="text-[10px] text-slate-400 uppercase font-semibold">${conn.connectedOn}</span>
+                        </div>
+
+                        <div style="margin-top: 16px; display: flex; align-items: center; gap: 8px;">
+                            <label class="switch">
+                                <input type="checkbox" ${isInCRM ? 'checked' : ''} onchange="handleCRMChange('${conn.url}', this.checked)">
+                                <span class="slider"></span>
+                            </label>
+                            <span class="label">IN CRM</span>
                         </div>
                     </div>
                 `;
@@ -420,33 +419,25 @@
             });
         }
 
-        // --- Global Helpers ---
         window.handleCRMChange = function(url, checked) {
             toggleCRM(url, checked);
-            // If the user checked "Hide CRM", the card should disappear immediately
-            if (document.getElementById('hideCRM').checked) {
-                applyFilters();
-            }
+            if (document.getElementById('hideCRM').checked) { applyFilters(); }
         };
 
         window.copyToClipboard = function(text) {
-            const el = document.createElement('textarea');
-            el.value = text;
-            document.body.appendChild(el);
-            el.select();
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
             document.execCommand('copy');
-            document.body.removeChild(el);
-            showToast();
+            document.body.removeChild(textArea);
+            const toast = document.getElementById('copy-toast');
+            toast.style.opacity = "1";
+            setTimeout(() => toast.style.opacity = "0", 2000);
         };
 
-        function showToast() {
-            const toast = document.getElementById('toast');
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2000);
-        }
-
         function updateStats(count) {
-            document.getElementById('stats').textContent = `${count} connection${count !== 1 ? 's' : ''}`;
+            document.getElementById('stats').textContent = `${count} CONNECTIONS FOUND`;
         }
 
         window.resetView = function() {
